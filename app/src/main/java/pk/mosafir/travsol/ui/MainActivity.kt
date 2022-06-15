@@ -9,7 +9,6 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.Toast
@@ -29,7 +28,6 @@ import com.google.firebase.messaging.FirebaseMessaging
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import pk.mosafir.travsol.BuildConfig
 import pk.mosafir.travsol.R
-import pk.mosafir.travsol.model.FirebaseToken
 import pk.mosafir.travsol.ui.account.AccountFragment
 import pk.mosafir.travsol.ui.home.HomeFragment
 import pk.mosafir.travsol.utils.*
