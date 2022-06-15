@@ -176,6 +176,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun whatsapp() {
+        //abc
         val trimToNumber = "923010050010"
         val intent = Intent(Intent.ACTION_VIEW)
         intent.data = Uri.parse("https://wa.me/$trimToNumber/?text=")
