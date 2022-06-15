@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite"
+        tools:context=".ui.SplashActivity">
+
+    <ImageView
+            android:src="@drawable/splash_icon"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="@dimen/_100sdp"
+            android:id="@+id/icon"
+            android:layout_height="wrap_content"
+            tools:ignore="ContentDescription" />
+    
+    <TextView
+            android:textColor="@color/colorRedLight"
+            android:layout_marginBottom="@dimen/_5sdp"
+            app:layout_constraintBottom_toTopOf="@id/progress_horizontal"
+            app:layout_constraintEnd_toEndOf="@id/progress_horizontal"
+            app:layout_constraintStart_toStartOf="@id/progress_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+        android:text="@string/loading_best_deals"/>
+
+    <androidx.core.widget.ContentLoadingProgressBar
+            android:id="@+id/progress_horizontal"
+            android:indeterminate="true"
+            android:layout_marginBottom="@dimen/_10sdp"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:indeterminateTint="@color/colorRed"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="@dimen/_130sdp"
+            android:layout_height="wrap_content"
+            tools:targetApi="lollipop" />
+</androidx.constraintlayout.widget.ConstraintLayout>

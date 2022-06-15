@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_250sdp"
+        android:background="@color/colorWhite"
+        android:orientation="vertical">
+
+    <View
+            android:layout_width="@dimen/_60sdp"
+            android:layout_height="@dimen/_5sdp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:background="@color/colorBlack" />
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:text="@string/talk_to_us"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/_20sdp"
+            android:textStyle="bold" />
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:background="@color/colorGrayDark" />
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:background="@color/colorGray"
+            android:layout_height="@dimen/_70sdp"
+            android:orientation="horizontal">
+        <ImageView
+                android:layout_marginStart="@dimen/_50sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/imageview_round_corner"
+                android:id="@+id/call"
+                android:clipToOutline="true"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:src="@drawable/call"
+                tools:ignore="ContentDescription,UnusedAttribute" />
+
+        <ImageView
+                android:id="@+id/whatsapp"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_50sdp"
+                android:background="@drawable/imageview_round_corner"
+                android:src="@drawable/whatsapp"
+                tools:ignore="ContentDescription" />
+
+    </RelativeLayout>
+    <ImageView
+            android:background="@drawable/cancel"
+            android:textAllCaps="false"
+            android:id="@+id/cancel"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_gravity="center"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_70sdp"
+            tools:ignore="ContentDescription" />
+</LinearLayout>

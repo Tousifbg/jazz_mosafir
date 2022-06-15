@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Projects/Jazz Mosafir Latest/jazz_mosafir/jazz_mosafir/app/src/main/res/layout/fragment_account.xml" value="0.176" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/drawable-anydpi/background_darkgrey_border.xml" value="0.2703125" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/drawable-anydpi/background_fb.xml" value="0.2703125" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/drawable-anydpi/background_google.xml" value="0.2703125" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/drawable-anydpi/background_login_disable.xml" value="0.2703125" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/drawable-anydpi/background_main_cards.xml" value="0.2703125" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/drawable-anydpi/background_red_circle.xml" value="0.2703125" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/drawable-hdpi/background_black_circle.xml" value="0.1707236842105263" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/drawable-hdpi/background_black_light_circle.xml" value="0.16905537459283387" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/drawable-hdpi/background_error.xml" value="0.2703125" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/drawable-hdpi/background_tab.xml" value="0.2703125" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/drawable-mdpi/background_warning_login.xml" value="0.2703125" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/drawable-mdpi/sqaure_red_round_corner_dull.xml" value="0.2703125" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/drawable-xxhdpi/square_round_corner_gray.xml" value="0.2703125" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/drawable/account.xml" value="0.262037037037037" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/drawable/active_tabs.xml" value="0.22916666666666666" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/drawable/back_arrow.xml" value="0.2703125" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/drawable/background.xml" value="0.2703125" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/drawable/background_black_circle.xml" value="0.2351851851851852" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/drawable/background_cancel.xml" value="0.2" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/drawable/background_cancel_booking.xml" value="0.24259259259259258" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/drawable/background_datepicker.xml" value="0.1707236842105263" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/drawable/background_error.xml" value="0.24259259259259258" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/drawable/background_login.xml" value="0.2638888888888889" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/drawable/background_red_circle.xml" value="0.2703125" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/drawable/bg_drawable.xml" value="0.2703125" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/drawable/cancel.xml" value="0.2703125" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/drawable/circle_red.xml" value="0.2703125" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/drawable/curved_bottom.xml" value="0.176" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/drawable/flight_backgrounf.xml" value="0.2703125" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.2703125" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/drawable/imageview_round_corner.xml" value="0.2703125" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/drawable/my_drawble.xml" value="0.2703125" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/drawable/new_bottom_curved.xml" value="0.1707236842105263" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/drawable/search.xml" value="0.22916666666666666" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/drawable/search_btn.xml" value="0.22916666666666666" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/drawable/search_icon.xml" value="0.22916666666666666" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/drawable/splash_icon.xml" value="0.2703125" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/drawable/sqaure_red_round_corner.xml" value="0.2703125" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/drawable/square_bg_month.xml" value="0.1707236842105263" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/drawable/square_bg_textview.xml" value="0.2703125" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/drawable/square_round_corner.xml" value="0.2703125" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/drawable/user_image_bg.xml" value="0.2703125" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/font/montserrat.xml" value="0.24444444444444444" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout-v31/bottom_sheet_dialog.xml" value="0.25416666666666665" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout-v31/cutom_dialog_datepicker.xml" value="0.16052631578947368" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/activity_splash.xml" value="0.45395348837209304" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/activity_video_full_screen.xml" value="0.24010416666666667" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/activity_web_view.xml" value="0.25416666666666665" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/activity_web_view2.xml" value="0.25416666666666665" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/booking_fragment.xml" value="0.25416666666666665" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/bottom_sheet_dialog.xml" value="0.264" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/bottom_sheet_flight.xml" value="0.264" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/bottom_sheet_hotel.xml" value="0.25416666666666665" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/bottom_sheet_tour_plan.xml" value="0.176" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/cancel_booking_item.xml" value="0.264" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/custom_tab_layout.xml" value="0.4" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/cutom_dialog_airport.xml" value="0.25416666666666665" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/cutom_dialog_date_selection.xml" value="0.25416666666666665" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/cutom_dialog_datepicker.xml" value="0.264" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/cutom_dialog_datepicker_oneway.xml" value="0.25416666666666665" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/cutom_dialog_loading.xml" value="0.25416666666666665" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/cutom_dialog_location.xml" value="0.2" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/cutom_dialog_monthpicker.xml" value="0.264" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/cutom_dialog_number0to4.xml" value="0.25416666666666665" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/cutom_dialog_number2to16.xml" value="0.25416666666666665" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/cutom_dialog_number6.xml" value="0.25416666666666665" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/discover_pakistan_grid.xml" value="0.25416666666666665" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/flight_hotel_tour_grid.xml" value="0.24074074074074073" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/fragment_account.xml" value="0.4" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/fragment_active_booking.xml" value="0.1361111111111111" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/fragment_blank.xml" value="0.11614583333333334" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/fragment_book_flight.xml" value="0.264" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/fragment_book_hotel.xml" value="0.264" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/fragment_booking.xml" value="0.264" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/fragment_cancel_booking.xml" value="0.1361111111111111" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/fragment_logged_in.xml" value="0.264" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/fragment_multi_city.xml" value="0.264" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/fragment_one_way.xml" value="0.264" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/fragment_payment.xml" value="0.25416666666666665" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/fragment_plan_tour.xml" value="0.264" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/fragment_round_trip.xml" value="0.176" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/fragment_talk_to_us.xml" value="0.25416666666666665" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/fragment_trending_blogs.xml" value="0.25416666666666665" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/fragment_trending_discover.xml" value="0.25416666666666665" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/fragment_trending_flightfragment.xml" value="0.25416666666666665" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/fragment_trending_hotel.xml" value="0.24010416666666667" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/fragment_trending_tour.xml" value="0.25416666666666665" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/home_fragment.xml" value="0.32042022324359815" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/item_city_list.xml" value="0.2" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/item_flight_airport_selection.xml" value="0.2" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/item_image_slider.xml" value="0.25416666666666665" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/item_movie.xml" value="0.25416666666666665" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/item_multy_city.xml" value="0.25416666666666665" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/item_room_list.xml" value="0.4" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/main_five_card.xml" value="0.4" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/main_four_card.xml" value="0.536" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/main_one_card.xml" value="0.4" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/main_tab_layout.xml" value="0.4" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/main_three_card.xml" value="0.25416666666666665" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/main_two_card.xml" value="0.25416666666666665" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/movie_detail_fragment.xml" value="0.25416666666666665" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/notification_dialog.xml" value="0.264" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/offer_card_item.xml" value="0.4" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/payment_fragment.xml" value="0.25416666666666665" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/toolbar.xml" value="0.2" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/layout/video_item_main.xml" value="0.25416666666666665" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/menu/navigation.xml" value="0.25416666666666665" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.14635416666666667" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/rangedatepicker/src/main/res/drawable/calendar_bg_selector.xml" value="0.24114583333333334" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/rangedatepicker/src/main/res/drawable/calendar_text_selector.xml" value="0.24114583333333334" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/rangedatepicker/src/main/res/drawable/day_text_color.xml" value="0.1" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/rangedatepicker/src/main/res/drawable/state_range_first.xml" value="0.1" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/rangedatepicker/src/main/res/drawable/state_range_last.xml" value="0.16822916666666668" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/rangedatepicker/src/main/res/drawable/state_range_middle.xml" value="0.16822916666666668" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/rangedatepicker/src/main/res/drawable/state_selected.xml" value="0.24114583333333334" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/rangedatepicker/src/main/res/layout/month.xml" value="0.25416666666666665" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/rangedatepicker/src/main/res/layout/space_view.xml" value="0.25416666666666665" />
+        <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/rangedatepicker/src/main/res/layout/week.xml" value="0.25416666666666665" />
+      </map>
+    </option>
+  </component>
+  <component name="EntryPointsManager">
+    <list size="1">
+      <item index="0" class="java.lang.String" itemvalue="android.annotation.SuppressLint" />
+    </list>
+  </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="11" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "193785287981",
+    "firebase_url": "https://mosafir-32358.firebaseio.com",
+    "project_id": "mosafir-32358",
+    "storage_bucket": "mosafir-32358.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:193785287981:android:f82c322d5616f836f62fa4",
+        "android_client_info": {
+          "package_name": "pk.mosafir.travsol"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "193785287981-l1p28eohnt36v3lipvlpasfd4av5asjp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "pk.mosafir.travsol",
+            "certificate_hash": "6ca1c86e6c1fe5d7b46b03233f223483f3a276a1"
+          }
+        },
+        {
+          "client_id": "193785287981-n7sdeia6uo3ea1a4fa628ti3j7srpm4o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "pk.mosafir.travsol",
+            "certificate_hash": "b1131d303f0c942f30bd960e6f852ceaacd0ebf4"
+          }
+        },
+        {
+          "client_id": "193785287981-taaf7t4invt2edi8hrgrglri052cvt0k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQSPpcEzZay9ak-sFcHaGKj2fuELPjz2w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "193785287981-oio6ept4reu437r51bvq9rneem4ir7ma.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "193785287981-cqdtfudn62tvlh4o574t5o7buln2mebv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mosafir.travel"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

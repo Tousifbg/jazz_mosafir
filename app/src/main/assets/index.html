@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Splash</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <style>
+	hrml, body{
+		margin: 0;
+		padding: 0;
+		position: relative;
+	}
+	html {
+  height: 99%;
+	}
+	body {
+	  min-height: 99.5%;
+	}
+	.logo {
+		position: absolute;
+		left: 0;
+		right: 0;
+		margin: 0 auto;
+		top: 50%;
+		transform: translateY(-50%);
+	}
+	.logo img{
+			width: 205px;
+		display: block;
+		margin: 0 auto;
+	}
+	.loading{
+		position: absolute;
+		left: 0;
+		right: 0;
+		margin: 0 auto;
+		bottom: 5%;
+		transform: translateY(-5%);
+	}
+	.loading .line{
+		position: relative;
+		width:150px;
+		height: 2px;
+		background: #efb4b6;
+		margin: 0 auto;
+	}
+	.loading .line:after{
+		content: "";
+		position: absolute;
+		left: 0;
+		height: 2px;
+		top: 0;
+		width: 50px;
+		background: #b31f24;
+		animation: movement 2.5s infinite;
+	}
+	.loading p{
+		    text-align: center;
+			font-size: 14px;
+			font-family: sans-serif;
+			color: #efb4b6;
+	}
+	@keyframes movement {
+	0% { left: 0;}
+    50%{ left : 66%;}
+    100%{ left: 0;}
+		}
+	</style>
+</head>
+
+<body>
+<div class="logo"><img src="logo.svg" alt=""></div>
+
+<div class="loading">
+    <p>Loading best deals </p>
+    <div class="line"></div>
+</div>
+</body>
+</html>

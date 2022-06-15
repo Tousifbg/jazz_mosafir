@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable name="tourBinding" type="pk.mosafir.travsol.formbinding.HotelBinding"/>
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorWhite"
+            tools:context=".ui.plan_tour.PlanTourFragment">
+
+        <include
+                android:id="@+id/topToolBar"
+                layout="@layout/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/top"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_300sdp"
+                android:background="@drawable/curved_shadow"
+                app:cardPreventCornerOverlap="false"
+                app:layout_constraintTop_toBottomOf="@id/topToolBar">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:background="@color/colorWhite"
+                    app:layout_constraintBottom_toTopOf="@+id/search_bg"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/desire_location"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                            android:id="@+id/departure_image"
+                            style="@style/flightImageView2"
+                            android:src="@drawable/tour_location"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="ContentDescription" />
+
+                    <TextView
+                            android:text="@{tourBinding.city}"
+                            android:id="@+id/departure_city"
+                            style="@style/flightTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat"
+                            android:hint="@string/select_your_tour_location"
+                            android:textColor="@color/textColor"
+                            app:layout_constraintStart_toEndOf="@id/departure_image"
+                            app:layout_constraintTop_toTopOf="@id/departure_image" />
+
+                    <View
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:layout_marginEnd="@dimen/_15sdp"
+                            android:background="@color/colorGray"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/departure_image"
+                            app:layout_constraintTop_toBottomOf="@id/departure_image" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/check_in"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/desire_location">
+
+                    <ImageView
+                            android:id="@+id/arrived_image"
+                            style="@style/flightImageView2"
+                            android:src="@drawable/calander"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="ContentDescription" />
+
+                    <TextView
+                            android:text="@{tourBinding.checkinDate}"
+                            android:id="@+id/arrived_city"
+                            style="@style/flightTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat"
+                            android:hint="@string/select_tour_date"
+                            android:textColor="@color/textColor"
+                            app:layout_constraintStart_toEndOf="@id/arrived_image"
+                            app:layout_constraintTop_toTopOf="@id/arrived_image" />
+
+                    <View
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:layout_marginEnd="@dimen/_15sdp"
+                            android:background="@color/colorGray"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/arrived_image"
+                            app:layout_constraintTop_toBottomOf="@id/arrived_image" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/travellers"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/check_in">
+
+                    <ImageView
+                            android:id="@+id/departure_date_image"
+                            style="@style/flightImageView2"
+                            android:src="@drawable/icon_travellers"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="ContentDescription" />
+
+                    <TextView
+                            android:text="@{tourBinding.stayers}"
+                            android:id="@+id/travelers_detail"
+                            style="@style/flightTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat"
+                            android:hint="@string/_1_traveller_s"
+                            android:textColor="@color/textColor"
+                            app:layout_constraintStart_toEndOf="@id/departure_date_image"
+                            app:layout_constraintTop_toTopOf="@id/departure_date_image" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:layout_marginEnd="@dimen/_15sdp"
+                        android:background="@color/colorGray"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@id/travellers"
+                        app:layout_constraintTop_toBottomOf="@id/travellers" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/persons"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        app:layout_constraintTop_toBottomOf="@id/travellers">
+
+                    <Switch
+                            android:id="@+id/switcher"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/_22sdp"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:src="@drawable/icon_travellers"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+                    <TextView
+                            android:id="@+id/travellers_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:fontFamily="@font/montserrat"
+                            android:text="@string/all_tours"
+                            android:textColor="@color/textColor"
+                            app:layout_constraintStart_toEndOf="@id/switcher"
+                            app:layout_constraintTop_toTopOf="@id/switcher" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <RelativeLayout
+                    android:id="@+id/search_bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_90sdp"
+                    android:background="@drawable/curved_bottom"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent">
+
+                <ImageView
+                        android:id="@+id/search"
+                        android:layout_width="@dimen/_42sdp"
+                        android:layout_height="@dimen/_42sdp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/_37sdp"
+                        android:background="@drawable/background_cancel"
+                        android:padding="@dimen/_8sdp"
+                        android:src="@drawable/search_icon"
+                        app:tint="@color/colorWhite"
+                        tools:ignore="ContentDescription" />
+            </RelativeLayout>
+
+            <TextView
+                    android:id="@+id/error"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_55sdp"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:background="@drawable/background_error"
+                    android:fontFamily="@font/montserrat"
+                    android:padding="@dimen/_5sdp"
+                    android:text="@string/the_location_or_category_field_is_required"
+                    android:textColor="@color/colorRed"
+                    android:textSize="@dimen/_14sdp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/search_bg" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+                android:id="@+id/signIn"
+
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_47sdp"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_25sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:background="@drawable/square_bg_textview"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/top">
+
+            <ImageView
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:src="@drawable/ic_baseline_person_24"
+                    tools:ignore="ContentDescription" />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="@string/sign_in"
+                    android:textColor="@color/colorRed"
+                    android:textSize="@dimen/_13sdp" />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="@string/to_manage_your_bookings"
+                    android:textSize="@dimen/_13sdp" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

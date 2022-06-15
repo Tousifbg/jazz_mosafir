@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <ScrollView
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorWhite"
+            android:scrollbars="none"
+            tools:context=".ui.home.HomeFragment">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <ImageView
+                    android:id="@+id/top_left"
+                    android:layout_width="@dimen/_125sdp"
+                    android:layout_height="@dimen/_43sdp"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:src="@drawable/jazz_logo"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription,MissingConstraints" />
+
+            <ImageView
+                    android:id="@+id/notification"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:src="@drawable/notification_icon"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription,MissingConstraints" />
+
+            <ImageView
+                    android:id="@+id/imageSlider"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintDimensionRatio="3:1.5"
+                    app:layout_constraintTop_toBottomOf="@+id/top_left"
+                    tools:ignore="ContentDescription,MissingConstraints" />
+
+            <TextView
+                    android:id="@+id/discover_et"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginStart="@dimen/_25sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_25sdp"
+                    android:background="@drawable/background"
+                    android:fontFamily="@font/montserrat"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/_7sdp"
+                    android:text="@string/discover_pakistan"
+                    android:textColor="@color/colorGrayDark"
+                    android:textSize="@dimen/_12sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/imageSlider"
+                    tools:ignore="RtlSymmetry" />
+
+            <Button
+                    android:layout_width="@dimen/_22sdp"
+                    android:layout_height="@dimen/_22sdp"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:background="@drawable/search_icon"
+                    app:layout_constraintEnd_toEndOf="@id/discover_et"
+                    app:layout_constraintTop_toTopOf="@id/discover_et" />
+
+
+            <com.skyfishjy.library.RippleBackground
+                    android:id="@+id/content"
+                    android:layout_width="@dimen/_55sdp"
+                    android:layout_height="@dimen/_55sdp"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:elevation="@dimen/_6sdp"
+                    android:layout_marginEnd="@dimen/_33sdp"
+                    app:layout_constraintStart_toStartOf="@id/book_flight"
+                    app:layout_constraintEnd_toEndOf="@id/plan_trip"
+                    android:layout_marginBottom="@dimen/_37sdp"
+                    app:layout_constraintBottom_toBottomOf="@id/book_flight"
+                    app:rb_color="@color/colorRedLight"
+                    app:rb_duration="3000"
+                    app:rb_radius="@dimen/_15sdp"
+                    app:rb_rippleAmount="4"
+                    app:rb_scale="2"
+                    tools:ignore="UnusedAttribute">
+
+                <LinearLayout
+                        android:id="@+id/centerImage"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/background_red_circle"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_2sdp"
+                            android:gravity="center"
+                            android:text="10%"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="@dimen/_12sdp"
+                            tools:ignore="HardcodedText" />
+
+                    <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/_3sdp"
+                            android:gravity="center"
+                            android:text="Off"
+                            android:textColor="@color/yellow"
+                            android:textSize="@dimen/_10sdp"
+                            tools:ignore="HardcodedText" />
+                </LinearLayout>
+            </com.skyfishjy.library.RippleBackground>
+
+            <androidx.cardview.widget.CardView
+                    android:id="@+id/book_flight"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    app:cardCornerRadius="@dimen/_5sdp"
+                    app:cardElevation="@dimen/_5sdp"
+                    app:layout_constraintDimensionRatio="1:.8"
+                    app:layout_constraintEnd_toStartOf="@id/plan_trip"
+                    app:layout_constraintStart_toEndOf="@id/book_hotel"
+                    app:layout_constraintTop_toBottomOf="@id/discover_et">
+
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:orientation="vertical"
+                        android:paddingBottom="@dimen/_10sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/discover_et"
+                        tools:ignore="UseCompoundDrawables">
+
+                    <ImageView
+                            android:layout_width="@dimen/_35sdp"
+                            android:layout_height="@dimen/_35sdp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:background="@drawable/book_flight"
+                            android:backgroundTint="@color/colorRed"
+                            tools:ignore="ContentDescription"
+                            tools:targetApi="lollipop" />
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:fontFamily="@font/montserrat"
+                            android:text="@string/book_a_flight"
+                            android:textSize="@dimen/_8sdp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                    android:id="@+id/book_hotel"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    app:cardCornerRadius="@dimen/_5sdp"
+                    app:cardElevation="@dimen/_5sdp"
+                    app:layout_constraintDimensionRatio="1:.8"
+                    app:layout_constraintEnd_toStartOf="@id/book_flight"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/discover_et">
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:orientation="vertical"
+                        android:paddingBottom="@dimen/_10sdp"
+                        app:layout_constraintDimensionRatio="2:1.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/discover_et"
+                        tools:ignore="UseCompoundDrawables">
+
+                    <ImageView
+                            android:layout_width="@dimen/_35sdp"
+                            android:layout_height="@dimen/_35sdp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:background="@drawable/book_hotel"
+                            android:backgroundTint="@color/colorRed"
+                            tools:ignore="ContentDescription"
+                            tools:targetApi="lollipop" />
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:fontFamily="@font/montserrat"
+                            android:text="@string/book_hotel"
+                            android:textSize="@dimen/_8sdp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                    android:id="@+id/plan_trip"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    app:cardCornerRadius="@dimen/_5sdp"
+                    app:cardElevation="@dimen/_5sdp"
+                    app:layout_constraintDimensionRatio="1:.8"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/book_flight"
+                    app:layout_constraintTop_toBottomOf="@id/discover_et">
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:orientation="vertical"
+                        android:paddingBottom="@dimen/_10sdp"
+                        app:layout_constraintDimensionRatio="2:1.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/discover_et"
+                        tools:ignore="UseCompoundDrawables">
+
+                    <ImageView
+                            android:layout_width="@dimen/_35sdp"
+                            android:layout_height="@dimen/_35sdp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:background="@drawable/plan_trip"
+                            android:backgroundTint="@color/colorRed"
+                            tools:ignore="ContentDescription"
+                            tools:targetApi="lollipop" />
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:fontFamily="@font/montserrat"
+                            android:text="@string/plan_a_trip"
+                            android:textSize="@dimen/_8sdp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                    android:id="@+id/ofe"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="@string/special_offers"
+                    android:textColor="@color/colorRed"
+                    android:textSize="@dimen/_13sdp"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/book_flight" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/special_offer_recycle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ofe" />
+            
+            <WebView
+                    android:id="@+id/webView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/plan_trip"
+                    tools:ignore="WebViewLayout" />
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@id/special_offer_recycle">
+
+                <LinearLayout
+                        android:id="@+id/may_like"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintTop_toBottomOf="@id/special_offer_recycle">
+
+                    <TextView
+                            android:id="@+id/ofe1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_20sdp"
+                            android:fontFamily="@font/montserrat"
+                            android:text="YOU MAY LIKE"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/_13sdp"
+                            android:textStyle="bold"
+                            tools:ignore="HardcodedText" />
+
+                    <View
+                            android:id="@+id/ofe1_ul"
+                            android:layout_width="@dimen/_32sdp"
+                            android:layout_height="@dimen/_2sdp"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:background="@color/colorRed" />
+
+                    <TextView
+                            android:id="@+id/ofe1_desc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:fontFamily="@font/montserrat"
+                            android:text="@string/enjoy_the_experience_of_these_serene_places_with_astonishing_sights" />
+
+                    <LinearLayout
+                            android:id="@+id/like1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical" />
+
+                    <LinearLayout
+                            android:id="@+id/like2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:orientation="vertical" />
+
+                    <LinearLayout
+                            android:id="@+id/like3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:orientation="vertical" />
+                </LinearLayout>
+
+                <LinearLayout
+                        android:id="@+id/trending"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintTop_toBottomOf="@id/may_like">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:fontFamily="@font/montserrat"
+                            android:text="TRENDING"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/_13sdp"
+                            android:textStyle="bold"
+                            tools:ignore="HardcodedText" />
+
+                    <View
+                            android:layout_width="@dimen/_32sdp"
+                            android:layout_height="@dimen/_2sdp"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:background="@color/colorRed" />
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:fontFamily="@font/montserrat"
+                            android:text="@string/here_are_some_of_the_most_famous_destinations_visited_by_tourists" />
+
+                    <include
+                            android:id="@+id/tab_includer"
+                            layout="@layout/main_tab_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:fontFamily="@font/montserrat"
+                            android:text="TRAVEL VIDEOS"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/_13sdp"
+                            android:textStyle="bold"
+                            tools:ignore="HardcodedText" />
+
+                    <View
+                            android:layout_width="@dimen/_32sdp"
+                            android:layout_height="@dimen/_2sdp"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:background="@color/colorRed" />
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:fontFamily="@font/montserrat"
+                            android:text="@string/watch_where_you_are_going"
+                            app:layout_constraintEnd_toEndOf="parent" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/videos_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:fontFamily="@font/montserrat"
+                            android:text="MOSAFIR KAHANI"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/_13sdp"
+                            android:textStyle="bold"
+                            tools:ignore="HardcodedText" />
+
+                    <View
+                            android:layout_width="@dimen/_32sdp"
+                            android:layout_height="@dimen/_2sdp"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:background="@color/colorRed" />
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:fontFamily="@font/montserrat"
+                            android:text="@string/we_celebrate_kahani"
+                            app:layout_constraintEnd_toEndOf="parent" />
+
+                    <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+                            android:id="@+id/youtube_kahani_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/_10sdp"
+                            app:autoPlay="false" />
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

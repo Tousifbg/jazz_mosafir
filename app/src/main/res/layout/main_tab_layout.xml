@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/main_tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <LinearLayout
+                android:id="@+id/tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toTopOf="parent">
+
+            <RelativeLayout
+                    android:id="@+id/relativeFLight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_tab">
+
+                <ImageView
+                        android:id="@+id/flight_icon"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:src="@drawable/ic_flight_icon" />
+
+                <TextView
+                        android:id="@+id/flightTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/_2sdp"
+                        android:layout_toEndOf="@+id/flight_icon"
+                        android:fontFamily="@font/montserrat"
+                        android:text="FLIGHT"
+                        android:textColor="@color/colorWhite" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:id="@+id/relativeHotel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:layout_weight="1">
+
+                <ImageView
+                        android:id="@+id/hotel_icon"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:src="@drawable/ic_hotel_icon" />
+
+                <TextView
+                        android:id="@+id/hotelTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/_2sdp"
+                        android:layout_toEndOf="@+id/hotel_icon"
+                        android:fontFamily="@font/montserrat"
+                        android:text="HOTEL"
+                        android:textColor="@color/colorWhite"
+                        android:visibility="gone" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:id="@+id/relativeTour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:layout_weight="1">
+
+                <ImageView
+                        android:id="@+id/tour_icon"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:src="@drawable/ic_trip_icon" />
+
+                <TextView
+                        android:id="@+id/tourTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/_2sdp"
+                        android:layout_toEndOf="@+id/tour_icon"
+                        android:fontFamily="@font/montserrat"
+                        android:text="TOURS"
+                        android:textColor="@color/colorWhite"
+                        android:visibility="gone" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:id="@+id/relativeDiscover"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:layout_weight="1">
+
+                <ImageView
+                        android:id="@+id/discover_icon"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:src="@drawable/ic_discover_icon" />
+
+                <TextView
+                        android:id="@+id/discoverTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/_2sdp"
+                        android:layout_toEndOf="@+id/discover_icon"
+                        android:fontFamily="@font/montserrat"
+                        android:text="DISCOVER PAKISAN"
+                        android:textColor="@color/colorWhite"
+                        android:visibility="gone" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:id="@+id/relativeBlog"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:layout_weight="1">
+
+                <ImageView
+                        android:id="@+id/blog_icon"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:src="@drawable/ic_flight_icon" />
+
+                <TextView
+                        android:id="@+id/blogTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/_2sdp"
+                        android:layout_toEndOf="@+id/blog_icon"
+                        android:fontFamily="@font/montserrat"
+                        android:text="BLOGS"
+                        android:textColor="@color/colorWhite"
+                        android:visibility="gone" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/fragContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                app:layout_constraintTop_toBottomOf="@id/tab_layout" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

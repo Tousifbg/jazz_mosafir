@@ -1,0 +1,557 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorWhite"
+            tools:context=".ui.account.AccountFragment">
+        <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_45sdp"
+                android:background="@color/colorRed"
+                app:layout_constraintTop_toTopOf="parent">
+
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <ImageView
+                        android:id="@+id/back"
+                        android:layout_width="@dimen/_15sdp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/left_arrow"
+                        app:tint="@color/colorWhite"
+                        tools:ignore="ContentDescription" />
+
+                <TextView
+                        android:id="@+id/title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:fontFamily="@font/montserrat"
+                        android:text="@string/user_login"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/_16sdp" />
+            </RelativeLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+        <androidx.cardview.widget.CardView
+                android:id="@+id/loginCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:elevation="@dimen/_20sdp"
+                android:visibility="visible"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar"
+                tools:ignore="UnusedAttribute">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                <com.hbb20.CountryCodePicker
+                        android:id="@+id/login_spinner_country"
+                        android:layout_width="@dimen/_90sdp"
+                        android:layout_height="@dimen/_39sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_34sdp"
+                        android:fontFamily="@font/montserrat"
+                        android:gravity="bottom"
+                        app:ccpDialog_keyboardAutoPopup="false"
+                        app:ccp_arrowSize="@dimen/_20sdp"
+                        app:ccp_defaultPhoneCode="92"
+                        app:ccp_showFullName="false"
+                        app:ccp_textSize="@dimen/_10sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="1dp"
+                        android:background="@color/colorGrayDark"
+                        app:layout_constraintEnd_toEndOf="@id/login_spinner_country"
+                        app:layout_constraintStart_toStartOf="@id/login_spinner_country"
+                        app:layout_constraintTop_toBottomOf="@id/login_spinner_country" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/phone_et_login"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:layout_marginTop="@dimen/_32sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/login_spinner_country"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/phone_number_login"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_40sdp"
+                            android:fontFamily="@font/montserrat"
+                            android:hint="@string/phone_number"
+                            android:inputType="number"
+                            android:singleLine="true"
+                            android:textColorHint="@color/colorRed"
+                            android:textSize="@dimen/_12sdp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/otp_layout"
+                        android:layout_width="0dp"
+                        android:visibility="gone"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@id/login_spinner_country"
+                        app:layout_constraintTop_toBottomOf="@id/phone_et_login">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/otp"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_40sdp"
+                            android:fontFamily="@font/montserrat"
+                            android:hint="@string/enter_otp_here"
+                            android:inputType="number"
+                            android:singleLine="true"
+                            android:textColorHint="@color/colorRed"
+                            android:textSize="@dimen/_12sdp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                        android:id="@+id/timer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:fontFamily="@font/montserrat"
+                        android:text="@string/_59"
+                        android:visibility="gone"
+                        android:textColor="@color/colorRed"
+                        app:layout_constraintStart_toStartOf="@id/otp_layout"
+                        app:layout_constraintTop_toBottomOf="@id/otp_layout" />
+
+                <TextView
+                        android:visibility="gone"
+                        android:id="@+id/timer_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_3sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:fontFamily="@font/montserrat"
+                        android:text="@string/seconds_wait_until_sms_otp_received"
+                        android:textColor="@color/colorGrayDark"
+                        app:layout_constraintStart_toEndOf="@id/timer"
+                        app:layout_constraintTop_toBottomOf="@id/otp_layout" />
+                <LinearLayout
+                        android:visibility="gone"
+                        android:background="@drawable/background_warning_login"
+                        android:orientation="horizontal"
+                        android:id="@+id/softWarning"
+                        app:layout_constraintTop_toBottomOf="@id/timer"
+                        android:layout_width="match_parent"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_height="@dimen/_55sdp">
+                    <TextView
+                            android:id="@+id/error"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat"
+                            android:padding="@dimen/_5sdp"
+                            android:text=""
+                            android:textColor="@color/brown"
+                            android:textSize="@dimen/_13sdp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+                </LinearLayout>
+
+                <Button
+                        android:id="@+id/login"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:background="@drawable/background_login"
+                        android:fontFamily="@font/montserrat"
+                        android:text="@string/login"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/_14sdp"
+                        app:layout_constraintEnd_toEndOf="@id/phone_et_login"
+                        app:layout_constraintStart_toStartOf="@id/login_spinner_country"
+                        app:layout_constraintTop_toBottomOf="@id/softWarning" />
+
+                <LinearLayout
+                        android:id="@+id/register_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:layout_marginBottom="@dimen/_15sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/login">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat"
+                            android:text="@string/not_register_yet"
+                            android:textSize="@dimen/_12sdp"
+                            app:layout_constraintTop_toBottomOf="@id/login" />
+
+                    <TextView
+                            android:id="@+id/registerNow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:fontFamily="@font/montserrat"
+                            android:text="@string/register_now"
+                            android:textColor="@color/colorRed"
+                            android:textSize="@dimen/_12sdp"
+                            app:layout_constraintTop_toBottomOf="@id/login" />
+                </LinearLayout>
+
+                <View
+                        android:id="@+id/view1"
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_14sdp"
+                        android:layout_marginEnd="@dimen/_7sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:background="@color/colorGray"
+                        app:layout_constraintEnd_toStartOf="@id/tv"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/register_layout" />
+
+                <TextView
+                        android:id="@+id/tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:fontFamily="@font/montserrat"
+                        android:text="@string/or"
+                        android:textColor="@color/colorRed"
+                        android:textSize="@dimen/_12sdp"
+                        app:layout_constraintEnd_toStartOf="@id/view2"
+                        app:layout_constraintStart_toEndOf="@id/view1"
+                        app:layout_constraintTop_toBottomOf="@id/register_layout" />
+
+                <View
+                        android:id="@+id/view2"
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="@dimen/_7sdp"
+                        android:layout_marginTop="@dimen/_14sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:background="@color/colorGray"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/tv"
+                        app:layout_constraintTop_toBottomOf="@id/register_layout" />
+
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:layout_marginBottom="@dimen/_25sdp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/view1">
+
+                    <ImageView
+                            android:id="@+id/facebook"
+                            android:layout_width="@dimen/_35sdp"
+                            android:layout_height="@dimen/_35sdp"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:background="@drawable/background_fb"
+                            android:padding="@dimen/_5sdp"
+                            android:src="@drawable/fb"
+                            app:tint="@color/colorWhite"
+                            tools:ignore="ContentDescription" />
+
+                    <com.facebook.login.widget.LoginButton
+                            android:id="@+id/login_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone" />
+
+                    <ImageView
+                            android:id="@+id/google"
+                            android:layout_width="@dimen/_35sdp"
+                            android:layout_height="@dimen/_35sdp"
+                            android:background="@drawable/background_google"
+                            android:padding="@dimen/_5sdp"
+                            android:src="@drawable/google"
+                            app:tint="@color/colorWhite"
+                            tools:ignore="ContentDescription" />
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+                android:id="@+id/register_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:elevation="@dimen/_20sdp"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar"
+                tools:ignore="UnusedAttribute">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/full_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@id/spinner_country"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat"
+                            android:hint="@string/full_name"
+                            android:inputType="text"
+                            android:singleLine="true"
+                            android:textColorHint="@color/colorRed"
+                            android:textSize="@dimen/_12sdp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.hbb20.CountryCodePicker
+                        android:id="@+id/spinner_country"
+                        android:layout_width="@dimen/_90sdp"
+                        android:layout_height="@dimen/_39sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_30sdp"
+                        android:fontFamily="@font/montserrat"
+                        android:gravity="bottom"
+                        app:ccpDialog_keyboardAutoPopup="false"
+                        app:ccp_arrowSize="@dimen/_20sdp"
+                        app:ccp_defaultPhoneCode="92"
+                        app:ccp_showFullName="false"
+                        app:ccp_textSize="@dimen/_10sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/full_name" />
+
+                <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="3dp"
+                        android:background="@color/colorGrayDark"
+                        app:layout_constraintEnd_toEndOf="@id/spinner_country"
+                        app:layout_constraintStart_toStartOf="@id/spinner_country"
+                        app:layout_constraintTop_toBottomOf="@id/spinner_country" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/phone_et"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:layout_marginTop="@dimen/_30sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/spinner_country"
+                        app:layout_constraintTop_toBottomOf="@id/full_name">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/phone_number"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_40sdp"
+                            android:fontFamily="@font/montserrat"
+                            android:hint="@string/mobile_number"
+                            android:inputType="number"
+                            android:singleLine="true"
+                            android:textColorHint="@color/colorRed"
+                            android:textSize="@dimen/_12sdp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/otp_layout_register"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@id/spinner_country"
+                        app:layout_constraintTop_toBottomOf="@id/phone_et">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/otp_register"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_40sdp"
+                            android:fontFamily="@font/montserrat"
+                            android:hint="@string/enter_otp_here"
+                            android:inputType="number"
+                            android:singleLine="true"
+                            android:textColorHint="@color/colorRed"
+                            android:textSize="@dimen/_12sdp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                        android:id="@+id/timer_register"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:fontFamily="@font/montserrat"
+                        android:text="@string/_59"
+                        android:textColor="@color/colorRed"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toStartOf="@id/otp_layout_register"
+                        app:layout_constraintTop_toBottomOf="@id/otp_layout_register" />
+
+                <TextView
+                        android:id="@+id/timer_text_register"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_3sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:fontFamily="@font/montserrat"
+                        android:text="@string/seconds_wait_until_sms_otp_received"
+                        android:textColor="@color/colorGrayDark"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toEndOf="@id/timer_register"
+                        app:layout_constraintTop_toBottomOf="@id/otp_layout_register" />
+                <LinearLayout
+                        android:visibility="gone"
+                        android:background="@drawable/background_warning_login"
+                        android:orientation="horizontal"
+                        android:id="@+id/softWarningRegister"
+                        app:layout_constraintTop_toBottomOf="@id/timer_register"
+                        android:layout_width="match_parent"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_height="@dimen/_55sdp">
+                    <TextView
+                            android:id="@+id/errorRegister"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat"
+                            android:padding="@dimen/_5sdp"
+                            android:text=""
+                            android:textColor="@color/brown"
+                            android:textSize="@dimen/_13sdp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+                </LinearLayout>
+
+                <Button
+                        android:id="@+id/register"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_30sdp"
+                        android:background="@drawable/background_login"
+                        android:fontFamily="@font/montserrat"
+                        android:text="@string/register"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/_14sdp"
+                        app:layout_constraintEnd_toEndOf="@id/phone_et"
+                        app:layout_constraintStart_toStartOf="@id/spinner_country"
+                        app:layout_constraintTop_toBottomOf="@id/softWarningRegister" />
+
+                <View
+                        android:id="@+id/view3"
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_18sdp"
+                        android:layout_marginEnd="@dimen/_7sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:background="@color/colorGray"
+                        app:layout_constraintEnd_toStartOf="@id/tvv"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/register" />
+
+                <TextView
+                        android:id="@+id/tvv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:fontFamily="@font/montserrat"
+                        android:text="@string/or"
+                        android:textColor="@color/colorRed"
+                        android:textSize="@dimen/_12sdp"
+                        app:layout_constraintEnd_toStartOf="@id/view4"
+                        app:layout_constraintStart_toEndOf="@id/view3"
+                        app:layout_constraintTop_toBottomOf="@id/register" />
+
+                <View
+                        android:id="@+id/view4"
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="@dimen/_7sdp"
+                        android:layout_marginTop="@dimen/_18sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:background="@color/colorGray"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/tvv"
+                        app:layout_constraintTop_toBottomOf="@id/register" />
+
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:layout_marginBottom="@dimen/_25sdp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/view3">
+
+                    <ImageView
+                            android:id="@+id/facebookRegister"
+                            android:layout_width="@dimen/_35sdp"
+                            android:layout_height="@dimen/_35sdp"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:background="@drawable/background_fb"
+                            android:padding="@dimen/_5sdp"
+                            android:src="@drawable/fb"
+                            app:tint="@color/colorWhite"
+                            tools:ignore="ContentDescription" />
+
+                    <com.facebook.login.widget.LoginButton
+                            android:id="@+id/login_button_register"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone" />
+
+                    <ImageView
+                            android:id="@+id/google_register"
+                            android:layout_width="@dimen/_35sdp"
+                            android:layout_height="@dimen/_35sdp"
+                            android:background="@drawable/background_google"
+                            android:padding="@dimen/_5sdp"
+                            android:src="@drawable/google"
+                            app:tint="@color/colorWhite"
+                            tools:ignore="ContentDescription" />
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

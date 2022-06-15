@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite">
+
+    <TextView
+            android:id="@+id/flight_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/montserrat"
+            android:singleLine="true"
+            android:text="@string/flight_1"
+            android:textColor="@color/textColorBlackish"
+            android:textSize="@dimen/_15sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/colorWhite"
+            app:layout_constraintTop_toBottomOf="@id/flight_no">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/desire_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                    android:id="@+id/departure_image"
+                    style="@style/flightImageView"
+                    android:src="@drawable/departure"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
+
+            <TextView
+                    android:id="@+id/departure_city"
+                    android:layout_width="0dp"
+                    style="@style/flightTextView"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat"
+                    android:hint="@string/departure_airport_or_city"
+                    android:textColor="@color/textColor"
+                    app:layout_constraintEnd_toStartOf="@id/departure_city_code"
+                    app:layout_constraintStart_toEndOf="@id/departure_image"
+                    app:layout_constraintTop_toTopOf="@id/departure_image" />
+
+            <TextView
+                    android:id="@+id/departure_city_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:fontFamily="@font/montserrat"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColor="@color/textColorBlackish"
+                    android:textSize="@dimen/_14sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/departure_image" />
+
+            <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:background="@color/colorGray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/departure_image"
+                    app:layout_constraintTop_toBottomOf="@id/departure_image" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/check_in"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/desire_location">
+
+            <ImageView
+                    android:id="@+id/arrived_image"
+                    style="@style/flightImageView"
+                    android:src="@drawable/arrival"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
+
+            <TextView
+                    android:id="@+id/arrived_city"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    style="@style/flightTextView"
+                    android:fontFamily="@font/montserrat"
+                    android:hint="@string/arrival_airport_or_city"
+                    android:textColor="@color/textColor"
+                    app:layout_constraintEnd_toStartOf="@id/arrived_city_code"
+                    app:layout_constraintStart_toEndOf="@id/arrived_image"
+                    app:layout_constraintTop_toTopOf="@id/arrived_image" />
+
+            <TextView
+                    android:id="@+id/arrived_city_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:fontFamily="@font/montserrat"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColor="@color/textColorBlackish"
+                    android:textSize="@dimen/_13sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/arrived_image" />
+
+            <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:background="@color/colorGray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/arrived_image"
+                    app:layout_constraintTop_toBottomOf="@id/arrived_image" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/check_out"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/check_in">
+
+            <ImageView
+                    android:id="@+id/departure_date_image"
+                    style="@style/flightImageView"
+                    android:src="@drawable/icon_calendar"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
+
+            <TextView
+                    android:id="@+id/start_dater"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat"
+                    style="@style/flightTextView"
+                    android:hint="@string/date"
+                    android:textColor="@color/textColor"
+                    app:layout_constraintStart_toEndOf="@id/departure_date_image"
+                    app:layout_constraintTop_toTopOf="@id/departure_date_image" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:background="@color/colorGray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/check_out"
+                app:layout_constraintTop_toBottomOf="@id/check_out" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

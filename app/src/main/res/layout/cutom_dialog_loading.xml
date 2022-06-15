@@ -1,0 +1,69 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="@dimen/_300sdp"
+        android:layout_height="@dimen/_200sdp"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:background="@color/colorWhite"
+        android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:background="@color/colorRed"
+            app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/montserrat"
+                    android:text="@string/jazz_mosafir"
+                    android:layout_centerInParent="true"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/_16sdp" />
+
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+    <TextView
+            android:textColor="@color/colorRed"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:textSize="@dimen/_15sdp"
+            android:gravity="center"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/be_patient_we_are_searching_best_matches_for_you"
+            app:layout_constraintBottom_toTopOf="@id/progress_horizontal"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    <TextView
+            android:textColor="@color/colorRedLight"
+            android:layout_marginBottom="@dimen/_5sdp"
+            app:layout_constraintBottom_toTopOf="@id/progress_horizontal"
+            app:layout_constraintEnd_toEndOf="@id/progress_horizontal"
+            app:layout_constraintStart_toStartOf="@id/progress_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/loading_best_deals"/>
+    <androidx.core.widget.ContentLoadingProgressBar
+            android:id="@+id/progress_horizontal"
+            android:indeterminate="true"
+            android:layout_marginBottom="@dimen/_10sdp"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:indeterminateTint="@color/colorRed"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="@dimen/_130sdp"
+            android:layout_height="wrap_content"
+            tools:targetApi="lollipop" />
+</androidx.constraintlayout.widget.ConstraintLayout>

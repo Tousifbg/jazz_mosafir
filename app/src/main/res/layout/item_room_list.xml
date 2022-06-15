@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:background="@color/colorGray"
+            android:layout_height="@dimen/_80sdp">
+        <TextView
+                android:fontFamily="@font/montserrat"
+                android:layout_marginTop="@dimen/_15sdp"
+                app:layout_constraintTop_toTopOf="parent"
+                android:id="@+id/adults_tv"
+                app:layout_constraintEnd_toEndOf="@id/adult"
+                app:layout_constraintStart_toStartOf="@id/adult"
+                android:text="@string/room_adults"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        <RelativeLayout
+                android:orientation="horizontal"
+                android:id="@+id/adult"
+                android:background="@drawable/square_round_corner_gray"
+                app:layout_constraintTop_toBottomOf="@id/adults_tv"
+                app:layout_constraintEnd_toStartOf="@id/child"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_width="@dimen/_130sdp"
+                android:layout_height="@dimen/_30sdp">
+
+            <TextView
+                    android:id="@+id/number_of_adults"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:gravity="center"
+                    android:text="@string/_1"
+                    android:textSize="@dimen/_14sdp"
+                    tools:ignore="RelativeOverlap" />
+            <ImageView
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="center_vertical|right"
+                    android:background="@drawable/ic_baseline_keyboard_arrow_down_24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:ignore="ContentDescription,RtlHardcoded" />
+        </RelativeLayout>
+        <TextView
+                app:layout_constraintTop_toTopOf="@id/adults_tv"
+                android:id="@+id/childs_tv"
+                android:fontFamily="@font/montserrat"
+                app:layout_constraintEnd_toEndOf="@id/child"
+                app:layout_constraintStart_toStartOf="@id/child"
+                android:text="@string/room_children"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        <RelativeLayout
+                android:orientation="horizontal"
+                android:id="@+id/child"
+                android:background="@drawable/square_round_corner_gray"
+                app:layout_constraintTop_toBottomOf="@id/adults_tv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/adult"
+                android:layout_width="@dimen/_130sdp"
+                android:layout_height="@dimen/_30sdp">
+
+            <TextView
+                    android:id="@+id/number_of_child"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:gravity="center"
+                    android:text="@string/_0"
+                    android:textSize="@dimen/_14sdp"
+                    tools:ignore="RelativeOverlap" />
+            <ImageView
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="center_vertical|right"
+                    android:background="@drawable/ic_baseline_keyboard_arrow_down_24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:ignore="ContentDescription,RtlHardcoded" />
+        </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:id="@+id/child_constraint1"
+            android:background="@color/colorGray"
+            android:layout_height="@dimen/_50sdp">
+        <RelativeLayout
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:orientation="horizontal"
+                android:id="@+id/child_number_tv1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/child1"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_width="@dimen/_130sdp"
+                android:layout_height="@dimen/_30sdp">
+
+            <TextView
+                    android:fontFamily="@font/montserrat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:gravity="center"
+                    android:text="@string/child_1_age_in_years" />
+
+        </RelativeLayout>
+        <RelativeLayout
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:orientation="horizontal"
+                android:id="@+id/child1"
+                app:layout_constraintStart_toEndOf="@id/child_number_tv1"
+                android:background="@drawable/square_round_corner_gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="@dimen/_130sdp"
+                android:layout_height="@dimen/_30sdp">
+
+            <TextView
+                    android:id="@+id/child_room1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:gravity="center"
+                    android:text="@string/_0"
+                    android:textSize="@dimen/_14sdp"
+                    tools:ignore="RelativeOverlap" />
+            <ImageView
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="center_vertical|right"
+                    android:background="@drawable/ic_baseline_keyboard_arrow_down_24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:ignore="ContentDescription,RtlHardcoded" />
+        </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:id="@+id/child_constraint2"
+            android:background="@color/colorGray"
+            android:layout_height="@dimen/_50sdp">
+        <RelativeLayout
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:orientation="horizontal"
+                android:id="@+id/child_number_tv2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/child2"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_width="@dimen/_130sdp"
+                android:layout_height="@dimen/_30sdp">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/montserrat"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:gravity="center"
+                    android:text="@string/child_2_age_in_years" />
+
+        </RelativeLayout>
+        <RelativeLayout
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:orientation="horizontal"
+                android:id="@+id/child2"
+                app:layout_constraintStart_toEndOf="@id/child_number_tv2"
+                android:background="@drawable/square_round_corner_gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="@dimen/_130sdp"
+                android:layout_height="@dimen/_30sdp">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:gravity="center"
+                    android:text="@string/_0"
+                    android:id="@+id/child_room2"
+                    android:textSize="@dimen/_14sdp"
+                    tools:ignore="RelativeOverlap" />
+            <ImageView
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="center_vertical|right"
+                    android:background="@drawable/ic_baseline_keyboard_arrow_down_24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:ignore="ContentDescription,RtlHardcoded" />
+        </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:id="@+id/child_constraint3"
+            android:visibility="gone"
+            android:background="@color/colorGray"
+            android:layout_height="@dimen/_50sdp">
+        <RelativeLayout
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:orientation="horizontal"
+                android:id="@+id/child_number_tv3"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/child3"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_width="@dimen/_130sdp"
+                android:layout_height="@dimen/_30sdp">
+
+            <TextView
+                    android:fontFamily="@font/montserrat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:gravity="center"
+                    android:text="@string/child_3_age_in_years" />
+
+        </RelativeLayout>
+        <RelativeLayout
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:orientation="horizontal"
+                android:id="@+id/child3"
+                app:layout_constraintStart_toEndOf="@id/child_number_tv3"
+                android:background="@drawable/square_round_corner_gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="@dimen/_130sdp"
+                android:layout_height="@dimen/_30sdp">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:gravity="center"
+                    android:text="@string/_0"
+                    android:id="@+id/child_room3"
+                    android:textSize="@dimen/_14sdp"
+                    tools:ignore="RelativeOverlap" />
+            <ImageView
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="center_vertical|right"
+                    android:background="@drawable/ic_baseline_keyboard_arrow_down_24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:ignore="ContentDescription,RtlHardcoded" />
+        </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:id="@+id/child_constraint4"
+            android:visibility="gone"
+            android:background="@color/colorGray"
+            android:layout_height="@dimen/_50sdp">
+        <RelativeLayout
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:orientation="horizontal"
+                android:id="@+id/child_number_tv4"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/child4"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_width="@dimen/_130sdp"
+                android:layout_height="@dimen/_30sdp">
+
+            <TextView
+                    android:fontFamily="@font/montserrat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:gravity="center"
+                    android:text="@string/child_4_age_in_years" />
+
+        </RelativeLayout>
+        <RelativeLayout
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:orientation="horizontal"
+                android:id="@+id/child4"
+                app:layout_constraintStart_toEndOf="@id/child_number_tv4"
+                android:background="@drawable/square_round_corner_gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="@dimen/_130sdp"
+                android:layout_height="@dimen/_30sdp">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:gravity="center"
+                    android:text="@string/_0"
+                    android:id="@+id/child_room4"
+                    android:textSize="@dimen/_14sdp"
+                    tools:ignore="RelativeOverlap" />
+            <ImageView
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="center_vertical|right"
+                    android:background="@drawable/ic_baseline_keyboard_arrow_down_24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:ignore="ContentDescription,RtlHardcoded" />
+        </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

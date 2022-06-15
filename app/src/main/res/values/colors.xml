@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#b31f24</color>
+    <color name="colorPrimaryDark">#b31f24</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="newRed">#ed1c24</color>
+    <color name="colorGray">#F4F3F4</color>
+    <color name="colorGrayDark">#757474</color>
+    <color name="colorRed">#b31f24</color>
+    <color name="colorRedLight">#eb9194</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="textColor">#868686</color>
+    <color name="textColorBlackish">#495057</color>
+    <color name="yellow">#ffc619</color>
+    <color name="dullYellow">#fff3cd</color>
+    <color name="errorColor">#51fff0f0</color>
+    //this is for HighLighted dates
+    <color name="calendar_unavailable_bg">#F44336</color>
+    <color name="calendar_range_middle_unavailable_bg">#F44336</color>
+    <color name="blue">#1572d9</color>
+    <color name="brown">#7c5e04</color>
+    // this is for Deactivated dates
+    <color name="calendar_range_middle_deactivated_bg">#673AB7</color>
+</resources>

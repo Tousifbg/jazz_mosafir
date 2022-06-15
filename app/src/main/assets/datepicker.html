@@ -1,0 +1,28 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <base href="https://rawgit.com/KidSysco/jquery-ui-month-picker/v3.0.0/demo/">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <link rel="stylesheet"
+          href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.js"></script>
+
+    <!-- MonthYearPicker-Addon .css and .js -->
+    <link type="text/css" href="../jquery.ui.datepicker.monthyearpicker.css" rel="stylesheet"/>
+    <script type="text/javascript" src="../jquery.ui.datepicker.monthyearpicker.js"></script>
+    <div id='InlineMenu'></div>
+
+    <script>
+      $( function() {
+        $( "#datepicker" ).datepicker({
+        inline: true,
+        minDate: new Date(),
+        });
+      });
+    </script>
+    Enter date: <div id="datepicker"></div>
+</head>
+
+</html>

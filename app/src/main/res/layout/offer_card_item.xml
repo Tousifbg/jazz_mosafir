@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="wrap_content"
+        android:layout_marginBottom="@dimen/_2sdp"
+        android:layout_marginEnd="@dimen/_7sdp"
+        android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+            android:layout_width="@dimen/_190sdp"
+            android:layout_height="0dp"
+            android:background="#00000000"
+            android:elevation="0dp"
+            app:layout_constraintDimensionRatio="3:2.4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="UnusedAttribute">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <androidx.cardview.widget.CardView
+                    android:layout_marginTop="@dimen/_1sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_110sdp"
+                    app:cardCornerRadius="@dimen/_12sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+                <ImageView
+                        android:scaleType="fitXY"
+                        android:adjustViewBounds="true"
+                        android:id="@+id/location_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_110sdp"
+                        android:src="@drawable/malam_jaba"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="ContentDescription" />
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                    android:layout_marginBottom="@dimen/_3sdp"
+                    android:layout_width="@dimen/_150sdp"
+                    android:layout_height="0dp"
+                    app:cardElevation="@dimen/_2sdp"
+                    app:cardCornerRadius="@dimen/_3sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="4:1.4"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorWhite">
+
+                    <TextView
+                            android:fontFamily="@font/montserrat"
+                            android:id="@+id/title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_3sdp"
+                            android:layout_marginStart="@dimen/_7sdp"
+                            android:text="@string/hunza_tour_with_family"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/_10sdp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                            android:fontFamily="@font/montserrat"
+                            android:id="@+id/city"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/Hunza"
+                            android:textColor="@color/colorGrayDark"
+                            android:textSize="@dimen/_9sdp"
+                            app:layout_constraintStart_toStartOf="@id/title"
+                            app:layout_constraintTop_toBottomOf="@id/title" />
+
+                    <ImageView
+                            android:id="@+id/starting"
+                            android:layout_width="@dimen/_22sdp"
+                            android:layout_height="0dp"
+                            android:src="@drawable/starting"
+                            app:layout_constraintDimensionRatio="2:1.4"
+                            app:layout_constraintStart_toStartOf="@id/title"
+                            app:layout_constraintTop_toBottomOf="@+id/city"
+                            tools:ignore="ContentDescription" />
+
+                    <TextView
+                            android:id="@+id/s_currency"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/_2sdp"
+                            android:text="@string/pkr"
+                            android:fontFamily="@font/montserrat"
+                            android:layout_marginStart="@dimen/_2sdp"
+                            android:textSize="@dimen/_8sdp"
+                            app:layout_constraintBottom_toBottomOf="@id/f_currency"
+                            app:layout_constraintEnd_toStartOf="@id/s_price"
+                            app:layout_constraintTop_toTopOf="@id/f_currency" />
+
+                    <TextView
+                            android:fontFamily="@font/montserrat"
+                            android:id="@+id/s_price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/_2sdp"
+                            android:text="@string/_14000"
+                            android:layout_marginStart="@dimen/_2sdp"
+                            android:textSize="@dimen/_8sdp"
+                            app:layout_constraintBottom_toBottomOf="@id/f_currency"
+                            app:layout_constraintEnd_toStartOf="@id/f_currency"
+                            app:layout_constraintTop_toTopOf="@id/f_currency" />
+
+                    <View
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:background="@color/colorGrayDark"
+                            app:layout_constraintBottom_toBottomOf="@id/s_currency"
+                            app:layout_constraintEnd_toEndOf="@id/s_price"
+                            app:layout_constraintStart_toStartOf="@id/s_currency"
+                            app:layout_constraintTop_toTopOf="@id/s_currency" />
+
+                    <TextView
+                            android:fontFamily="@font/montserrat"
+                            android:id="@+id/f_currency"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/_2sdp"
+                            android:text="@string/pkr"
+                            android:textColor="@color/colorRed"
+                            android:textSize="@dimen/_9sdp"
+                            app:layout_constraintBottom_toBottomOf="@id/f_price"
+                            app:layout_constraintEnd_toStartOf="@id/f_price" />
+                    <TextView
+                            android:id="@+id/f_price"
+                            android:fontFamily="@font/montserrat"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/_7sdp"
+                            android:layout_marginBottom="@dimen/_6sdp"
+                            android:text="@string/_14000"
+                            android:textSize="@dimen/_9sdp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
