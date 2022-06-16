@@ -9,7 +9,6 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.Toast
@@ -19,17 +18,11 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import com.facebook.*
-import com.facebook.login.LoginResult
-import com.facebook.login.widget.LoginButton
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.common.api.ApiException
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.navigation.NavigationBarView
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
-import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -49,14 +42,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var fragmentManager: FragmentManager
     private lateinit var transaction: FragmentTransaction
     private val viewModel: OffersViewModel by viewModel()
-    lateinit var callbackManager:CallbackManager
+
     companion object {
         var fragment = ""
         lateinit var sharedPreferences: SharedPreferences
         lateinit var token: String
         lateinit var firebaseToken: String
         var userId = 0L
-        lateinit var login: LoginButton
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -75,44 +67,11 @@ class MainActivity : AppCompatActivity() {
         firebaseToken = getFirebaseToken()
         loggedIn = getIfLoggedIn()
         BuildConfig.slide_banner
-        FacebookSdk.sdkInitialize(applicationContext)
-        login = findViewById(R.id.login_button)
-        login.setPermissions(
-            listOf(
-                "public_profile", "email", "user_birthday", "user_friends"
-            )
-        )
+
         if (getTempKey() == "12") {
             setTempKey("temp-${System.currentTimeMillis()}")
         }
-        callbackManager = CallbackManager.Factory.create()
-        login.registerCallback(
-            callbackManager,
-            object : FacebookCallback<LoginResult> {
-                override fun onSuccess(result: LoginResult) {
-                    Log.d("userLogin", "here")
-                    var email = ""
-                    val request = GraphRequest.newMeRequest(
-                        result.accessToken
-                    ) { `object`, _ ->
-                        email = `object`!!.getString("email")
-                    }
-                    val parameters = Bundle()
-                    parameters.putString("fields", "id,name,email,gender,birthday")
-                    request.parameters = parameters
-                    request.executeAsync()
-//                    handleFacebookAccessToken(result.accessToken)
-                    //Toast.makeText(requireContext(), "login done $email", Toast.LENGTH_SHORT).show()
-                }
 
-                override fun onCancel() {
-
-                }
-
-                override fun onError(error: FacebookException) {
-
-                }
-            })
         val bNav: BottomNavigationView = findViewById(R.id.bottom_nav)
         bNav.setOnItemSelectedListener(NavigationBarView.OnItemSelectedListener { item: MenuItem ->
             var selectedFragment: Fragment = HomeFragment()
@@ -290,25 +249,7 @@ class MainActivity : AppCompatActivity() {
             viewModel.putData()
         }
     }
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        callbackManager.onActivityResult(requestCode, resultCode, data)
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 1&& resultCode == RESULT_OK) {
-     //       requireActivity().toast("login successful")
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            try {
-                val account = task.getResult(ApiException::class.java)!!
-       //         requireActivity().toast(account.email.toString())
-                account.displayName
-                account.photoUrl
-            } catch (e: ApiException) {
-         //       requireActivity().toast(e.toString())
-            }
-        }
-        else{
-           // requireActivity().toast("login failed")
-        }
-    }
+
     private var doubleBackToExitPressedOnce = false
     override fun onBackPressed() {
         val myFragment: HomeFragment? =

@@ -9,5 +9,7 @@ data class UserDetails(
     val email: String? = "",
     val mobile: String? = "",
     val token: String? = "",
+    val profile_image: String? = "",
+    val full_name: String? = "",
     @PrimaryKey val user_id: Int? = 0
 )

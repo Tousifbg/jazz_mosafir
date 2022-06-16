@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "691e64e42ee49f2fdb2e51add0b515d4",
+    "identityHash": "8e282f5037058f97dd353d769518ab35",
     "entities": [
       {
         "tableName": "offer",
@@ -200,7 +200,7 @@
       },
       {
         "tableName": "user_detail",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`country_code` TEXT, `email` TEXT, `mobile` TEXT, `token` TEXT, `user_id` INTEGER, PRIMARY KEY(`user_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`country_code` TEXT, `email` TEXT, `mobile` TEXT, `token` TEXT, `profile_image` TEXT, `full_name` TEXT, `user_id` INTEGER, PRIMARY KEY(`user_id`))",
         "fields": [
           {
             "fieldPath": "country_code",
@@ -223,6 +223,18 @@
           {
             "fieldPath": "token",
             "columnName": "token",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "profile_image",
+            "columnName": "profile_image",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "full_name",
+            "columnName": "full_name",
             "affinity": "TEXT",
             "notNull": false
           },
@@ -310,7 +322,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '691e64e42ee49f2fdb2e51add0b515d4')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8e282f5037058f97dd353d769518ab35')"
     ]
   }
 }
