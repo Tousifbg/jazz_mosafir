@@ -50,6 +50,7 @@ class MainActivity : AppCompatActivity() {
         lateinit var firebaseToken: String
         var userId = 0L
     }
+    //
 /////
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
