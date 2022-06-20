@@ -17,6 +17,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.Observer
 import com.facebook.*
 import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -31,13 +32,15 @@ import com.google.firebase.auth.GoogleAuthProvider
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import pk.mosafir.travsol.R
 import pk.mosafir.travsol.databinding.FragmentAccountBinding
+import pk.mosafir.travsol.interfaces.SocialLoginInterface
+import pk.mosafir.travsol.model.SocialLoginModel
 import pk.mosafir.travsol.ui.MainActivity
 import pk.mosafir.travsol.ui.base.BaseFragment
 import pk.mosafir.travsol.ui.home.HomeFragment
 import pk.mosafir.travsol.utils.*
 import pk.mosafir.travsol.viewmodel.AccountViewModel
 
-class AccountFragment : BaseFragment(), View.OnClickListener {
+class AccountFragment : BaseFragment(), View.OnClickListener, SocialLoginInterface {
     private var mAuth: FirebaseAuth? = null
     private lateinit var _binding: FragmentAccountBinding
     private val binding get() = _binding
@@ -51,8 +54,6 @@ class AccountFragment : BaseFragment(), View.OnClickListener {
     var tryier = 0
     private val viewModel: AccountViewModel by viewModel()
 
-    //]private lateinit var mGoogleSignInClient: GoogleSignInClient
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -63,15 +64,6 @@ class AccountFragment : BaseFragment(), View.OnClickListener {
         binding.registerNow.setOnClickListener(this)
         binding.back.setOnClickListener(this)
         mAuth = FirebaseAuth.getInstance()
-
-        /*val gso = GoogleSignInOptions
-            .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client))
-            .requestEmail()
-            .build()*/
-        //val googleSignInClient: GoogleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
-
-        //mGoogleSignInClient = GoogleSignIn.getClient(requireContext(),gso)
 
         binding.loginSpinnerCountry.apply {
             ccpDialogShowTitle = false
@@ -84,22 +76,15 @@ class AccountFragment : BaseFragment(), View.OnClickListener {
 
         //click fb button and call fb login method which is written in MainActivity class
         binding.facebook.setOnClickListener {
-            MainActivity.login.performClick()
+            MainActivity.socialLogin("1", this)
         }
         //google login button
         binding.google.setOnClickListener {
-            /*val signInIntent = googleSignInClient.signInIntent
-            startActivityForResult(signInIntent, 1)*/
-            MainActivity.googlelogin.performClick()
+            MainActivity.socialLogin("2", this)
         }
 
         return binding.root
     }
-
-    /*private fun SignInGoogle() {
-        val signinIntent = mGoogleSignInClient.signInIntent
-        startActivityForResult(signinIntent,1)
-    }*/
 
     @SuppressLint("SetTextI18n")
     override fun setTitle(title: String) {
@@ -324,31 +309,7 @@ class AccountFragment : BaseFragment(), View.OnClickListener {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        /*if (requestCode == 1) {
-            requireActivity().toast("login successful")
 
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            handleSignInResult(task)
-            
-            *//*val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            try {
-                val account = task.getResult(ApiException::class.java)!!
-                requireActivity().toast(account.email.toString())
-                account.displayName
-                account.photoUrl
-                Log.e("Google: ","name: "+account.displayName.toString())
-                Log.e("img: ",account.photoUrl.toString())
-                Log.e("email: ",account.email.toString())
-            } catch (e: ApiException) {
-                requireActivity().toast(e.toString())
-            }*//*
-        }
-        else{
-            requireActivity().toast("login failed")
-        }*/
-    }
 
     private fun handleSignInResult(task: Task<GoogleSignInAccount>) {
         try {
@@ -388,7 +349,6 @@ class AccountFragment : BaseFragment(), View.OnClickListener {
 //            }
 //        }
     }
-
     @SuppressLint("UseCompatLoadingForDrawables")
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun bindRegister() {
@@ -570,5 +530,20 @@ class AccountFragment : BaseFragment(), View.OnClickListener {
 
             }
         }
+    }
+    private fun postSocialData(socialLoginModel : SocialLoginModel) {
+        viewModel.checkSocialLogin(socialLoginModel)
+        viewModel.checkSocialLogin.observe(this, Observer {
+            when(it){
+                "1"->{
+
+                }
+            }
+
+        })
+    }
+
+    override fun updated(model: SocialLoginModel?) {
+        postSocialData(model!!)
     }
 }
