@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import pk.mosafir.travsol.data.Repository
+import pk.mosafir.travsol.model.SocialLoginModel
 import pk.mosafir.travsol.response.Offer
 import pk.mosafir.travsol.response.Response
 
@@ -12,6 +13,10 @@ class AccountViewModel(private val repository: Repository) : BaseViewModel() {
     private val _checkUser = MutableLiveData<String>()
     val checkUser: MutableLiveData<String>
         get() = _checkUser
+
+    private val _checkSocialLogin = MutableLiveData<String>()
+    val checkSocialLogin: MutableLiveData<String>
+        get() = _checkSocialLogin
 
     private val _validateOTP = MutableLiveData<String>()
     val validateOTP: MutableLiveData<String>
@@ -66,6 +71,18 @@ class AccountViewModel(private val repository: Repository) : BaseViewModel() {
         viewModelScope.launch {
             when (val response = repository.validateOTPRegister(mobile, temp_key)) {
                 is Response.Success -> _validateOTPRegister.value = response.data
+                is Response.Error -> error.value = response.message
+            }
+        }
+    }
+
+    //social login
+    ///login
+    @SuppressLint("NullSafeMutableLiveData")
+    fun checkSocialLogin(socialLoginModel: SocialLoginModel) {
+        viewModelScope.launch {
+            when (val response = repository.checkSocialUser(socialLoginModel)) {
+                is Response.Success -> _checkSocialLogin.value = response.data
                 is Response.Error -> error.value = response.message
             }
         }
