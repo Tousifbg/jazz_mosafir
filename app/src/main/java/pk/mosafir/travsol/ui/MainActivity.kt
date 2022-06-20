@@ -77,6 +77,7 @@ class MainActivity : AppCompatActivity() {
         lateinit var socialLoginInterface:SocialLoginInterface
         fun socialLogin(which:String,result: SocialLoginInterface ){
             when(which){
+
                 "1"->{
                     login.performClick()
                 }
