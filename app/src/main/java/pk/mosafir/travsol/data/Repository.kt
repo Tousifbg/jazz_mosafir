@@ -285,7 +285,6 @@ class Repository(
         return try {
             val userCheckResponse = api.checkUserSocialResponse(socialLoginModel)
             Response.Success(userCheckResponse.Status_code)
-
         } catch (e: Exception) {
             Response.Error("error" + e.message)
         }
