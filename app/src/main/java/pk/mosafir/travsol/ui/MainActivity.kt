@@ -46,6 +46,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import pk.mosafir.travsol.BuildConfig
 import pk.mosafir.travsol.R
+import pk.mosafir.travsol.interfaces.SocialLoginInterface
 import pk.mosafir.travsol.model.SocialLoginModel
 import pk.mosafir.travsol.ui.account.AccountFragment
 import pk.mosafir.travsol.ui.home.HomeFragment
@@ -63,10 +64,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var transaction: FragmentTransaction
     private val viewModel: OffersViewModel by viewModel()
     lateinit var callbackManager:CallbackManager
-
-
-    private val socialVModel: AccountViewModel by viewModel()
-
     companion object {
         var fragment = ""
         lateinit var sharedPreferences: SharedPreferences
@@ -77,6 +74,19 @@ class MainActivity : AppCompatActivity() {
         lateinit var googlelogin: Button
         lateinit var mGoogleSignInClient: GoogleSignInClient
         const val RC_SIGN_IN = 9001
+        lateinit var socialLoginInterface:SocialLoginInterface
+        fun socialLogin(which:String,result: SocialLoginInterface ){
+            when(which){
+
+                "1"->{
+                    login.performClick()
+                }
+                "2"->{
+                    googlelogin.performClick()
+                }
+            }
+            socialLoginInterface = result
+        }
     }
 /////
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -137,8 +147,9 @@ class MainActivity : AppCompatActivity() {
                         toast("email: "+email)
                         Log.d("FB_DATA: ","name: "+name+ "email: "+email+ "imageURL: "+imageURL+
                                "authID: "+authID+ "authTYPE: "+authTYPE)
-
-                        postSocialData(email, name, imageURL, authID, authTYPE)
+                        var socialLoginModel = SocialLoginModel(email, name, imageURL, authID, authTYPE)
+                        socialLoginInterface.updated(socialLoginModel)
+//                        postSocialData(email, name, imageURL, authID, authTYPE)
 
                         //displaying profile img in custom dialog
                         //showDialog(imageURL)
@@ -231,19 +242,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     //method calling apiii
-    private fun postSocialData(email: String, name: String, imageURL: String, authID: String, authTYPE: String) {
-        var socialLoginModel = SocialLoginModel(email, name, imageURL, authID, authTYPE)
-        socialVModel.checkSocialLogin(socialLoginModel)
-        socialVModel.checkSocialLogin.observe(this, Observer {
-            when(it){
-                "1"->{
 
-                }
-            }
-
-        })
-        //socialVideModel.checkUserSocial.observe()
-    }
 
     private fun SignInGoogle() {
         val signinIntent = mGoogleSignInClient.signInIntent
@@ -436,8 +435,10 @@ class MainActivity : AppCompatActivity() {
             var authTYPE = ""
 
             authTYPE = "GOOGLE"
-
-            postSocialData(googleEmail, googleFirstName, googleProfilePicURL, googleID, authTYPE)
+            var socialLoginModel = SocialLoginModel(googleEmail,
+                "$googleFirstName $googleLastName", googleProfilePicURL, googleID, authTYPE)
+            socialLoginInterface.updated(socialLoginModel)
+//            postSocialData(googleEmail, googleFirstName, googleProfilePicURL, googleID, authTYPE)
 
         }catch (e:ApiException){
             Log.e(
