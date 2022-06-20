@@ -2,6 +2,8 @@ package pk.mosafir.travsol.ui
 
 import android.Manifest.permission
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -11,7 +13,10 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.Window
+import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -19,11 +24,17 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.Observer
+import com.bumptech.glide.Glide
 import com.facebook.*
 import com.facebook.login.LoginResult
 import com.facebook.login.widget.LoginButton
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.Task
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.navigation.NavigationBarView
@@ -35,9 +46,11 @@ import com.google.firebase.messaging.FirebaseMessaging
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import pk.mosafir.travsol.BuildConfig
 import pk.mosafir.travsol.R
+import pk.mosafir.travsol.model.SocialLoginModel
 import pk.mosafir.travsol.ui.account.AccountFragment
 import pk.mosafir.travsol.ui.home.HomeFragment
 import pk.mosafir.travsol.utils.*
+import pk.mosafir.travsol.viewmodel.AccountViewModel
 import pk.mosafir.travsol.viewmodel.OffersViewModel
 import pk.mosafir.travsol.webview.WebViewActivity
 import java.util.concurrent.Executors
@@ -50,6 +63,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var transaction: FragmentTransaction
     private val viewModel: OffersViewModel by viewModel()
     lateinit var callbackManager:CallbackManager
+
+
+    private val socialVModel: AccountViewModel by viewModel()
+
     companion object {
         var fragment = ""
         lateinit var sharedPreferences: SharedPreferences
@@ -57,12 +74,16 @@ class MainActivity : AppCompatActivity() {
         lateinit var firebaseToken: String
         var userId = 0L
         lateinit var login: LoginButton
+        lateinit var googlelogin: Button
+        lateinit var mGoogleSignInClient: GoogleSignInClient
+        const val RC_SIGN_IN = 9001
     }
-    //
+/////
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         sharedPreferences = getSharedPreferences("main", MODE_PRIVATE)
         fragmentManager = supportFragmentManager
         transaction = fragmentManager.beginTransaction()
@@ -75,6 +96,12 @@ class MainActivity : AppCompatActivity() {
         firebaseToken = getFirebaseToken()
         loggedIn = getIfLoggedIn()
         BuildConfig.slide_banner
+
+       if (getTempKey() == "12") {
+        setTempKey("temp-${System.currentTimeMillis()}")
+        }
+
+        //fb signin
         FacebookSdk.sdkInitialize(applicationContext)
         login = findViewById(R.id.login_button)
         login.setPermissions(
@@ -82,21 +109,41 @@ class MainActivity : AppCompatActivity() {
                 "public_profile", "email", "user_birthday", "user_friends"
             )
         )
-        if (getTempKey() == "12") {
-            setTempKey("temp-${System.currentTimeMillis()}")
-        }
         callbackManager = CallbackManager.Factory.create()
         login.registerCallback(
             callbackManager,
             object : FacebookCallback<LoginResult> {
                 override fun onSuccess(result: LoginResult) {
-                    Log.d("userLogin", "here")
                     var email = ""
+                    var name = ""
+                    var imageURL = ""
+                    var authID = ""
+                    var authTYPE = ""
                     val request = GraphRequest.newMeRequest(
                         result.accessToken
                     ) { `object`, _ ->
+
                         email = `object`!!.getString("email")
+
+                        name = `object`!!.getString("name")
+
+                        imageURL = "https://graph.facebook.com/${`object`!!
+                            ?.getString("id")}/picture?width=500&height=500"
+
+                        authID = result.accessToken.userId
+
+                        authTYPE = "FB"
+
+                        toast("email: "+email)
+                        Log.d("FB_DATA: ","name: "+name+ "email: "+email+ "imageURL: "+imageURL+
+                               "authID: "+authID+ "authTYPE: "+authTYPE)
+
+                        postSocialData(email, name, imageURL, authID, authTYPE)
+
+                        //displaying profile img in custom dialog
+                        //showDialog(imageURL)
                     }
+
                     val parameters = Bundle()
                     parameters.putString("fields", "id,name,email,gender,birthday")
                     request.parameters = parameters
@@ -110,13 +157,30 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onError(error: FacebookException) {
-
+                    toast("FB_ERROR: "+error.message)
                 }
             })
+
+    //google signin
+    val gso = GoogleSignInOptions
+        .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        .requestIdToken(getString(R.string.default_web_client))
+        .requestEmail()
+        .build()
+
+        mGoogleSignInClient = GoogleSignIn.getClient(this@MainActivity ,gso)
+
+        googlelogin = findViewById(R.id.googleLoginBtn)
+        googlelogin.setOnClickListener {
+            SignInGoogle()
+
+        }
+
         val bNav: BottomNavigationView = findViewById(R.id.bottom_nav)
         bNav.setOnItemSelectedListener(NavigationBarView.OnItemSelectedListener { item: MenuItem ->
             var selectedFragment: Fragment = HomeFragment()
             when (item.itemId) {
+
                 R.id.navigation_account -> {
                     if (loggedIn) {
                         val intent = Intent(this, WebViewActivity::class.java)
@@ -164,6 +228,41 @@ class MainActivity : AppCompatActivity() {
             transaction.commit()
             return@OnItemSelectedListener true
         })
+    }
+
+    //method calling apiii
+    private fun postSocialData(email: String, name: String, imageURL: String, authID: String, authTYPE: String) {
+        var socialLoginModel = SocialLoginModel(email, name, imageURL, authID, authTYPE)
+        socialVModel.checkSocialLogin(socialLoginModel)
+        socialVModel.checkSocialLogin.observe(this, Observer {
+            when(it){
+                "1"->{
+
+                }
+            }
+
+        })
+        //socialVideModel.checkUserSocial.observe()
+    }
+
+    private fun SignInGoogle() {
+        val signinIntent = mGoogleSignInClient.signInIntent
+        startActivityForResult(signinIntent, RC_SIGN_IN)
+    }
+
+    private fun showDialog(imageURL: String) {
+        val dialog = Dialog(this@MainActivity)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.custom_profile_img_dialog)
+        val img = dialog.findViewById(R.id.img_profile) as ImageView
+        val cancel = dialog.findViewById(R.id.img_cancl) as TextView
+
+        Glide.with(this@MainActivity).load(imageURL).into(img)
+
+        cancel.setOnClickListener { dialog.dismiss() }
+        dialog.show()
+
     }
 
     private fun hasPermissions(context: Context?, vararg permissions: String?): Boolean {
@@ -290,10 +389,11 @@ class MainActivity : AppCompatActivity() {
             viewModel.putData()
         }
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         callbackManager.onActivityResult(requestCode, resultCode, data)
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 1&& resultCode == RESULT_OK) {
+     /*   if (requestCode == 1 && resultCode == RESULT_OK) {
      //       requireActivity().toast("login successful")
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
@@ -304,12 +404,50 @@ class MainActivity : AppCompatActivity() {
             } catch (e: ApiException) {
          //       requireActivity().toast(e.toString())
             }
+        }*/
+        if (requestCode == RC_SIGN_IN) {
+            toast("login successful")
+
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            handleSignInResult(task)
         }
         else{
-           // requireActivity().toast("login failed")
+            toast("login failed")
         }
     }
+
+    private fun handleSignInResult(task: Task<GoogleSignInAccount>) {
+        try {
+            val account = task.getResult(ApiException::class.java)
+            //signin successfully
+            val googleID = account?.id ?:""
+            Log.i("Google ID", googleID.toString())
+            val googleFirstName = account?.givenName ?: ""
+            Log.i("Google First Name", googleFirstName)
+            val googleLastName = account?.familyName ?: ""
+            Log.i("Google Last Name", googleLastName)
+            val googleEmail = account?.email ?: ""
+            Log.i("Google Email", googleEmail)
+            val googleProfilePicURL = account?.photoUrl.toString()
+            Log.i("Google Profile Pic URL", googleProfilePicURL)
+            val googleIdToken = account?.idToken ?: ""
+            Log.i("Google ID Token", googleIdToken)
+
+            var authTYPE = ""
+
+            authTYPE = "GOOGLE"
+
+            postSocialData(googleEmail, googleFirstName, googleProfilePicURL, googleID, authTYPE)
+
+        }catch (e:ApiException){
+            Log.e(
+                "failed code=", e.statusCode.toString())
+        }
+
+    }
+
     private var doubleBackToExitPressedOnce = false
+
     override fun onBackPressed() {
         val myFragment: HomeFragment? =
             supportFragmentManager.findFragmentByTag("MY_FRAGMENT") as HomeFragment?
