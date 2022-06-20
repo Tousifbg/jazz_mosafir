@@ -230,7 +230,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    //method calling api
+    //method calling apiii
     private fun postSocialData(email: String, name: String, imageURL: String, authID: String, authTYPE: String) {
         var socialLoginModel = SocialLoginModel(email, name, imageURL, authID, authTYPE)
         socialVModel.checkSocialLogin(socialLoginModel)
