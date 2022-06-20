@@ -66,20 +66,45 @@ class Repository(
 
     //Discover pakistan data
     suspend fun putRecentCity(id: String) {
-        api.putCitiesRecentAsync(TourPutRecentModel(getTempKey(), getUserId().toString(), id))
+        if (!loggedIn)
+            api.putCitiesRecentAsync(
+                TourPutRecentModel(
+                    getTempKey(),
+                    userDetailDao.getUserDetail().user_id.toString(),
+                    id
+                )
+            )
+        else
+            api.putCitiesRecentAsync(
+                TourPutRecentModel(
+                    getTempKey(),
+                    "0",
+                    id
+                )
+            )
     }
 
     suspend fun getCitiesRecent(): Response<List<DiscoverPakistanCity>> {
         return try {
             getTourCities()
-            Response.Success(
-                api.getCitiesRecentAsync(
-                    TourKeyModel(
-                        getTempKey(),
-                        getUserId().toString()
-                    )
-                ).discover_pakistan_cities
-            )
+            if (loggedIn)
+                Response.Success(
+                    api.getCitiesRecentAsync(
+                        TourKeyModel(
+                            getTempKey(),
+                            userDetailDao.getUserDetail().user_id.toString()
+                        )
+                    ).discover_pakistan_cities
+                )
+            else
+                Response.Success(
+                    api.getCitiesRecentAsync(
+                        TourKeyModel(
+                            getTempKey(),
+                            "0"
+                        )
+                    ).discover_pakistan_cities
+                )
         } catch (ex: Exception) {
             Response.Error("123" + ex.message)
         }
@@ -100,19 +125,45 @@ class Repository(
 
     //Hotel functions
     suspend fun putRecentHotel(id: String) {
-        api.putHotelRecentAsync(TourPutRecentModel(getTempKey(), getUserId().toString(), id))
+        if (loggedIn)
+            api.putHotelRecentAsync(
+                TourPutRecentModel(
+                    getTempKey(),
+                    userDetailDao.getUserDetail().user_id.toString(),
+                    id
+                )
+            )
+        else
+            api.putHotelRecentAsync(
+                TourPutRecentModel(
+                    getTempKey(),
+                    "0",
+                    id
+                )
+            )
     }
 
     suspend fun getHotelCities(string: String?): Response<List<HotelLocation>> {
         return try {
             addHotelCitiesToDb()
-            return Response.Success(
-                api.getHotelRecentLocationAsync(
-                    HotelKeyModel(
-                        getTempKey(),
-                        getUserId().toString(), string!!)
-                ).hotel_locations
-            )
+            return if (loggedIn)
+                Response.Success(
+                    api.getHotelRecentLocationAsync(
+                        HotelKeyModel(
+                            getTempKey(),
+                            userDetailDao.getUserDetail().user_id.toString(), string!!
+                        )
+                    ).hotel_locations
+                )
+            else
+                Response.Success(
+                    api.getHotelRecentLocationAsync(
+                        HotelKeyModel(
+                            getTempKey(),
+                            "0", string!!
+                        )
+                    ).hotel_locations
+                )
         } catch (e: Exception) {
             Response.Error(e.message)
         }
@@ -134,7 +185,21 @@ class Repository(
         airportItem: JSONArray,
         flag: Int
     ): Response<List<GeneralFlightResponse>> {
-        val list = api.getAirportRecentAsync(TourKeyModel(getTempKey(), getUserId().toString()))
+        val list =
+            if (loggedIn)
+                api.getAirportRecentAsync(
+                    TourKeyModel(
+                        getTempKey(),
+                        userDetailDao.getUserDetail().user_id.toString()
+                    )
+                )
+            else
+                api.getAirportRecentAsync(
+                    TourKeyModel(
+                        getTempKey(),
+                        "0"
+                    )
+                )
         var listFly = ArrayList<GeneralFlightResponse>()
         try {
             when (flag) {
@@ -157,7 +222,10 @@ class Repository(
     }
 
     suspend fun putRecentAirport(model: RecentAirportModal) {
+        if(loggedIn)
+            model.user_id = userDetailDao.getUserDetail().user_id.toString()
         api.putAirportRecentAsync(model)
+
     }
 
     private suspend fun setAirportDatabase(airportItem: JSONArray) {
@@ -179,8 +247,22 @@ class Repository(
     }
 
     suspend fun putData() {
-//        Log.i("Firebase Token", "${getUserId()}, ${getTempKey()}, ${getFirebaseToken()}")
-        api.putFTokenAsync(FirebaseToken(getUserId(), getTempKey(), getFirebaseToken()))
+        if (loggedIn)
+            api.putFTokenAsync(
+                FirebaseToken(
+                    userDetailDao.getUserDetail().user_id.toLong(),
+                    getTempKey(),
+                    getFirebaseToken()
+                )
+            )
+        else
+            api.putFTokenAsync(
+                FirebaseToken(
+                    0,
+                    getTempKey(),
+                    getFirebaseToken()
+                )
+            )
     }
 
     suspend fun checkUser(mobile: String, countryCode: String): Response<String> {
@@ -201,11 +283,7 @@ class Repository(
 
     suspend fun checkSocialUser(socialLoginModel: SocialLoginModel): Response<String> {
         return try {
-//            val socialLogin = SocialLoginModel(socialLoginModel)
             val userCheckResponse = api.checkUserSocialResponse(socialLoginModel)
-            if (userCheckResponse.Status_code == "1") {
-                temp_key = userCheckResponse.accessToken
-            }
             Response.Success(userCheckResponse.Status_code)
 
         } catch (e: Exception) {
@@ -220,7 +298,6 @@ class Repository(
             if (userCheckResponse.message == "Login Successfull") {
                 userDetailDao.insertUserDetail(userCheckResponse.user_details)
                 userCheckResponse.user_details.token?.let { loggedInUser(it) }
-                saveUserDetails(userDetails = userCheckResponse.user_details)
                 putData()
                 Response.Success("1")
             } else {
@@ -256,9 +333,7 @@ class Repository(
             val userCheckResponse: UserDetailTable =
                 api.checkOTPRegister(OtpModel(mobile, temp_key))
             if (userCheckResponse.message == "Login Successfull") {
-                userDetailDao.insertUserDetail(userCheckResponse.user_details)
-                userCheckResponse.user_details.token?.let { loggedInUser(it) }
-                saveUserDetails(userCheckResponse.user_details)
+                loggedInUser("0")
                 putData()
                 Response.Success("1")
             } else {
@@ -273,30 +348,44 @@ class Repository(
     suspend fun getRecentTripLocation(): Response<List<TourLocation>> {
         return try {
             getTourLocations()
-            return Response.Success(
+            return if(loggedIn) Response.Success(
                 api.getTourRecentLocationAsync(
                     TourKeyModel(
                         getTempKey(),
-                        getUserId().toString()
+                        userDetailDao.getUserDetail().user_id.toString()
                     )
                 ).tours_and_cities
             )
+            else{
+                Response.Success(
+                    api.getTourRecentLocationAsync(
+                        TourKeyModel(
+                            getTempKey(),
+                            "0"
+                        )
+                    ).tours_and_cities
+                )
+            }
         } catch (e: Exception) {
             Response.Error(e.message)
         }
     }
 
     suspend fun putRecentTripLocation(name: String) {
-        api.putTourRecentAsync(TourPutRecentModel(getTempKey(), getUserId().toString(), name))
+//        api.putTourRecentAsync(
+//            TourPutRecentModel(
+//                getTempKey(),
+//                userDetailDao.getUserDetail().user_id.toString(),
+//                name
+//            )
+//        )
     }
 
     suspend fun getTourLocations() {
         try {
             val locations = api.getTourLocationAsync().tours_and_cities
             tourLocationDao.insertTourCities(locations)
-            //Response.Success(locations)
         } catch (e: Exception) {
-            //Response.Error(e.message)
         }
     }
 }

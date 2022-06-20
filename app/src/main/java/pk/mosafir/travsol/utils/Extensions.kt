@@ -12,7 +12,6 @@ import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import pk.mosafir.travsol.R
 import pk.mosafir.travsol.model.LikeDataModal
-import pk.mosafir.travsol.response.UserDetails
 import pk.mosafir.travsol.ui.MainActivity.Companion.sharedPreferences
 
 var loggedIn: Boolean = false
@@ -20,17 +19,19 @@ var temp_key: String = ""
 fun Context.toast(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }
+
 fun Context.loadJSONFromAssets(fileName: String): String {
     return applicationContext.assets.open(fileName).bufferedReader().use { reader ->
         reader.readText()
     }
 }
-fun saveUserDetails(userDetails: UserDetails){
-    sharedPreferences.edit().putString("mobile", userDetails.mobile).apply()
-    sharedPreferences.edit().putLong("user_id", userDetails.user_id!!.toLong()).apply()
-}
+
 fun setFirebaseToken(token: String){
     sharedPreferences.edit().putString("firebase_token", token).apply()
+}
+
+fun getFirebaseToken(): String{
+    return sharedPreferences.getString("firebase_token", "").toString()
 }
 
 fun setTempKey(token: String){
@@ -40,32 +41,20 @@ fun setTempKey(token: String){
 fun getTempKey():String{
     return sharedPreferences.getString("temp_key", "12").toString()
 }
-
-fun getFirebaseToken(): String{
-    return sharedPreferences.getString("firebase_token", "").toString()
-}
-
-fun getMobile(): String{
-    return sharedPreferences.getString("mobile", "").toString()
-}
-fun getToken(): String{
-    return sharedPreferences.getString("token", "").toString()
-}
-
-fun getUserId(): Long {
-    return sharedPreferences.getLong("user_id", 0L)
-}
 fun getIfLoggedIn(): Boolean{
     return sharedPreferences.getBoolean("loggedin", false)
 }
+
+fun getUserId(): Long{
+    return 0
+}
+
 fun loggedInUser(id: String){
     loggedIn = true
-    sharedPreferences.edit().putString("token", id).apply()
     sharedPreferences.edit().putBoolean("loggedin", true).apply()
 }
 fun loggedOutUser(){
     loggedIn = false
-    sharedPreferences.edit().putString("token", "").apply()
     sharedPreferences.edit().putBoolean("loggedin", false).apply()
 }
 
