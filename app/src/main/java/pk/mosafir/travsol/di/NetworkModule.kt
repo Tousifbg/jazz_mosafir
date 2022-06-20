@@ -44,7 +44,6 @@ val networkModule = module {
             chain.proceed(
                 request.newBuilder()
                     .url(httpURL)
-                    .header("Authentication", getToken())
                     .build()
             )
         }

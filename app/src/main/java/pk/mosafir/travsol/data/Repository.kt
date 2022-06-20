@@ -18,6 +18,7 @@ class Repository(
 ) {
     private var citiesList = ArrayList<DiscoverPakistanCity>()
     private var mOffersList = ArrayList<Offer>()
+
     suspend fun getOffersList(): Response<List<Offer>>? {
         mOffersList = offersDao.getOffers() as ArrayList<Offer>
         return try {
@@ -186,6 +187,20 @@ class Repository(
         return try {
             val login = LoginModel("", mobile, "+$countryCode")
             val userCheckResponse = api.checkUserResponse(login)
+            if (userCheckResponse.Status_code == "1") {
+                temp_key = userCheckResponse.accessToken
+            }
+            Response.Success(userCheckResponse.Status_code)
+
+        } catch (e: Exception) {
+            Response.Error("error" + e.message)
+        }
+    }
+
+    suspend fun checkSocialUser(socialLoginModel: SocialLoginModel): Response<String> {
+        return try {
+//            val socialLogin = SocialLoginModel(socialLoginModel)
+            val userCheckResponse = api.checkUserSocialResponse(socialLoginModel)
             if (userCheckResponse.Status_code == "1") {
                 temp_key = userCheckResponse.accessToken
             }

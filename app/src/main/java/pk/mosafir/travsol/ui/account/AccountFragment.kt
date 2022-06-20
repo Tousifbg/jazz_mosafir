@@ -8,6 +8,7 @@ import android.os.CountDownTimer
 import android.text.SpannableString
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,12 +24,14 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import pk.mosafir.travsol.R
 import pk.mosafir.travsol.databinding.FragmentAccountBinding
+import pk.mosafir.travsol.ui.MainActivity
 import pk.mosafir.travsol.ui.base.BaseFragment
 import pk.mosafir.travsol.ui.home.HomeFragment
 import pk.mosafir.travsol.utils.*
@@ -48,6 +51,8 @@ class AccountFragment : BaseFragment(), View.OnClickListener {
     var tryier = 0
     private val viewModel: AccountViewModel by viewModel()
 
+    //]private lateinit var mGoogleSignInClient: GoogleSignInClient
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -59,12 +64,15 @@ class AccountFragment : BaseFragment(), View.OnClickListener {
         binding.back.setOnClickListener(this)
         mAuth = FirebaseAuth.getInstance()
 
-        val gso = GoogleSignInOptions
+        /*val gso = GoogleSignInOptions
             .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client))
             .requestEmail()
-            .build()
-        val googleSignInClient: GoogleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
+            .build()*/
+        //val googleSignInClient: GoogleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
+
+        //mGoogleSignInClient = GoogleSignIn.getClient(requireContext(),gso)
+
         binding.loginSpinnerCountry.apply {
             ccpDialogShowTitle = false
             setDefaultCountryUsingNameCode("PK")
@@ -73,50 +81,25 @@ class AccountFragment : BaseFragment(), View.OnClickListener {
             ccpDialogShowTitle = false
             setDefaultCountryUsingNameCode("PK")
         }
-        val callbackManager = CallbackManager.Factory.create()
-        binding.loginButton.setPermissions(
-            listOf(
-                "public_profile", "email", "user_birthday", "user_friends"
-            )
-        )
-        binding.loginButton.registerCallback(
-            callbackManager,
-            object : FacebookCallback<LoginResult> {
-                override fun onSuccess(result: LoginResult) {
-                    var email = ""
-                    val request = GraphRequest.newMeRequest(
-                        result.accessToken
-                    ) { `object`, _ ->
-                        email = `object`!!.getString("email")
-                    }
-                    val parameters = Bundle()
-                    parameters.putString("fields", "id,name,email,gender,birthday")
-                    request.parameters = parameters
-                    request.executeAsync()
-                    handleFacebookAccessToken(result.accessToken)
-                    Toast.makeText(requireContext(), "login done $email", Toast.LENGTH_SHORT).show()
-                }
 
-                override fun onCancel() {
-
-                }
-
-                override fun onError(error: FacebookException) {
-                    Toast.makeText(requireContext(), "error:${error.message} ", Toast.LENGTH_SHORT)
-                        .show()
-                }
-            })
-
+        //click fb button and call fb login method which is written in MainActivity class
         binding.facebook.setOnClickListener {
-            binding.loginButton.performClick()
+            MainActivity.login.performClick()
         }
+        //google login button
         binding.google.setOnClickListener {
-            val signInIntent = googleSignInClient.signInIntent
-            startActivityForResult(signInIntent, 1)
+            /*val signInIntent = googleSignInClient.signInIntent
+            startActivityForResult(signInIntent, 1)*/
+            MainActivity.googlelogin.performClick()
         }
 
         return binding.root
     }
+
+    /*private fun SignInGoogle() {
+        val signinIntent = mGoogleSignInClient.signInIntent
+        startActivityForResult(signinIntent,1)
+    }*/
 
     @SuppressLint("SetTextI18n")
     override fun setTitle(title: String) {
@@ -343,21 +326,55 @@ class AccountFragment : BaseFragment(), View.OnClickListener {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 1) {
+        /*if (requestCode == 1) {
             requireActivity().toast("login successful")
+
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            handleSignInResult(task)
+            
+            *//*val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 val account = task.getResult(ApiException::class.java)!!
                 requireActivity().toast(account.email.toString())
                 account.displayName
                 account.photoUrl
+                Log.e("Google: ","name: "+account.displayName.toString())
+                Log.e("img: ",account.photoUrl.toString())
+                Log.e("email: ",account.email.toString())
             } catch (e: ApiException) {
                 requireActivity().toast(e.toString())
-            }
+            }*//*
         }
         else{
             requireActivity().toast("login failed")
+        }*/
+    }
+
+    private fun handleSignInResult(task: Task<GoogleSignInAccount>) {
+        try {
+
+            val account = task.getResult(ApiException::class.java)
+            //signin successfully
+            val googleID = account?.id ?:""
+            Log.i("Google ID", googleID.toString())
+            val googleFirstName = account?.givenName ?: ""
+            Log.i("Google First Name", googleFirstName)
+            val googleLastName = account?.familyName ?: ""
+            Log.i("Google Last Name", googleLastName)
+            val googleEmail = account?.email ?: ""
+            Log.i("Google Email", googleEmail)
+            val googleProfilePicURL = account?.photoUrl.toString()
+            Log.i("Google Profile Pic URL", googleProfilePicURL)
+            val googleIdToken = account?.idToken ?: ""
+            Log.i("Google ID Token", googleIdToken)
+
+        }catch (e: ApiException) {
+            // Sign in was unsuccessful
+            Log.e(
+                "failed code=", e.statusCode.toString()
+            )
         }
+
     }
 
     private fun handleFacebookAccessToken(token: AccessToken) {
