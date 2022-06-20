@@ -134,7 +134,7 @@ class MainActivity : AppCompatActivity() {
 
                         authTYPE = "FB"
 
-                        toast("email: "+email)
+                        toast("Welcome: "+name)
                         Log.d("FB_DATA: ","name: "+name+ "email: "+email+ "imageURL: "+imageURL+
                                "authID: "+authID+ "authTYPE: "+authTYPE)
 
@@ -237,7 +237,10 @@ class MainActivity : AppCompatActivity() {
         socialVModel.checkSocialLogin.observe(this, Observer {
             when(it){
                 "1"->{
-
+                    toast("api success")
+                }
+                "0"->{
+                    toast("api failed")
                 }
             }
 
@@ -406,13 +409,14 @@ class MainActivity : AppCompatActivity() {
             }
         }*/
         if (requestCode == RC_SIGN_IN) {
-            toast("login successful")
+            //toast("login successful")
 
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             handleSignInResult(task)
         }
         else{
-            toast("login failed")
+            Log.e("failed: ","login failed")
+            //toast("login failed")
         }
     }
 
@@ -437,11 +441,14 @@ class MainActivity : AppCompatActivity() {
 
             authTYPE = "GOOGLE"
 
+            toast("Welcome: "+googleFirstName)
+
             postSocialData(googleEmail, googleFirstName, googleProfilePicURL, googleID, authTYPE)
 
         }catch (e:ApiException){
             Log.e(
                 "failed code=", e.statusCode.toString())
+            toast(e.statusCode.toString())
         }
 
     }
