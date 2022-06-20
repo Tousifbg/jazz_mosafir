@@ -531,15 +531,19 @@ class AccountFragment : BaseFragment(), View.OnClickListener, SocialLoginInterfa
             }
         }
     }
-    private fun postSocialData(socialLoginModel : SocialLoginModel) {
+
+   private fun postSocialData(socialLoginModel : SocialLoginModel) {
         viewModel.checkSocialLogin(socialLoginModel)
         viewModel.checkSocialLogin.observe(this, Observer {
             when(it){
                 "1"->{
-
+                    requireContext().toast("api login success")
+                }
+                "0"->{
+                    requireContext().toast("api login failed")
                 }
             }
-
+            //we used 'when' here to check different success states
         })
     }
 

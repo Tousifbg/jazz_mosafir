@@ -1,11 +1,13 @@
 package pk.mosafir.travsol.data
 
+import android.util.Log
 import org.json.JSONArray
 import pk.mosafir.travsol.dao.*
 import pk.mosafir.travsol.model.*
 import pk.mosafir.travsol.network.ApiInterface
 import pk.mosafir.travsol.response.*
 import pk.mosafir.travsol.utils.*
+import kotlin.math.log
 
 class Repository(
     private val api: ApiInterface,
@@ -110,7 +112,8 @@ class Repository(
                 api.getHotelRecentLocationAsync(
                     HotelKeyModel(
                         getTempKey(),
-                        getUserId().toString(), string!!)
+                        getUserId().toString(), string!!
+                    )
                 ).hotel_locations
             )
         } catch (e: Exception) {
@@ -199,17 +202,19 @@ class Repository(
 
     //
 
-    suspend fun checkSocialUser(socialLoginModel: SocialLoginModel): Response<String> {
-        return try {
-//            val socialLogin = SocialLoginModel(socialLoginModel)
-            val userCheckResponse = api.checkUserSocialResponse(socialLoginModel)
-            if (userCheckResponse.Status_code == "1") {
-                temp_key = userCheckResponse.accessToken
-            }
-            Response.Success(userCheckResponse.Status_code)
+    suspend fun checkSocialUser(socialLoginModel: SocialLoginModel): Response<String?> {
+        try {
+            val userCheckResponse: UserDetailTable = api.checkUserSocialResponse(socialLoginModel)
+            if (userCheckResponse.message == "Login Successfull") {
+                userCheckResponse.user_details.token?.let { loggedInUser(it) }
+                saveUserDetails(userCheckResponse.user_details)
+                putData()
 
+                Log.e("data: ",userCheckResponse.user_details.full_name.toString())
+            }
+            return Response.Success(userCheckResponse.Status_code)
         } catch (e: Exception) {
-            Response.Error("error" + e.message)
+            return Response.Error("error" + e.message)
         }
     }
 
@@ -218,9 +223,8 @@ class Repository(
         return try {
             val userCheckResponse: UserDetailTable = api.checkOTP(OtpModel(mobile, temp_key))
             if (userCheckResponse.message == "Login Successfull") {
-                userDetailDao.insertUserDetail(userCheckResponse.user_details)
                 userCheckResponse.user_details.token?.let { loggedInUser(it) }
-                saveUserDetails(userDetails = userCheckResponse.user_details)
+                saveUserDetails(userCheckResponse.user_details)
                 putData()
                 Response.Success("1")
             } else {

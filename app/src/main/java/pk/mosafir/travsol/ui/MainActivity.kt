@@ -64,6 +64,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var transaction: FragmentTransaction
     private val viewModel: OffersViewModel by viewModel()
     lateinit var callbackManager:CallbackManager
+
     companion object {
         var fragment = ""
         lateinit var sharedPreferences: SharedPreferences
@@ -74,8 +75,13 @@ class MainActivity : AppCompatActivity() {
         lateinit var googlelogin: Button
         lateinit var mGoogleSignInClient: GoogleSignInClient
         const val RC_SIGN_IN = 9001
+
+
+        //we want to call social login api in account fragment instead of main activity
+        //for that we used interface to send social data to account fragment and then call api there
         lateinit var socialLoginInterface:SocialLoginInterface
-        fun socialLogin(which:String,result: SocialLoginInterface ){
+
+        fun socialLogin(which:String, result: SocialLoginInterface ){
             when(which){
 
                 "1"->{
@@ -147,6 +153,8 @@ class MainActivity : AppCompatActivity() {
                         toast("email: "+email)
                         Log.d("FB_DATA: ","name: "+name+ "email: "+email+ "imageURL: "+imageURL+
                                "authID: "+authID+ "authTYPE: "+authTYPE)
+
+                        //pass model to interface which will be used in account fragment
                         var socialLoginModel = SocialLoginModel(email, name, imageURL, authID, authTYPE)
                         socialLoginInterface.updated(socialLoginModel)
 //                        postSocialData(email, name, imageURL, authID, authTYPE)
@@ -435,6 +443,8 @@ class MainActivity : AppCompatActivity() {
             var authTYPE = ""
 
             authTYPE = "GOOGLE"
+
+            //pass model to interface which will be used in account fragment
             var socialLoginModel = SocialLoginModel(googleEmail,
                 "$googleFirstName $googleLastName", googleProfilePicURL, googleID, authTYPE)
             socialLoginInterface.updated(socialLoginModel)
