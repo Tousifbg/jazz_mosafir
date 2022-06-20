@@ -329,7 +329,6 @@ class AccountFragment : BaseFragment(), View.OnClickListener {
             requireActivity().toast("login failed")
         }
     }
-
     @SuppressLint("UseCompatLoadingForDrawables")
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun bindRegister() {

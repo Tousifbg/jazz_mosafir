@@ -58,7 +58,6 @@ class MainActivity : AppCompatActivity() {
         var userId = 0L
         lateinit var login: LoginButton
     }
-    //
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
