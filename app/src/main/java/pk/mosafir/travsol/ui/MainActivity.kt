@@ -54,10 +54,12 @@ import pk.mosafir.travsol.utils.*
 import pk.mosafir.travsol.viewmodel.AccountViewModel
 import pk.mosafir.travsol.viewmodel.OffersViewModel
 import pk.mosafir.travsol.webview.WebViewActivity
+import timber.log.Timber
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
 
+@SuppressLint("StaticFieldLeak")
 class MainActivity : AppCompatActivity() {
     private lateinit var firebaseAnalytics: FirebaseAnalytics
     private lateinit var fragmentManager: FragmentManager
@@ -68,11 +70,11 @@ class MainActivity : AppCompatActivity() {
     companion object {
         var fragment = ""
         lateinit var sharedPreferences: SharedPreferences
-        lateinit var token: String
+//        lateinit var token: String
         lateinit var firebaseToken: String
-        var userId = 0L
         lateinit var login: LoginButton
         lateinit var googlelogin: Button
+
         lateinit var mGoogleSignInClient: GoogleSignInClient
         const val RC_SIGN_IN = 9001
 
@@ -107,8 +109,6 @@ class MainActivity : AppCompatActivity() {
         transaction.commit()
         requestForSpecificPermission()
         firebaseAnalytics = Firebase.analytics
-        token = getToken()
-        userId = getUserId()
         firebaseToken = getFirebaseToken()
         loggedIn = getIfLoggedIn()
         BuildConfig.slide_banner
@@ -400,18 +400,6 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         callbackManager.onActivityResult(requestCode, resultCode, data)
         super.onActivityResult(requestCode, resultCode, data)
-     /*   if (requestCode == 1 && resultCode == RESULT_OK) {
-     //       requireActivity().toast("login successful")
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            try {
-                val account = task.getResult(ApiException::class.java)!!
-       //         requireActivity().toast(account.email.toString())
-                account.displayName
-                account.photoUrl
-            } catch (e: ApiException) {
-         //       requireActivity().toast(e.toString())
-            }
-        }*/
         if (requestCode == RC_SIGN_IN) {
             toast("login successful")
 
@@ -428,17 +416,11 @@ class MainActivity : AppCompatActivity() {
             val account = task.getResult(ApiException::class.java)
             //signin successfully
             val googleID = account?.id ?:""
-            Log.i("Google ID", googleID.toString())
             val googleFirstName = account?.givenName ?: ""
-            Log.i("Google First Name", googleFirstName)
             val googleLastName = account?.familyName ?: ""
-            Log.i("Google Last Name", googleLastName)
             val googleEmail = account?.email ?: ""
-            Log.i("Google Email", googleEmail)
             val googleProfilePicURL = account?.photoUrl.toString()
-            Log.i("Google Profile Pic URL", googleProfilePicURL)
             val googleIdToken = account?.idToken ?: ""
-            Log.i("Google ID Token", googleIdToken)
 
             var authTYPE = ""
 
@@ -448,11 +430,8 @@ class MainActivity : AppCompatActivity() {
             var socialLoginModel = SocialLoginModel(googleEmail,
                 "$googleFirstName $googleLastName", googleProfilePicURL, googleID, authTYPE)
             socialLoginInterface.updated(socialLoginModel)
-//            postSocialData(googleEmail, googleFirstName, googleProfilePicURL, googleID, authTYPE)
-
-        }catch (e:ApiException){
-            Log.e(
-                "failed code=", e.statusCode.toString())
+        }catch (e:ApiException) {
+            Timber.e(e.statusCode.toString())
         }
 
     }

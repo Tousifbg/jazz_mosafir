@@ -10,7 +10,6 @@ import pk.mosafir.travsol.data.Repository
 import pk.mosafir.travsol.model.LikeDataModal
 import pk.mosafir.travsol.model.LoginModel
 import pk.mosafir.travsol.network.ApiInterface
-import pk.mosafir.travsol.utils.getToken
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit

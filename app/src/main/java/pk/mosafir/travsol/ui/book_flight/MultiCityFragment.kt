@@ -197,12 +197,14 @@ class MultiCityFragment : FlightBaseFragment(), View.OnClickListener {
                 }
             }
             if (!error) {
+                if(loggedIn)
+
                 //region loop to put recent searched airport
                 for (i in 0 until destinationCount) {
                     viewModel.putAirportRecent(
                         RecentAirportModal(
                             getTempKey(),
-                            "" + getUserId(),
+                            "0",
                             "oneWay",
                             "${airportDepartCode[i]} ,${airportDepart[i]}",
                             "${airportArrivedCode[i]} ,${airportArrived[i]}",

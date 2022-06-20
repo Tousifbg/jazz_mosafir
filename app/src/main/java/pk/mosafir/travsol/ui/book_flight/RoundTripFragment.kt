@@ -147,7 +147,7 @@ class RoundTripFragment : FlightBaseFragment(), View.OnClickListener, AirportSel
                     viewModel.putAirportRecent(
                         RecentAirportModal(
                             getTempKey(),
-                            "" + getUserId(),
+                            "0",
                             "roundTrip",
                             "$departCityCode ,$departCity",
                             "$arrivedCityCode ,$arrivedCity",

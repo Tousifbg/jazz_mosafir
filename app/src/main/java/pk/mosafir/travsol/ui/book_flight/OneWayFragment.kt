@@ -148,7 +148,7 @@ class OneWayFragment : FlightBaseFragment(), View.OnClickListener, AirportSelect
                     viewModel.putAirportRecent(
                         RecentAirportModal(
                             getTempKey(),
-                            "" + getUserId(),
+                            "0",
                             "oneWay",
                             "$departCityCode ,$departCity",
                             "$arrivedCityCode ,$arrivedCity",

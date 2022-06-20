@@ -13,4 +13,5 @@ interface UserDetailDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUserDetail(offers: UserDetails)
+
 }
