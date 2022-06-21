@@ -51,7 +51,7 @@ interface ApiInterface {
     suspend fun checkUserResponse(@Body loginModel: LoginModel): UserCheckResponse
 
     @POST("social_login")
-    suspend fun checkUserSocialResponse(@Body socialLoginModel: SocialLoginModel): UserCheckResponse
+    suspend fun checkUserSocialResponse(@Body socialLoginModel: SocialLoginModel): UserDetailTable
 
     //Register Responses
     @POST("register_user")
