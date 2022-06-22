@@ -56,6 +56,8 @@ fun loggedInUser(id: String){
 fun loggedOutUser(){
     loggedIn = false
     sharedPreferences.edit().putBoolean("loggedin", false).apply()
+
+
 }
 
 //flight 1, hotel 3, tour 2, discover 12, blog 14

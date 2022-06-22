@@ -83,6 +83,29 @@ class AccountFragment : BaseFragment(), View.OnClickListener, SocialLoginInterfa
             MainActivity.socialLogin("2", this)
         }
 
+        viewModel.checkSocialLogin.observe(viewLifecycleOwner, Observer {
+            when(it){
+                "1"->{
+                    requireContext().toast("Login Success")
+                    //go to home fragment when login success
+                    val fragmentManager = requireActivity().supportFragmentManager
+                    val transaction = fragmentManager.beginTransaction()
+                    transaction.replace(
+                        R.id.nav_host_fragment,
+                        HomeFragment(),
+                        "MY_FRAGMENT"
+                    )
+                    transaction.commit()
+                }
+                "0"->{
+                    requireContext().toast("Login Failed - Try Again")
+                }
+                else->{
+                    requireContext().toast(it)
+                }
+            }
+            //we used 'when' here to check different success states
+        })
         return binding.root
     }
 
@@ -297,58 +320,6 @@ class AccountFragment : BaseFragment(), View.OnClickListener, SocialLoginInterfa
         }
     }
 
-    private fun firebaseAuthWithGoogle(idToken: GoogleSignInAccount) {
-        val credential = GoogleAuthProvider.getCredential(idToken.idToken, null)
-        mAuth!!.signInWithCredential(credential).addOnCompleteListener {
-            if (it.isSuccessful) {
-                idToken.id?.let { it1 -> loggedInUser(it1) }
-                Toast.makeText(requireContext(), "logged in", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(requireContext(), "${it.exception}", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
-
-
-    private fun handleSignInResult(task: Task<GoogleSignInAccount>) {
-        try {
-
-            val account = task.getResult(ApiException::class.java)
-            //signin successfully
-            val googleID = account?.id ?:""
-            Log.i("Google ID", googleID.toString())
-            val googleFirstName = account?.givenName ?: ""
-            Log.i("Google First Name", googleFirstName)
-            val googleLastName = account?.familyName ?: ""
-            Log.i("Google Last Name", googleLastName)
-            val googleEmail = account?.email ?: ""
-            Log.i("Google Email", googleEmail)
-            val googleProfilePicURL = account?.photoUrl.toString()
-            Log.i("Google Profile Pic URL", googleProfilePicURL)
-            val googleIdToken = account?.idToken ?: ""
-            Log.i("Google ID Token", googleIdToken)
-
-        }catch (e: ApiException) {
-            // Sign in was unsuccessful
-            Log.e(
-                "failed code=", e.statusCode.toString()
-            )
-        }
-
-    }
-
-    private fun handleFacebookAccessToken(token: AccessToken) {
-        val credentials = FacebookAuthProvider.getCredential(token.token)
-//        mAuth!!.signInWithCredential(credentials).addOnCompleteListener {
-//            if (it.isSuccessful) {
-//                loggedInUser(token.userId)
-//                requireContext().toast("logged success")
-//            } else {
-//                requireContext().toast("failed")
-//            }
-//        }
-    }
     @SuppressLint("UseCompatLoadingForDrawables")
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun bindRegister() {
@@ -534,17 +505,7 @@ class AccountFragment : BaseFragment(), View.OnClickListener, SocialLoginInterfa
 
    private fun postSocialData(socialLoginModel : SocialLoginModel) {
         viewModel.checkSocialLogin(socialLoginModel)
-        viewModel.checkSocialLogin.observe(this, Observer {
-            when(it){
-                "1"->{
-                    requireContext().toast("api login success")
-                }
-                "0"->{
-                    requireContext().toast("api login failed")
-                }
-            }
-            //we used 'when' here to check different success states
-        })
+
     }
 
     override fun updated(model: SocialLoginModel?) {

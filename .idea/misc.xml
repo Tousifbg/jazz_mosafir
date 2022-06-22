@@ -8,9 +8,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Projects/Jazz Mosafir Latest/jazz_mosafir/jazz_mosafir/app/src/main/res/drawable/user_image_bg.xml" value="0.103" />
         <entry key="..\:/Projects/Jazz Mosafir Latest/jazz_mosafir/jazz_mosafir/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/Projects/Jazz Mosafir Latest/jazz_mosafir/jazz_mosafir/app/src/main/res/layout/custom_profile_img_dialog.xml" value="0.25416666666666665" />
         <entry key="..\:/Projects/Jazz Mosafir Latest/jazz_mosafir/jazz_mosafir/app/src/main/res/layout/fragment_account.xml" value="0.2" />
+        <entry key="..\:/Projects/Jazz Mosafir Latest/jazz_mosafir/jazz_mosafir/app/src/main/res/layout/fragment_logged_in.xml" value="0.2" />
+        <entry key="..\:/Projects/Jazz Mosafir Latest/jazz_mosafir/jazz_mosafir/app/src/main/res/layout/fragment_one_way.xml" value="0.2" />
+        <entry key="..\:/Projects/Jazz Mosafir Latest/jazz_mosafir/jazz_mosafir/app/src/main/res/layout/fragment_user_info.xml" value="0.176" />
+        <entry key="..\:/Projects/Jazz Mosafir Latest/jazz_mosafir/jazz_mosafir/app/src/main/res/layout/offer_card_item.xml" value="0.1" />
         <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/drawable-anydpi/background_darkgrey_border.xml" value="0.2703125" />
         <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/drawable-anydpi/background_fb.xml" value="0.2703125" />
         <entry key="..\:/jazz mosafir/jazz mosafir/jazz_mosafir/app/src/main/res/drawable-anydpi/background_google.xml" value="0.2703125" />

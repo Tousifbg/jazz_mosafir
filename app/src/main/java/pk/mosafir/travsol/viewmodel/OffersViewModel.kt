@@ -5,8 +5,6 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import pk.mosafir.travsol.dao.TourCityDao
 import pk.mosafir.travsol.data.Repository
-import pk.mosafir.travsol.model.FirebaseToken
-import pk.mosafir.travsol.model.TourKeyModel
 import pk.mosafir.travsol.response.DiscoverPakistanCity
 import pk.mosafir.travsol.response.Offer
 import pk.mosafir.travsol.response.Response
@@ -45,15 +43,6 @@ class OffersViewModel(private val repository: Repository, private val tourCityDa
         }
     }
 
-    private fun fetchCities() {
-        viewModelScope.launch {
-            when (val response = repository.getCitiesRecent()) {
-                is Response.Success -> _hotelCityList.value = response.data
-                is Response.Error -> error.value = response.message
-            }
-            isLoading.value = false
-        }
-    }
 
     fun putData() {
         viewModelScope.launch {
@@ -70,4 +59,14 @@ class OffersViewModel(private val repository: Repository, private val tourCityDa
             isLoading.value = false
         }
     }
+    private fun fetchCities() {
+        viewModelScope.launch {
+            when (val response = repository.getCitiesRecent()) {
+                is Response.Success -> _hotelCityList.value = response.data
+                is Response.Error -> error.value = response.message
+            }
+            isLoading.value = false
+        }
+    }
+
 }

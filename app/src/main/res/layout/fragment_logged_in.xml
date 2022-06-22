@@ -2,6 +2,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+                name="loggedInBinding"
+                type="pk.mosafir.travsol.response.UserDetails" />
+    </data>
+
 <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -17,11 +23,12 @@
         <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
             <ImageView
                     android:id="@+id/back"
-                    android:src="@drawable/left_arrow"
                     android:layout_width="@dimen/_15sdp"
                     android:layout_height="wrap_content"
+                    android:src="@drawable/left_arrow"
                     app:tint="@color/colorWhite"
                     tools:ignore="ContentDescription" />
 
@@ -37,16 +44,18 @@
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/userImage"
             android:layout_width="@dimen/_90sdp"
             android:layout_height="@dimen/_90sdp"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:background="@drawable/user_image_bg"
-            android:src="@drawable/avtar"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:background="@drawable/avtar"
+            app:civ_border_width="3dp"
+            app:civ_border_color="@color/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
 
     <TextView
             android:id="@+id/userName"
@@ -54,12 +63,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_5sdp"
             android:fontFamily="@font/montserrat"
-            android:text="@string/hi_adil_zahoor_anjum"
+            android:text="@{`Hi ` +loggedInBinding.full_name}"
             android:textColor="@color/textColorBlackish"
             android:textSize="@dimen/_13sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/userImage" />
+
     <LinearLayout
             android:id="@+id/userProfile"
             android:layout_marginTop="@dimen/_10sdp"
@@ -75,6 +85,7 @@
                 android:layout_width="@dimen/_15sdp"
                 android:layout_height="@dimen/_15sdp"/>
         <TextView
+                android:id="@+id/myProfile"
                 android:layout_marginStart="@dimen/_5sdp"
                 android:text="@string/my_profile"
                 android:textSize="@dimen/_13sdp"

@@ -1,5 +1,6 @@
 package pk.mosafir.travsol.data
 
+import android.util.Log
 import org.json.JSONArray
 import pk.mosafir.travsol.dao.*
 import pk.mosafir.travsol.model.*
@@ -19,7 +20,7 @@ class Repository(
     private var citiesList = ArrayList<DiscoverPakistanCity>()
     private var mOffersList = ArrayList<Offer>()
 
-    suspend fun getOffersList(): Response<List<Offer>>? {
+    suspend fun getOffersList(): Response<List<Offer>> {
         mOffersList = offersDao.getOffers() as ArrayList<Offer>
         return try {
             if (mOffersList.size > 0) {
@@ -56,7 +57,7 @@ class Repository(
                     }
                 }
                 offersDao.insertOffers(mOffersList)
-                Response.Success(offersDao.getOffers())
+                Response.Success(offersDao.getOffers()!!)
             }
         } catch (e: Exception) {
             Response.Error(e.message)
@@ -281,12 +282,22 @@ class Repository(
 
     //
 
-    suspend fun checkSocialUser(socialLoginModel: SocialLoginModel): Response<String> {
-        return try {
+    suspend fun checkSocialUser(socialLoginModel: SocialLoginModel): Response<String?> {
+         try {
             val userCheckResponse = api.checkUserSocialResponse(socialLoginModel)
-            Response.Success(userCheckResponse.Status_code)
+             if (userCheckResponse.message == "Login Successfull") {
+                 userDetailDao.insertUserDetail(userCheckResponse.user_details)
+                 putData()
+                 loggedInUser("0")
+                 Log.e("data: ",userCheckResponse.user_details.full_name.toString())
+             }
+             else{
+                 Log.e("data: 2 ",userCheckResponse.user_details.full_name.toString())
+             }
+             return Response.Success(userCheckResponse.Status_code)
+
         } catch (e: Exception) {
-            Response.Error("error" + e.message)
+            return Response.Error("error" + e.message)
         }
     }
 

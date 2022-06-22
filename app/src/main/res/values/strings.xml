@@ -4,7 +4,7 @@
     <!--ak apps -->
     <string name="default_web_client">193785287981-taaf7t4invt2edi8hrgrglri052cvt0k.apps.googleusercontent.com</string>
     <!--mosafir apps -->
-<!--    <string name="default_web_client">193785287981-taaf7t4invt2edi8hrgrglri052cvt0k.apps.googleusercontent.com</string>-->
+    <!--    <string name="default_web_client">193785287981-taaf7t4invt2edi8hrgrglri052cvt0k.apps.googleusercontent.com</string>-->
     <string name="app_name">Jazz Mosafir</string>
     <string name="default_notification_channel_id">123</string>
     <string name="discover_pakistan">Discover Pakistan</string>

@@ -140,4 +140,7 @@ dependencies {
     //DataStore
     //implementation "androidx.datastore:datastore-preferences:1.0.0-beta01"
     implementation project(path: ':rangedatepicker')
+
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
 }
