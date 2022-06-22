@@ -8,8 +8,9 @@ import pk.mosafir.travsol.response.Offer
 
 @Dao
 interface OffersDao {
+
     @Query("SELECT * FROM offer")
-    suspend fun getOffers(): List<Offer>
+    suspend fun getOffers():List<Offer>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertOffers(offers: List<Offer>)

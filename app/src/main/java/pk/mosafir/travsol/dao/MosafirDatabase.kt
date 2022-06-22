@@ -1,20 +1,21 @@
 package pk.mosafir.travsol.dao
 
 import android.content.Context
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import pk.mosafir.travsol.response.*
 
 @Database(
-    entities = [Offer::class, TourCity::class, HotelLocation::class, TourLocation::class, UserDetails::class, DiscoverPakistanCity::class,FlyFrom10::class],
-    version = 1,
+    entities = [Offer::class,TourCity::class,  HotelLocation::class, TourLocation::class, UserDetails::class, DiscoverPakistanCity::class,FlyFrom10::class],
+    version = 2,
     exportSchema = true,
-//    autoMigrations = [
-//        AutoMigration(
-//            from = 4, to = 5
-//        )
-//    ]
+    autoMigrations = [
+        AutoMigration(
+            from = 1, to = 2
+        )
+    ]
 )
 abstract class MosafirDatabase : RoomDatabase() {
     abstract fun getOffersDao(): OffersDao

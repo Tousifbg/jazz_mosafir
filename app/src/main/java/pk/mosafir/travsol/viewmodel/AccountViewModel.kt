@@ -66,6 +66,7 @@ class AccountViewModel(private val repository: Repository) : BaseViewModel() {
             }
         }
     }
+
     @SuppressLint("NullSafeMutableLiveData")
     fun validateOTPRegister(mobile: String, temp_key: String) {
         viewModelScope.launch {

@@ -1,6 +1,5 @@
 package pk.mosafir.travsol.data
 
-import android.util.Log
 import org.json.JSONArray
 import pk.mosafir.travsol.dao.*
 import pk.mosafir.travsol.model.*
@@ -264,11 +263,6 @@ class Repository(
                     getFirebaseToken()
                 )
             )
-        try {
-            Log.d("putting", userDetailDao.getUserDetail().user_id.toString())
-        } catch (e: Exception) {
-            Log.d("putting", "no")
-        }
     }
 
     suspend fun checkUser(mobile: String, countryCode: String): Response<String> {
@@ -287,14 +281,12 @@ class Repository(
 
     //
 
-    suspend fun checkSocialUser(socialLoginModel: SocialLoginModel): Response<String?> {
+    suspend fun checkSocialUser(socialLoginModel: SocialLoginModel): Response<String> {
         return try {
-            val userCheckResponse: UserDetailTable = api.checkUserSocialResponse(socialLoginModel)
-            userDetailDao.insertUserDetail(userCheckResponse.user_details)
-            putData()
+            val userCheckResponse = api.checkUserSocialResponse(socialLoginModel)
             Response.Success(userCheckResponse.Status_code)
         } catch (e: Exception) {
-            Response.Error("error" + e.message.toString())
+            Response.Error("error" + e.message)
         }
     }
 

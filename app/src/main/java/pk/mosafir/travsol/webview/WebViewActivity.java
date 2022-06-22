@@ -86,7 +86,7 @@ public class WebViewActivity extends AppCompatActivity {
             @SuppressLint("LogNotTimber")
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
-                if (url.equals("https://mosafir.pk/mobile/Admin/dashboard")) {
+                if (url.equals("https://mosafir.pk/mobile?redirect=Admin/dashboard")) {
                     setLoggedIn(true);
                     finish();
                 } else if (url.equals("https://mosafir.pk/mobile/users/b2c_logout") || url.equals("https://www.mosafir.pk/mobile/users/b2c_logout")) {
@@ -180,7 +180,11 @@ public class WebViewActivity extends AppCompatActivity {
         webview.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView view, int progress) {
                 if (progress == 100) {
-                    dialog.cancel();
+                    try {
+                        dialog.cancel();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 

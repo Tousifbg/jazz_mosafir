@@ -49,6 +49,7 @@ import pk.mosafir.travsol.R
 import pk.mosafir.travsol.interfaces.SocialLoginInterface
 import pk.mosafir.travsol.model.SocialLoginModel
 import pk.mosafir.travsol.ui.account.AccountFragment
+import pk.mosafir.travsol.ui.account.LoggedInFragment
 import pk.mosafir.travsol.ui.home.HomeFragment
 import pk.mosafir.travsol.utils.*
 import pk.mosafir.travsol.viewmodel.AccountViewModel
@@ -66,6 +67,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var transaction: FragmentTransaction
     private val viewModel: OffersViewModel by viewModel()
     lateinit var callbackManager:CallbackManager
+
     companion object {
         var fragment = ""
         lateinit var sharedPreferences: SharedPreferences
@@ -76,8 +78,13 @@ class MainActivity : AppCompatActivity() {
 
         lateinit var mGoogleSignInClient: GoogleSignInClient
         const val RC_SIGN_IN = 9001
+
+
+        //we want to call social login api in account fragment instead of main activity
+        //for that we used interface to send social data to account fragment and then call api there
         lateinit var socialLoginInterface:SocialLoginInterface
-        fun socialLogin(which:String,result: SocialLoginInterface ){
+
+        fun socialLogin(which:String, result: SocialLoginInterface ){
             when(which){
 
                 "1"->{
@@ -144,11 +151,14 @@ class MainActivity : AppCompatActivity() {
 
                         authTYPE = "FB"
 
-                        toast("email: "+email)
+                        //toast("email: "+email)
                         Log.d("FB_DATA: ","name: "+name+ "email: "+email+ "imageURL: "+imageURL+
                                "authID: "+authID+ "authTYPE: "+authTYPE)
+
+                        //pass model to interface which will be used in account fragment
                         var socialLoginModel = SocialLoginModel(email, name, imageURL, authID, authTYPE)
                         socialLoginInterface.updated(socialLoginModel)
+
 //                        postSocialData(email, name, imageURL, authID, authTYPE)
 
                         //displaying profile img in custom dialog
@@ -194,10 +204,11 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.navigation_account -> {
                     if (loggedIn) {
-                        val intent = Intent(this, WebViewActivity::class.java)
-                        intent.putExtra("url", "https://mosafir.pk/mobile/Admin/dashboard")
-                        startActivity(intent)
-                        return@OnItemSelectedListener true
+                        selectedFragment = LoggedInFragment()
+//                        val intent = Intent(this, WebViewActivity::class.java)
+//                        intent.putExtra("url", "https://mosafir.pk/mobile/Admin/dashboard")
+//                        startActivity(intent)
+//                        return@OnItemSelectedListener true
                     } else {
                         selectedFragment = AccountFragment()
                     }
@@ -332,14 +343,12 @@ class MainActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onResume() {
         super.onResume()
-        var selectedFragment: Fragment
-        fragmentManager = supportFragmentManager
+        var selectedFragment: Fragment = HomeFragment()
+//        fragmentManager = supportFragmentManager
         when (fragment) {
             "home" -> {
                 selectedFragment = HomeFragment()
-                transaction = fragmentManager.beginTransaction()
-                transaction.replace(R.id.nav_host_fragment, selectedFragment)
-                transaction.commit()
+                openFragment(selectedFragment)
             }
             "booking" -> {
                 if (loggedIn) {
@@ -349,23 +358,16 @@ class MainActivity : AppCompatActivity() {
                     return
                 } else {
                     selectedFragment = AccountFragment()
+                    openFragment(selectedFragment)
                 }
-                transaction = fragmentManager.beginTransaction()
-                transaction.replace(R.id.nav_host_fragment, selectedFragment)
-                transaction.commit()
             }
             "login" -> {
                 if (loggedIn) {
-                    val intent = Intent(this, WebViewActivity::class.java)
-                    intent.putExtra("url", "https://mosafir.pk/mobile/Admin/dashboard")
-                    startActivity(intent)
-                    return
+                    selectedFragment = LoggedInFragment()
                 } else {
                     selectedFragment = AccountFragment()
                 }
-                transaction = fragmentManager.beginTransaction()
-                transaction.replace(R.id.nav_host_fragment, selectedFragment)
-                transaction.commit()
+                openFragment(selectedFragment)
             }
             "payment" -> {
                 if (loggedIn) {
@@ -375,31 +377,34 @@ class MainActivity : AppCompatActivity() {
                     return
                 } else {
                     selectedFragment = AccountFragment()
+                    openFragment(selectedFragment)
                 }
-                transaction = fragmentManager.beginTransaction()
-                transaction.replace(R.id.nav_host_fragment, selectedFragment)
-                transaction.commit()
             }
-        }
 
+        }
         FirebaseMessaging.getInstance().token.addOnSuccessListener {
             firebaseToken = it
             setFirebaseToken(firebaseToken)
             viewModel.putData()
         }
     }
+    fun openFragment(selectedFragment: Fragment){
+        transaction = fragmentManager.beginTransaction()
+        transaction.replace(R.id.nav_host_fragment, selectedFragment)
+        transaction.commit()
 
+    }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         callbackManager.onActivityResult(requestCode, resultCode, data)
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == RC_SIGN_IN) {
-            toast("login successful")
+            Log.e("google_social_login: ","success")
 
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             handleSignInResult(task)
         }
         else{
-            toast("login failed")
+            Log.e("gogoel_social_login: ","failed")
         }
     }
 
@@ -413,10 +418,12 @@ class MainActivity : AppCompatActivity() {
             val googleEmail = account?.email ?: ""
             val googleProfilePicURL = account?.photoUrl.toString()
             val googleIdToken = account?.idToken ?: ""
-
+            //toast("$googleEmail $googleID")
             var authTYPE = ""
 
             authTYPE = "GOOGLE"
+
+            //pass model to interface which will be used in account fragment
             var socialLoginModel = SocialLoginModel(googleEmail,
                 "$googleFirstName $googleLastName", googleProfilePicURL, googleID, authTYPE)
             socialLoginInterface.updated(socialLoginModel)
