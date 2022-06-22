@@ -11,7 +11,6 @@ import retrofit2.http.DELETE
 interface UserDetailDao {
     @Query("SELECT * FROM user_detail")
     suspend fun getUserDetail(): UserDetails
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUserDetail(offers: UserDetails)
 }
