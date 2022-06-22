@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import pk.mosafir.travsol.response.UserDetails
+import retrofit2.http.DELETE
 
 @Dao
 interface UserDetailDao {
@@ -13,5 +14,4 @@ interface UserDetailDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUserDetail(offers: UserDetails)
-
 }
