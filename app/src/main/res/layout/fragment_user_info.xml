@@ -23,11 +23,12 @@
         <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
             <ImageView
                     android:id="@+id/back"
-                    android:src="@drawable/left_arrow"
                     android:layout_width="@dimen/_15sdp"
                     android:layout_height="wrap_content"
+                    android:src="@drawable/left_arrow"
                     app:tint="@color/colorWhite"
                     tools:ignore="ContentDescription" />
 

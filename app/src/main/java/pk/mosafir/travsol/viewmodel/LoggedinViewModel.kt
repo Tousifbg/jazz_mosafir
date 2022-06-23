@@ -16,10 +16,6 @@ class LoggedInViewModel(
     val userData: MutableLiveData<UserDetails>
         get() = _userData
 
-  /*  private val _deleteData = MutableLiveData<Boolean>()
-    val deleteData: MutableLiveData<Boolean>
-        get() = _deleteData*/
-
     fun getUserData() {
         viewModelScope.launch {
             userData.value = userDetailDao.getUserDetail()

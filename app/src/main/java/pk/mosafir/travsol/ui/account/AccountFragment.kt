@@ -91,6 +91,8 @@ class AccountFragment : BaseFragment(), View.OnClickListener, SocialLoginInterfa
                     loggedIn = true
                     loggedInUser("")
 
+                    loggedIn = true
+                    loggedInUser("")
                     //go to home fragment when login success
                     val fragmentManager = requireActivity().supportFragmentManager
                     val transaction = fragmentManager.beginTransaction()

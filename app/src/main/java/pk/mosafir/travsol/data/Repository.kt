@@ -169,7 +169,7 @@ class Repository(
         }
     }
 
-    suspend fun addHotelCitiesToDb() {
+    private suspend fun addHotelCitiesToDb() {
         var hotelCities = hotelLocationDao.getHotelLocations()
         if (hotelCities.isEmpty()) {
             try {
@@ -200,7 +200,7 @@ class Repository(
                         "0"
                     )
                 )
-        var listFly = ArrayList<GeneralFlightResponse>()
+        val listFly = ArrayList<GeneralFlightResponse>()
         try {
             when (flag) {
                 0 -> {
@@ -371,7 +371,7 @@ class Repository(
         }
     }
 
-    suspend fun putRecentTripLocation(name: String) {
+//    suspend fun putRecentTripLocation(name: String) {
 //        api.putTourRecentAsync(
 //            TourPutRecentModel(
 //                getTempKey(),
@@ -379,9 +379,9 @@ class Repository(
 //                name
 //            )
 //        )
-    }
+//    }
 
-    suspend fun getTourLocations() {
+    private suspend fun getTourLocations() {
         try {
             val locations = api.getTourLocationAsync().tours_and_cities
             tourLocationDao.insertTourCities(locations)
