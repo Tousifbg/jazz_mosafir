@@ -202,7 +202,7 @@ class HomeFragment : BaseFragment(), CitySelector, BillingProcessor.IBillingHand
             }
             fragmentManager = requireActivity().supportFragmentManager
             transaction = fragmentManager.beginTransaction()
-            transaction.replace(R.id.fragContainer, TrendingFlightfragment())
+            transaction.replace(R.id.fragContainer, TrendingFlightfragment()).addToBackStack(null)
             transaction.commit()
         }
         binding.tabIncluder.relativeHotel.setOnClickListener {
@@ -223,7 +223,7 @@ class HomeFragment : BaseFragment(), CitySelector, BillingProcessor.IBillingHand
             }
             fragmentManager = requireActivity().supportFragmentManager
             transaction = fragmentManager.beginTransaction()
-            transaction.replace(R.id.fragContainer, TrendingHotelFragment())
+            transaction.replace(R.id.fragContainer, TrendingHotelFragment()).addToBackStack(null)
             transaction.commit()
         }
         binding.tabIncluder.relativeTour.setOnClickListener {
@@ -244,7 +244,7 @@ class HomeFragment : BaseFragment(), CitySelector, BillingProcessor.IBillingHand
             }
             fragmentManager = requireActivity().supportFragmentManager
             transaction = fragmentManager.beginTransaction()
-            transaction.replace(R.id.fragContainer, TrendingTourFragment())
+            transaction.replace(R.id.fragContainer, TrendingTourFragment()).addToBackStack(null)
             transaction.commit()
 
         }
@@ -264,7 +264,7 @@ class HomeFragment : BaseFragment(), CitySelector, BillingProcessor.IBillingHand
             }
             fragmentManager = requireActivity().supportFragmentManager
             transaction = fragmentManager.beginTransaction()
-            transaction.replace(R.id.fragContainer, TrendingDiscoverFragment())
+            transaction.replace(R.id.fragContainer, TrendingDiscoverFragment()).addToBackStack(null)
             transaction.commit()
 
         }
@@ -286,7 +286,7 @@ class HomeFragment : BaseFragment(), CitySelector, BillingProcessor.IBillingHand
             }
             fragmentManager = requireActivity().supportFragmentManager
             transaction = fragmentManager.beginTransaction()
-            transaction.replace(R.id.fragContainer, TrendingBlogsFragment())
+            transaction.replace(R.id.fragContainer, TrendingBlogsFragment()).addToBackStack(null)
             transaction.commit()
 
         }
@@ -393,19 +393,19 @@ class HomeFragment : BaseFragment(), CitySelector, BillingProcessor.IBillingHand
         binding.planTrip.setOnClickListener {
             val fragmentManager = requireActivity().supportFragmentManager
             val transaction = fragmentManager.beginTransaction()
-            transaction.replace(R.id.nav_host_fragment, PlanTourFragment())
+            transaction.replace(R.id.nav_host_fragment, PlanTourFragment()).addToBackStack(null)
             transaction.commit()
         }
         binding.bookHotel.setOnClickListener {
             val fragmentManager = requireActivity().supportFragmentManager
             val transaction = fragmentManager.beginTransaction()
-            transaction.replace(R.id.nav_host_fragment, BookHotelFragment())
+            transaction.replace(R.id.nav_host_fragment, BookHotelFragment()).addToBackStack(null)
             transaction.commit()
         }
         binding.bookFlight.setOnClickListener {
             val fragmentManager = requireActivity().supportFragmentManager
             val transaction = fragmentManager.beginTransaction()
-            transaction.replace(R.id.nav_host_fragment, BookFlightFragment())
+            transaction.replace(R.id.nav_host_fragment, BookFlightFragment()).addToBackStack(null)
             transaction.commit()
         }
 
