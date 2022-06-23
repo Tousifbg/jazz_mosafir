@@ -28,7 +28,7 @@ class UserInfoFragment : Fragment() {
         _binding = FragmentUserInfoBinding.inflate(inflater, container, false)
 
         viewModel.getUserInfoData()
-        viewModel.userInfoData.observe(viewLifecycleOwner, Observer {
+        viewModel.userInfoData.observe(viewLifecycleOwner, {
             binding.userInfoBinding = it
 
             binding.userName.text = binding.userInfoBinding!!.full_name
