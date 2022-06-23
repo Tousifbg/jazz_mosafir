@@ -114,7 +114,7 @@ class MainActivity : AppCompatActivity() {
        if (getTempKey() == "12") {
         setTempKey("temp-${System.currentTimeMillis()}")
         }
-    //gg
+    //gggg
 
         //fb signin
         FacebookSdk.sdkInitialize(applicationContext)
