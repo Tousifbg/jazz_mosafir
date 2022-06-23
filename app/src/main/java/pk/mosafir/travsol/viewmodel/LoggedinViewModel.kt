@@ -27,10 +27,6 @@ class LoggedInViewModel(
     }
 
     fun deleteUserData() {
-        /*viewModelScope.launch {
-            deleteData.value = userDetailDao.deleteUserDetail()
-        }*/
-
         viewModelScope.launch(Dispatchers.IO) {
             userDetailDao.clear()
         }

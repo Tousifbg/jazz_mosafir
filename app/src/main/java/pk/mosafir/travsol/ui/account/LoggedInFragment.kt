@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
@@ -45,14 +46,6 @@ class LoggedInFragment : Fragment() {
                     .into(binding.userImage)
                 requireContext().toast("image exist")
             }
-
-            //bind view events with data
-//            binding.userName.text = binding.loggedInBinding!!.full_name
-//            if (binding.loggedInBinding!!.profile_image != null){
-//                Glide.with(requireContext())
-//                    .load(binding.loggedInBinding!!.profile_image)
-//                    .into(binding.userImage)
-//            }
         })
 
         //go to my profile fragment
@@ -61,11 +54,36 @@ class LoggedInFragment : Fragment() {
             val transaction = fragmentManager.beginTransaction()
             transaction.replace(
                 R.id.nav_host_fragment,
-                UserInfoFragment(),
-                "MY_FRAGMENT"
+                UserInfoFragment()
+            ).addToBackStack(null)
+            transaction.commit()
+        }
+
+        //go back by button in toolbar
+        binding.back.setOnClickListener {
+            val fragmentManager = requireActivity().supportFragmentManager
+            val transaction = fragmentManager.beginTransaction()
+            transaction.replace(
+                R.id.nav_host_fragment,
+                HomeFragment()
             )
             transaction.commit()
         }
+
+      /*  //method for onBackPressed using in fragments
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true)
+            {
+                override fun handleOnBackPressed() {
+                    // Leave empty do disable back press or
+                    // write your code which you want
+                    requireContext().toast("back...")
+                }
+            }
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            callback
+        )*/
 
 
         mAuth = FirebaseAuth.getInstance()
@@ -82,8 +100,8 @@ class LoggedInFragment : Fragment() {
 
         }
 
+        //logout
         binding.logout.setOnClickListener {
-
             viewModel.deleteUserData()
             loggedIn = false
             loggedOutUser()
@@ -93,25 +111,8 @@ class LoggedInFragment : Fragment() {
             val transaction = fragmentManager.beginTransaction()
             transaction.replace(R.id.nav_host_fragment, HomeFragment(), "MY_FRAGMENT")
             transaction.commit()
-            /*viewModel.deleteData.observe(viewLifecycleOwner, Observer {
-                when(it)
-                {
-                    true->{
-                        loggedIn = false
-                        loggedOutUser()
-                        requireContext().toast("Logged out successfully")
-
-                        val fragmentManager = requireActivity().supportFragmentManager
-                        val transaction = fragmentManager.beginTransaction()
-                        transaction.replace(R.id.nav_host_fragment, HomeFragment(), "MY_FRAGMENT")
-                        transaction.commit()
-                    }
-                    false->{
-                        requireContext().toast("Logged out failed")
-                    }
-                }
-            })*/
         }
         return binding.root
     }
+
 }

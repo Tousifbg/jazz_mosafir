@@ -1,15 +1,18 @@
 package pk.mosafir.travsol.ui.account
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import pk.mosafir.travsol.R
 import pk.mosafir.travsol.databinding.FragmentUserInfoBinding
+import pk.mosafir.travsol.utils.toast
 import pk.mosafir.travsol.viewmodel.UserInfoViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class UserInfoFragment : Fragment() {
@@ -30,6 +33,17 @@ class UserInfoFragment : Fragment() {
 
             binding.userName.text = binding.userInfoBinding!!.full_name
         })
+
+        //go back
+        binding.back.setOnClickListener {
+            val fragmentManager = requireActivity().supportFragmentManager
+            val transaction = fragmentManager.beginTransaction()
+            transaction.replace(
+                R.id.nav_host_fragment,
+                LoggedInFragment()
+            )
+            transaction.commit()
+        }
 
      return binding.root
     }

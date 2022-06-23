@@ -2,7 +2,6 @@ package pk.mosafir.travsol.ui
 
 import android.Manifest.permission
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
@@ -24,7 +23,6 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.facebook.*
 import com.facebook.login.LoginResult
@@ -40,7 +38,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.navigation.NavigationBarView
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
-import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -50,9 +47,9 @@ import pk.mosafir.travsol.interfaces.SocialLoginInterface
 import pk.mosafir.travsol.model.SocialLoginModel
 import pk.mosafir.travsol.ui.account.AccountFragment
 import pk.mosafir.travsol.ui.account.LoggedInFragment
+import pk.mosafir.travsol.ui.account.UserInfoFragment
 import pk.mosafir.travsol.ui.home.HomeFragment
 import pk.mosafir.travsol.utils.*
-import pk.mosafir.travsol.viewmodel.AccountViewModel
 import pk.mosafir.travsol.viewmodel.OffersViewModel
 import pk.mosafir.travsol.webview.WebViewActivity
 import timber.log.Timber
@@ -169,8 +166,6 @@ class MainActivity : AppCompatActivity() {
                     parameters.putString("fields", "id,name,email,gender,birthday")
                     request.parameters = parameters
                     request.executeAsync()
-//                    handleFacebookAccessToken(result.accessToken)
-                    //Toast.makeText(requireContext(), "login done $email", Toast.LENGTH_SHORT).show()
                 }
 
                 override fun onCancel() {
@@ -246,7 +241,7 @@ class MainActivity : AppCompatActivity() {
             fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
             fragmentManager = supportFragmentManager
             transaction = fragmentManager.beginTransaction()
-            transaction.replace(R.id.nav_host_fragment, selectedFragment)
+            transaction.replace(R.id.nav_host_fragment, selectedFragment).addToBackStack(null)
             transaction.commit()
             return@OnItemSelectedListener true
         })
@@ -331,6 +326,7 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(Intent.ACTION_VIEW)
         intent.data = Uri.parse("https://wa.me/$trimToNumber/?text=")
         startActivity(intent)
+
     }
 
     private fun callUs() {
@@ -388,9 +384,10 @@ class MainActivity : AppCompatActivity() {
             viewModel.putData()
         }
     }
+
     fun openFragment(selectedFragment: Fragment){
         transaction = fragmentManager.beginTransaction()
-        transaction.replace(R.id.nav_host_fragment, selectedFragment)
+        transaction.replace(R.id.nav_host_fragment, selectedFragment).addToBackStack(null)
         transaction.commit()
 
     }
@@ -436,15 +433,14 @@ class MainActivity : AppCompatActivity() {
     private var doubleBackToExitPressedOnce = false
 
     override fun onBackPressed() {
-        val myFragment: HomeFragment? =
-            supportFragmentManager.findFragmentByTag("MY_FRAGMENT") as HomeFragment?
-        if (myFragment == null || !myFragment.isVisible) {
-            val fragmentManager = supportFragmentManager
-            val transaction = fragmentManager.beginTransaction()
-            transaction.replace(R.id.nav_host_fragment, HomeFragment(), "MY_FRAGMENT")
-            transaction.commit()
-        } else {
-            if (doubleBackToExitPressedOnce) {
+
+        if(fragmentManager.getBackStackEntryCount() > 0){
+            fragmentManager.popBackStackImmediate()
+            Log.e("displayscreen: ","1")
+        }
+        else{
+            Log.e("displayscreen: ","2")
+            if (doubleBackToExitPressedOnce){
                 super.onBackPressed()
                 return
             }
@@ -459,5 +455,40 @@ class MainActivity : AppCompatActivity() {
                 doubleBackToExitPressedOnce = false
             }, 1, TimeUnit.SECONDS)
         }
+
+        /*val myFragment2: LoggedInFragment? =
+            supportFragmentManager.findFragmentByTag("MY_FRAGMENT2") as LoggedInFragment?
+        if (myFragment2 == null || !myFragment2.isVisible) {
+            val fragmentManager = supportFragmentManager
+            val transaction = fragmentManager.beginTransaction()
+            transaction.replace(R.id.nav_host_fragment, LoggedInFragment(), "MY_FRAGMENT2")
+            transaction.commit()
+        }
+
+
+        val myFragment: HomeFragment? =
+            supportFragmentManager.findFragmentByTag("MY_FRAGMENT") as HomeFragment?
+        if (myFragment == null || !myFragment.isVisible) {
+            val fragmentManager = supportFragmentManager
+            val transaction = fragmentManager.beginTransaction()
+            transaction.replace(R.id.nav_host_fragment, HomeFragment(), "MY_FRAGMENT")
+            transaction.commit()
+        }
+        else {
+            if (doubleBackToExitPressedOnce) {
+                super.onBackPressed()
+                return
+            }
+            this.doubleBackToExitPressedOnce = true
+            Toast.makeText(
+                this,
+                "Please click BACK again to exit",
+                Toast.LENGTH_SHORT
+            ).show()
+            val executor: ScheduledExecutorService? = Executors.newSingleThreadScheduledExecutor()
+            executor!!.schedule({
+                doubleBackToExitPressedOnce = false
+            }, 1, TimeUnit.SECONDS)
+        }*/
     }
 }

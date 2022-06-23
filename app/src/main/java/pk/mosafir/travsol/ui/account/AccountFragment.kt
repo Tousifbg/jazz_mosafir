@@ -87,6 +87,10 @@ class AccountFragment : BaseFragment(), View.OnClickListener, SocialLoginInterfa
             when(it){
                 "1"->{
                     requireContext().toast("Login Success")
+
+                    loggedIn = true
+                    loggedInUser("")
+
                     //go to home fragment when login success
                     val fragmentManager = requireActivity().supportFragmentManager
                     val transaction = fragmentManager.beginTransaction()

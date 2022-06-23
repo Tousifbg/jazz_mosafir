@@ -281,9 +281,10 @@ class Repository(
 
     //
 
-    suspend fun checkSocialUser(socialLoginModel: SocialLoginModel): Response<String> {
+    suspend fun checkSocialUser(socialLoginModel: SocialLoginModel): Response<String?> {
         return try {
             val userCheckResponse = api.checkUserSocialResponse(socialLoginModel)
+            userDetailDao.insertUserDetail(userCheckResponse.user_details)
             Response.Success(userCheckResponse.Status_code)
         } catch (e: Exception) {
             Response.Error("error" + e.message)
