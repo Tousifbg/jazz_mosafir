@@ -60,7 +60,7 @@ class UserInfoFragment : Fragment() {
         _binding = FragmentUserInfoBinding.inflate(inflater, container, false)
 
         viewModel.getUserInfoData()
-        viewModel.userInfoData.observe(viewLifecycleOwner, Observer {
+        viewModel.userInfoData.observe(viewLifecycleOwner, {
             binding.userInfoBinding = it
             if (it.auth_type.isNullOrBlank()){
                 requireContext().toast("native login")

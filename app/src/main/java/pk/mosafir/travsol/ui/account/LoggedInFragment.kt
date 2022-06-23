@@ -110,7 +110,7 @@ class LoggedInFragment : Fragment() {
             loggedIn = false
             loggedOutUser()
             requireContext().toast("Logged out successfully")
-
+            MainActivity.logoutSocial()
             val fragmentManager = requireActivity().supportFragmentManager
             val transaction = fragmentManager.beginTransaction()
             transaction.replace(R.id.nav_host_fragment, HomeFragment(), "MY_FRAGMENT")
