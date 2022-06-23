@@ -5,19 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import pk.mosafir.travsol.R
 import pk.mosafir.travsol.databinding.FragmentLoggedInBinding
-import pk.mosafir.travsol.ui.MainActivity
+import pk.mosafir.travsol.ui.MainActivity.Companion.logoutSocial
+import pk.mosafir.travsol.ui.MainActivity.Companion.runningFragment
 import pk.mosafir.travsol.ui.home.HomeFragment
 import pk.mosafir.travsol.utils.loggedIn
 import pk.mosafir.travsol.utils.loggedOutUser
-import pk.mosafir.travsol.viewmodel.LoggedInViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import pk.mosafir.travsol.response.UserDetails
 import pk.mosafir.travsol.utils.toast
+import pk.mosafir.travsol.viewmodel.LoggedInViewModel
 
 class LoggedInFragment : Fragment() {
     private lateinit var _binding: FragmentLoggedInBinding
@@ -37,34 +36,24 @@ class LoggedInFragment : Fragment() {
             transaction.commit()
         }
         viewModel.getUserData()
-        viewModel.userData.observe(viewLifecycleOwner, Observer{ details ->
+        viewModel.userData.observe(viewLifecycleOwner, { details ->
             binding.loggedInBinding = details
             binding.loggedInBinding!!.profile_image?.let {
                 Glide.with(requireContext())
                     .load(it)
                     .into(binding.userImage)
-                requireContext().toast("image exist")
             }
-
-            //bind view events with data
-//            binding.userName.text = binding.loggedInBinding!!.full_name
-//            if (binding.loggedInBinding!!.profile_image != null){
-//                Glide.with(requireContext())
-//                    .load(binding.loggedInBinding!!.profile_image)
-//                    .into(binding.userImage)
-//            }
         })
 
-        //go to my profile fragment
         binding.myProfile.setOnClickListener {
             val fragmentManager = requireActivity().supportFragmentManager
             val transaction = fragmentManager.beginTransaction()
             transaction.replace(
                 R.id.nav_host_fragment,
-                UserInfoFragment(),
-                "MY_FRAGMENT"
+                UserInfoFragment()
             )
             transaction.commit()
+            runningFragment = "loggedin"
         }
 
 
@@ -83,34 +72,16 @@ class LoggedInFragment : Fragment() {
         }
 
         binding.logout.setOnClickListener {
-
             viewModel.deleteUserData()
             loggedIn = false
             loggedOutUser()
+            logoutSocial()
             requireContext().toast("Logged out successfully")
 
             val fragmentManager = requireActivity().supportFragmentManager
             val transaction = fragmentManager.beginTransaction()
             transaction.replace(R.id.nav_host_fragment, HomeFragment(), "MY_FRAGMENT")
             transaction.commit()
-            /*viewModel.deleteData.observe(viewLifecycleOwner, Observer {
-                when(it)
-                {
-                    true->{
-                        loggedIn = false
-                        loggedOutUser()
-                        requireContext().toast("Logged out successfully")
-
-                        val fragmentManager = requireActivity().supportFragmentManager
-                        val transaction = fragmentManager.beginTransaction()
-                        transaction.replace(R.id.nav_host_fragment, HomeFragment(), "MY_FRAGMENT")
-                        transaction.commit()
-                    }
-                    false->{
-                        requireContext().toast("Logged out failed")
-                    }
-                }
-            })*/
         }
         return binding.root
     }

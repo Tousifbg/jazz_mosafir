@@ -87,6 +87,8 @@ class AccountFragment : BaseFragment(), View.OnClickListener, SocialLoginInterfa
             when(it){
                 "1"->{
                     requireContext().toast("Login Success")
+                    loggedIn = true
+                    loggedInUser("")
                     //go to home fragment when login success
                     val fragmentManager = requireActivity().supportFragmentManager
                     val transaction = fragmentManager.beginTransaction()
@@ -313,7 +315,7 @@ class AccountFragment : BaseFragment(), View.OnClickListener, SocialLoginInterfa
                 } else {
                     val fragmentManager = requireActivity().supportFragmentManager
                     val transaction = fragmentManager.beginTransaction()
-                    transaction.replace(R.id.nav_host_fragment, HomeFragment(), "MY_FRAGMENT")
+                    transaction.replace(R.id.nav_host_fragment, HomeFragment(), "MY_FRAG")
                     transaction.commit()
                 }
             }
