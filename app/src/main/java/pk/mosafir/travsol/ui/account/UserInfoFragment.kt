@@ -77,7 +77,6 @@ class UserInfoFragment : Fragment() {
                 binding.phoneNumberProfile.isFocusable = false
                 binding.phoneNumberProfile.isFocusableInTouchMode = false
                 binding.phoneNumberProfile.isCursorVisible = false
-
                 binding.profileSpinnerCountry.setCcpClickable(false)
 
             }else{
@@ -227,24 +226,4 @@ class UserInfoFragment : Fragment() {
             }
         }
     }
-
-    private fun getImageUri(requireContext: Context, bitmap: Bitmap): Uri {
-        val bytes = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
-        val path: String =
-            MediaStore.Images.Media.insertImage(requireContext.contentResolver, bitmap, "Title", null)
-        return Uri.parse(path)
-    }
-
-    private fun getRealPathFromURI(tempUri: Uri): String {
-        val cursor: Cursor? = getApplicationContext().contentResolver.query(tempUri, null, null,
-            null, null)
-        cursor?.moveToFirst()
-        val idx: Int = cursor!!.getColumnIndex(MediaStore.Images.ImageColumns.DATA)
-        return cursor.getString(idx)
-        Log.e("img_link", cursor?.toString())
-
-    }
-
-
 }
