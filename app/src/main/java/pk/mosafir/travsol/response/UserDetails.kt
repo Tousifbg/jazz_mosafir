@@ -13,4 +13,5 @@ data class UserDetails(
     val full_name: String? = "",
     var auth_type: String? = "",
     @PrimaryKey val user_id: Int
+    //ggg
 )
