@@ -14,9 +14,6 @@ interface UserDetailDao {
     suspend fun insertUserDetail(offers: UserDetails)
 
 
-    /*@Query("DELETE FROM user_detail")
-    fun deleteUserDetail(): Boolean*/
-
     @Query("DELETE FROM user_detail")
     suspend fun clear()
 }

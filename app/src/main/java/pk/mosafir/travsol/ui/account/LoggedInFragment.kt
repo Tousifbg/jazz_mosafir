@@ -1,6 +1,7 @@
 package pk.mosafir.travsol.ui.account
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,14 +38,32 @@ class LoggedInFragment : Fragment() {
             transaction.replace(R.id.nav_host_fragment, HomeFragment(), "MY_FRAGMENT")
             transaction.commit()
         }
+
         viewModel.getUserData()
         viewModel.userData.observe(viewLifecycleOwner, Observer{ details ->
             binding.loggedInBinding = details
+            binding.userName.text = details.full_name.toString()
+
             binding.loggedInBinding!!.profile_image?.let {
                 Glide.with(requireContext())
                     .load(it)
                     .into(binding.userImage)
                 requireContext().toast("image exist")
+                /*     if (details.auth_type.isNullOrBlank()){
+                requireContext().toast("image not exist")
+                Log.e("auth",details.auth_type.toString())
+                binding.userName.text = details.full_name.toString()
+
+            }else{
+                binding.loggedInBinding!!.profile_image?.let {
+                    Glide.with(requireContext())
+                        .load(it)
+                        .into(binding.userImage)
+                    requireContext().toast("image exist")
+                }
+                Log.e("auth",details.auth_type.toString())
+                binding.userName.text = details.full_name.toString()
+            }*/
             }
         })
 
@@ -69,21 +88,6 @@ class LoggedInFragment : Fragment() {
             )
             transaction.commit()
         }
-
-      /*  //method for onBackPressed using in fragments
-        val callback: OnBackPressedCallback =
-            object : OnBackPressedCallback(true)
-            {
-                override fun handleOnBackPressed() {
-                    // Leave empty do disable back press or
-                    // write your code which you want
-                    requireContext().toast("back...")
-                }
-            }
-        requireActivity().onBackPressedDispatcher.addCallback(
-            viewLifecycleOwner,
-            callback
-        )*/
 
 
         mAuth = FirebaseAuth.getInstance()

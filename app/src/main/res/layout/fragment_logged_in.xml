@@ -63,7 +63,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_5sdp"
             android:fontFamily="@font/montserrat"
-            android:text="@{`Hi ` +loggedInBinding.full_name}"
             android:textColor="@color/textColorBlackish"
             android:textSize="@dimen/_13sdp"
             app:layout_constraintEnd_toEndOf="parent"

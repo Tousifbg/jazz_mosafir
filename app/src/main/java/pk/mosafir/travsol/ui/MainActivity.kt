@@ -45,6 +45,7 @@ import pk.mosafir.travsol.BuildConfig
 import pk.mosafir.travsol.R
 import pk.mosafir.travsol.interfaces.SocialLoginInterface
 import pk.mosafir.travsol.model.SocialLoginModel
+import pk.mosafir.travsol.response.UserDetails
 import pk.mosafir.travsol.ui.account.AccountFragment
 import pk.mosafir.travsol.ui.account.LoggedInFragment
 import pk.mosafir.travsol.ui.account.UserInfoFragment
@@ -115,6 +116,8 @@ class MainActivity : AppCompatActivity() {
         setTempKey("temp-${System.currentTimeMillis()}")
         }
 
+    //login 
+
 
         //fb signin
         FacebookSdk.sdkInitialize(applicationContext)
@@ -156,8 +159,6 @@ class MainActivity : AppCompatActivity() {
                         //pass model to interface which will be used in account fragment
                         var socialLoginModel = SocialLoginModel(email, name, imageURL, authID, authTYPE)
                         socialLoginInterface.updated(socialLoginModel)
-
-//                        postSocialData(email, name, imageURL, authID, authTYPE)
 
                         //displaying profile img in custom dialog
                         //showDialog(imageURL)
@@ -392,6 +393,7 @@ class MainActivity : AppCompatActivity() {
         transaction.commit()
 
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         callbackManager.onActivityResult(requestCode, resultCode, data)
         super.onActivityResult(requestCode, resultCode, data)
@@ -425,12 +427,13 @@ class MainActivity : AppCompatActivity() {
             var socialLoginModel = SocialLoginModel(googleEmail,
                 "$googleFirstName $googleLastName", googleProfilePicURL, googleID, authTYPE)
             socialLoginInterface.updated(socialLoginModel)
+
+
         }catch (e:ApiException) {
             Timber.e(e.statusCode.toString())
         }
 
     }
-
     private var doubleBackToExitPressedOnce = false
 
     override fun onBackPressed() {

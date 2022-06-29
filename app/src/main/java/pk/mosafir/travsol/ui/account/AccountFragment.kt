@@ -91,8 +91,6 @@ class AccountFragment : BaseFragment(), View.OnClickListener, SocialLoginInterfa
                     loggedIn = true
                     loggedInUser("")
 
-                    loggedIn = true
-                    loggedInUser("")
                     //go to home fragment when login success
                     val fragmentManager = requireActivity().supportFragmentManager
                     val transaction = fragmentManager.beginTransaction()
@@ -285,6 +283,7 @@ class AccountFragment : BaseFragment(), View.OnClickListener, SocialLoginInterfa
                                     if (s.equals("1")) {
                                         //viewModel.checkUser.value = "-1"
                                         bindLogin()
+                                        Log.e("token: ", temp_key)
                                     } else {
                                         //viewModel.checkUser.value = "-1"
                                         binding.login.text = "Login"
@@ -478,14 +477,25 @@ class AccountFragment : BaseFragment(), View.OnClickListener, SocialLoginInterfa
                         2
                     )
                 }
-                binding.error.text = spannable
+                //using CountDownTimer, you may get that error cause of detaching the fragment before finishing the timer
+                context?.let {
+                    binding.error.text = spannable
+                    binding.error.movementMethod =
+                        LinkMovementMethod.getInstance()
+                    binding.error.highlightColor =
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.blue
+                        )
+                }
+               /* binding.error.text = spannable
                 binding.error.movementMethod =
                     LinkMovementMethod.getInstance()
                 binding.error.highlightColor =
                     ContextCompat.getColor(
                         requireContext(),
                         R.color.blue
-                    )
+                    )*/
             }
         }.start()
         binding.otp.addTextChangedListener {
@@ -511,7 +521,6 @@ class AccountFragment : BaseFragment(), View.OnClickListener, SocialLoginInterfa
 
    private fun postSocialData(socialLoginModel : SocialLoginModel) {
         viewModel.checkSocialLogin(socialLoginModel)
-
     }
 
     override fun updated(model: SocialLoginModel?) {

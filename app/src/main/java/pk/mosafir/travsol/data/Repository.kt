@@ -1,5 +1,6 @@
 package pk.mosafir.travsol.data
 
+import android.util.Log
 import org.json.JSONArray
 import pk.mosafir.travsol.dao.*
 import pk.mosafir.travsol.model.*
@@ -284,7 +285,9 @@ class Repository(
     suspend fun checkSocialUser(socialLoginModel: SocialLoginModel): Response<String?> {
         return try {
             val userCheckResponse = api.checkUserSocialResponse(socialLoginModel)
+            userCheckResponse!!.user_details!!.auth_type = socialLoginModel.oauth_type
             userDetailDao.insertUserDetail(userCheckResponse.user_details)
+            //temp_key = userCheckResponse.user_details.token.toString()
             Response.Success(userCheckResponse.Status_code)
         } catch (e: Exception) {
             Response.Error("error" + e.message)

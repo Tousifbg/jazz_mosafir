@@ -11,5 +11,6 @@ data class UserDetails(
     val token: String? = "",
     val profile_image: String? = "",
     val full_name: String? = "",
+    var auth_type: String? = "",
     @PrimaryKey val user_id: Int
 )
