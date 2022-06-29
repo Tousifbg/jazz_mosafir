@@ -2,24 +2,21 @@ package pk.mosafir.travsol.adapter
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.Context
 import android.os.Build
-import android.text.Editable
-import android.text.TextWatcher
 import android.text.format.DateFormat
 import android.view.*
 import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.LifecycleOwner
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.savvi.rangedatepicker.CalendarPickerView
+import pk.mosafir.travsol.CustomDialog
 import pk.mosafir.travsol.R
 import pk.mosafir.travsol.interfaces.AirportSelector
 import pk.mosafir.travsol.response.GeneralFlightResponse
-import pk.mosafir.travsol.ui.book_flight.BookFlightFragment
 import pk.mosafir.travsol.ui.book_flight.MultiCityFragment.Companion.airportArrived
 import pk.mosafir.travsol.ui.book_flight.MultiCityFragment.Companion.airportArrivedCode
 import pk.mosafir.travsol.ui.book_flight.MultiCityFragment.Companion.airportDepart
@@ -34,25 +31,20 @@ import java.util.*
 class MultiCityAdapter(
     private val viewModel: FlightViewModel,
     private val offers: List<Int>,
-    private val viewLifecycleOwner: LifecycleOwner,
-    private val offersList: MutableList<GeneralFlightResponse>
+    private val viewLifecycleOwner: LifecycleOwner
 ) : RecyclerView.Adapter<MultiCityAdapter.OfferViewHolder>(), AirportSelector {
     private lateinit var datePickerDialog: Dialog
-    lateinit var airportListAdapter: AirportListAdapter
     private var depart: Boolean = false
-    private lateinit var dialog: Dialog
+    private lateinit var dialog: CustomDialog
+    private lateinit var dialogArrival: CustomDialog
     private var pos = 0
-    private lateinit var dialogTitle:TextView
     private var finalDate = ""
     private var finalMonth = ""
     private var finalYear = ""
-    val lp = WindowManager.LayoutParams()
+    private val lp = WindowManager.LayoutParams()
     private var flag = 0
-
-    private val mOffersList = mutableListOf<GeneralFlightResponse>()
-    private val mOffersList2 = mutableListOf<GeneralFlightResponse>()
     private lateinit var holderExtra: MultiCityAdapter.OfferViewHolder
-
+    private lateinit var context:Context
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -60,22 +52,16 @@ class MultiCityAdapter(
     ): MultiCityAdapter.OfferViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_multy_city, parent, false)
-        mOffersList.clear()
-        for (m in offersList) {
-            mOffersList.add(m)
-        }
-        dialog = Dialog(parent.context, R.style.full_screen_dialog)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        context = parent.context
         datePickerDialog = Dialog(parent.context, R.style.full_screen_dialog)
         datePickerDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        lp.copyFrom(dialog.window?.attributes)
+        lp.copyFrom(datePickerDialog.window?.attributes)
         lp.width = WindowManager.LayoutParams.MATCH_PARENT
         lp.height = WindowManager.LayoutParams.MATCH_PARENT
-        showDialog()
-        datePickerDialog()
         return OfferViewHolder(view)
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: MultiCityAdapter.OfferViewHolder, @SuppressLint("RecyclerView") position: Int) {
         destinationCount = itemCount
@@ -83,7 +69,8 @@ class MultiCityAdapter(
         holder.checkOut.setOnClickListener {
             holderExtra = holder
             pos = position
-            datePickerDialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
+            datePickerDialog()
+            //datePickerDialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
             datePickerDialog.show()
             datePickerDialog.window!!.attributes = lp
         }
@@ -92,22 +79,16 @@ class MultiCityAdapter(
             holderExtra = holder
             pos = position
             flag = 0
-            showDialog()
-            dialogTitle.text = "Departure City"
-            dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
-            dialog.show()
-            dialog.window!!.attributes = lp
+            dialog = CustomDialog("Departure City", context, this@MultiCityAdapter, viewModel, viewLifecycleOwner, R.style.full_screen_dialog)
+            showDialog(dialog)
         }
         holder.arrivalLocation.setOnClickListener {
             depart = false
             holderExtra = holder
             flag = 1
             pos = position
-            showDialog()
-            dialogTitle.text = "Arrival City"
-            dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
-            dialog.show()
-            dialog.window!!.attributes = lp
+            dialogArrival = CustomDialog("Arrival City", context, this@MultiCityAdapter, viewModel, viewLifecycleOwner, R.style.full_screen_dialog)
+            showDialog(dialogArrival)
         }
     }
 
@@ -127,97 +108,40 @@ class MultiCityAdapter(
         var startDater: TextView = itemView.findViewById(R.id.start_dater)
     }
 
-    @SuppressLint("SetTextI18n", "NotifyDataSetChanged")
-    private fun showDialog() {
-        dialog.setCancelable(false)
-        dialog.setContentView(R.layout.cutom_dialog_location)
-        val recyclerView = dialog.findViewById<RecyclerView>(R.id.recyclerView)
-        val location = dialog.findViewById<EditText>(R.id.location)
-        airportListAdapter = AirportListAdapter("", offersList, this)
-        dialogTitle = dialog.findViewById(R.id.title)
 
-        viewModel.fetchOffers(flag)
-        viewModel.airportList.observe(viewLifecycleOwner, {
-            with(BookFlightFragment.mOffersList) {
-                clear()
-                it?.let { it1 -> addAll(it1) }
-                airportListAdapter.notifyDataSetChanged()
-            }
-        })
-
-        location.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-            @SuppressLint("NotifyDataSetChanged")
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (s!!.isEmpty()) {
-                    airportListAdapter = AirportListAdapter("", offersList, this@MultiCityAdapter)
-                    recyclerView.adapter = airportListAdapter
-                } else {
-                    try {
-
-                        mOffersList2.clear()
-                        airportListAdapter.notifyDataSetChanged()
-                        airportListAdapter = AirportListAdapter(
-                            s.toString().lowercase(Locale.getDefault()),
-                            mOffersList2,
-                            this@MultiCityAdapter
-                        )
-                        recyclerView.adapter = airportListAdapter
-                        viewModel.getSelectedAirport("%${s}%")
-                        viewModel.searchAirportList.observe(viewLifecycleOwner, {
-                            with(mOffersList2) {
-                                clear()
-                                it?.let { it1 -> addAll(it1) }
-                                airportListAdapter.notifyDataSetChanged()
-                            }
-                        })
-                    } catch (e: Exception) {
-                    }
-                }
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-            }
-        })
-        recyclerView.apply {
-            layoutManager =
-                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            adapter = airportListAdapter
-        }
-        val cancel = dialog.findViewById<TextView>(R.id.cancel)
-        cancel.setOnClickListener {
-            dialog.dismiss()
-        }
-    }
-
+    @RequiresApi(Build.VERSION_CODES.N)
     @SuppressLint("SetTextI18n")
     override fun selected(model: GeneralFlightResponse) {
         val apName = model.fly_from!!.split(',')[1]
         val apCode = model.fly_from.split(',')[0]
-        dialog.dismiss()
         if (depart) {
+            dialog.dismiss()
             holderExtra.departCity.text = apName
             holderExtra.departCityCode.text = apCode
             airportDepart[pos] = apName
             airportDepartCode[pos] = apCode
-            depart = false
-            dialogTitle.text = "Arrival City"
-            dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
             holderExtra.arrivalLocation.performClick()
-            dialog.window!!.attributes = lp
         } else {
+            dialogArrival.dismiss()
             holderExtra.arrivedCity.text = apName
             holderExtra.arrivedCityCode.text = apCode
             airportArrived[pos] = apName
             airportArrivedCode[pos] = apCode
+            datePickerDialog()
             holderExtra.checkOut.performClick()
-            datePickerDialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
+//            datePickerDialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
             datePickerDialog.show()
-            datePickerDialog.window!!.attributes = lp
+            datePickerDialog.window?.attributes = lp
         }
     }
-
+    @SuppressLint("SetTextI18n", "NotifyDataSetChanged")
+    private fun showDialog(dialogue: CustomDialog) {
+        //dialogue.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialogue.initialize()
+        dialogue.window!!.attributes.windowAnimations = R.style.DialogAnimation
+        dialogue.show()
+        dialogue.window?.attributes = lp
+    }
     @SuppressLint( "SetTextI18n", "WeekBasedYear", "NewApi")
     @RequiresApi(Build.VERSION_CODES.N)
     private fun datePickerDialog() {
@@ -256,6 +180,4 @@ class MultiCityAdapter(
 
         })
     }
-
-
 }

@@ -104,17 +104,20 @@ class BookHotelFragment : Fragment(), CitySelector, View.OnClickListener {
         lp.height = WindowManager.LayoutParams.MATCH_PARENT
 
         binding.desireLocation.setOnClickListener {
+            showDialog()
             dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
             dialog.show()
             dialog.window!!.attributes = lp
         }
         binding.checkIn.setOnClickListener {
-            datePickerDialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
+            datePickerDialog()
+            //datePickerDialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
             datePickerDialog.show()
             datePickerDialog.window!!.attributes = lp
         }
         binding.checkOut.setOnClickListener {
-            datePickerDialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
+            datePickerDialog()
+            //datePickerDialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
             datePickerDialog.show()
             datePickerDialog.window!!.attributes = lp
         }
@@ -130,6 +133,7 @@ class BookHotelFragment : Fragment(), CitySelector, View.OnClickListener {
         }
         binding.signIn.setOnClickListener(this)
         binding.persons.setOnClickListener {
+            showBottomSheetDialog()
             bottomSheetDialog.window!!.attributes.windowAnimations = R.style.BottomAnimation
             bottomSheetDialog.show()
         }
@@ -160,9 +164,9 @@ class BookHotelFragment : Fragment(), CitySelector, View.OnClickListener {
                 }
             }
         }
-        datePickerDialog()
-        showDialog()
-        showBottomSheetDialog()
+
+
+
 
         return binding.root
     }
@@ -371,6 +375,7 @@ class BookHotelFragment : Fragment(), CitySelector, View.OnClickListener {
         done.setOnClickListener(this)
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     @SuppressLint("SetTextI18n")
     override fun selected(city: String?, id: String) {
         hotelId = id
@@ -381,10 +386,12 @@ class BookHotelFragment : Fragment(), CitySelector, View.OnClickListener {
             binding.departureCity.text = hotelBindingModal.city
         departCity = city
         dialog.dismiss()
-        datePickerDialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
+        datePickerDialog()
+//        datePickerDialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
         datePickerDialog.show()
-        datePickerDialog.window!!.attributes = lp
+        //datePickerDialog.window!!.attributes = lp
         showDialog()
+        datePickerDialog.window?.attributes = lp
     }
 
     @SuppressLint("NotifyDataSetChanged", "SetTextI18n")
@@ -418,6 +425,7 @@ class BookHotelFragment : Fragment(), CitySelector, View.OnClickListener {
                 checkInDate = binding.checkInDate.text.toString()
                 checkOutDate = binding.checkInDate.text.toString()
                 datePickerDialog.cancel()
+                showBottomSheetDialog()
                 bottomSheetDialog.window!!.attributes.windowAnimations = R.style.BottomAnimation
                 bottomSheetDialog.show()
             }

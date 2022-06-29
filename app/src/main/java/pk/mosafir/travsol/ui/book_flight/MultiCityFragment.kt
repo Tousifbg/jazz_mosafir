@@ -9,14 +9,18 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.RadioGroup
 import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import pk.mosafir.travsol.R
 import pk.mosafir.travsol.adapter.MultiCityAdapter
 import pk.mosafir.travsol.databinding.FragmentMultiCityBinding
 import pk.mosafir.travsol.model.RecentAirportModal
+import pk.mosafir.travsol.ui.MainActivity
+import pk.mosafir.travsol.ui.account.AccountFragment
+import pk.mosafir.travsol.ui.account.LoggedInFragment
 import pk.mosafir.travsol.ui.base.FlightBaseFragment
-import pk.mosafir.travsol.ui.book_flight.BookFlightFragment.Companion.mOffersList
 import pk.mosafir.travsol.utils.*
 import pk.mosafir.travsol.webview.WebViewActivity
 
@@ -53,6 +57,21 @@ class MultiCityFragment : FlightBaseFragment(), View.OnClickListener {
     //</editor-fold>
 
     //<editor-fold desc="OnCreateView">
+
+    private lateinit var transaction: FragmentTransaction
+    private lateinit var selectedFragment: Fragment
+
+    private fun openFragment(selectedFragment: Fragment) {
+        transaction = MainActivity.fragmentManager.beginTransaction()
+        transaction.replace(R.id.nav_host_fragment, selectedFragment).addToBackStack(null)
+        transaction.commit()
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+    }
+
     @SuppressLint("NotifyDataSetChanged", "SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,7 +80,7 @@ class MultiCityFragment : FlightBaseFragment(), View.OnClickListener {
         _binding = FragmentMultiCityBinding.inflate(inflater, container, false)
         offersList.add(1)
         offersList.add(1)
-        multiCityAdapter = MultiCityAdapter(viewModel, offersList, viewLifecycleOwner, mOffersList)
+        multiCityAdapter = MultiCityAdapter(viewModel, offersList, viewLifecycleOwner)
         binding.multyFlight.apply {
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
@@ -69,11 +88,12 @@ class MultiCityFragment : FlightBaseFragment(), View.OnClickListener {
         }
 
         bottomSheetDialog = BottomSheetDialog(requireContext())
-        showBottomSheetDialog()
         binding.persons.setOnClickListener {
+            showBottomSheetDialog()
             bottomSheetDialog.window!!.attributes.windowAnimations = R.style.BottomAnimation
             bottomSheetDialog.show()
         }
+//
 
         if (loggedIn) {
             binding.signIn.invisible()
@@ -197,26 +217,26 @@ class MultiCityFragment : FlightBaseFragment(), View.OnClickListener {
                 }
             }
             if (!error) {
-                if(loggedIn)
+                if (loggedIn)
 
                 //region loop to put recent searched airport
-                for (i in 0 until destinationCount) {
-                    viewModel.putAirportRecent(
-                        RecentAirportModal(
-                            getTempKey(),
-                            "0",
-                            "oneWay",
-                            "${airportDepartCode[i]} ,${airportDepart[i]}",
-                            "${airportArrivedCode[i]} ,${airportArrived[i]}",
-                            dateTravelForApi[i],
-                            "",
-                            "$adult",
-                            "$children",
-                            "$infant",
-                            cabinClass
+                    for (i in 0 until destinationCount) {
+                        viewModel.putAirportRecent(
+                            RecentAirportModal(
+                                getTempKey(),
+                                "0",
+                                "oneWay",
+                                "${airportDepartCode[i]} ,${airportDepart[i]}",
+                                "${airportArrivedCode[i]} ,${airportArrived[i]}",
+                                dateTravelForApi[i],
+                                "",
+                                "$adult",
+                                "$children",
+                                "$infant",
+                                cabinClass
+                            )
                         )
-                    )
-                }
+                    }
                 //endregion
                 binding.error.invisible()
                 val intent = Intent(requireContext(), WebViewActivity::class.java)
@@ -225,7 +245,6 @@ class MultiCityFragment : FlightBaseFragment(), View.OnClickListener {
             }
         }
         binding.signIn.setOnClickListener(this)
-
         binding.lessFlight.setOnClickListener(this)
         binding.plusFlight.setOnClickListener(this)
         return binding.root
@@ -245,17 +264,12 @@ class MultiCityFragment : FlightBaseFragment(), View.OnClickListener {
                 }
             }
             R.id.signIn -> {
-                val url: String = when {
-                    !loggedIn -> {
-                        "https://mosafir.pk/mobile/Flights/user_login"
-                    }
-                    else -> {
-                        "https://mosafir.pk/mobile/Admin/dashboard"
-                    }
+                selectedFragment = if (loggedIn) {
+                    LoggedInFragment()
+                } else {
+                    AccountFragment()
                 }
-                val intent = Intent(requireContext(), WebViewActivity::class.java)
-                intent.putExtra("url", url)
-                startActivity(intent)
+                openFragment(selectedFragment)
             }
             R.id.lessFlight -> {
                 val size = offersList.size

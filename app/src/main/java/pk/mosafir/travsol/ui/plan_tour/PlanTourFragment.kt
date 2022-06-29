@@ -109,18 +109,21 @@ class PlanTourFragment : Fragment(), CitySelector, View.OnClickListener {
         lp.height = WindowManager.LayoutParams.MATCH_PARENT
 
         binding.departureCity.setOnClickListener {
+            showDialog()
             dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
             dialog.show()
             dialog.window!!.attributes = lp
         }
         binding.topToolBar.title.text = "Plan Tour"
         binding.checkIn.setOnClickListener {
-            dateDialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
+            datePickerDialog()
+            //dateDialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
             dateDialog.show()
             dateDialog.window!!.attributes = lp
 
         }
         binding.travellers.setOnClickListener {
+            showBottomSheetDialog()
             bottomSheetDialog.window!!.attributes.windowAnimations = R.style.BottomAnimation
             bottomSheetDialog.show()
 
@@ -170,9 +173,9 @@ class PlanTourFragment : Fragment(), CitySelector, View.OnClickListener {
         if (loggedIn) {
             binding.signIn.invisible()
         }
-        showDialog()
-        datePickerDialog()
-        showBottomSheetDialog()
+
+
+
         binding.signIn.setOnClickListener(this)
         return binding.root
     }
@@ -867,19 +870,6 @@ class PlanTourFragment : Fragment(), CitySelector, View.OnClickListener {
                                 cityAdapter.notifyDataSetChanged()
                             }
                         })
-//
-//
-//                        cityAdapter.notifyDataSetChanged()
-//                        cityAdapter = CityLocationListAdapter(s.toString(), mOffersList2, this@PlanTourFragment)
-//                        recyclerView.adapter = cityAdapter
-//                        viewModel.getTourLocation("%${s}%")
-//                        viewModel.tourSearchCityList.observe(viewLifecycleOwner, {
-//                            with(mOffersList2) {
-//                                clear()
-//                                it?.let { it1 -> addAll(it1) }
-//                                cityAdapter.notifyDataSetChanged()
-//                            }
-//                        })
                     }
                 }
             }
@@ -939,7 +929,8 @@ class PlanTourFragment : Fragment(), CitySelector, View.OnClickListener {
         binding.departureCity.text = city
         dialog.dismiss()
         showDialog()
-        dateDialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
+        datePickerDialog()
+//        dateDialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
         dateDialog.show()
         dateDialog.window!!.attributes = lp
     }
@@ -948,6 +939,7 @@ class PlanTourFragment : Fragment(), CitySelector, View.OnClickListener {
         binding.arrivedCity.text = "$selectedMonth/$year"
         dateDialog.dismiss()
         tourBindingModal.checkinDate = "$selectedMonth/$year"
+        showBottomSheetDialog()
         bottomSheetDialog.window!!.attributes.windowAnimations = R.style.BottomAnimation
         bottomSheetDialog.show()
     }

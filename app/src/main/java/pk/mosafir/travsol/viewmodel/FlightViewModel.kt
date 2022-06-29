@@ -11,14 +11,10 @@ import pk.mosafir.travsol.response.Response
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONArray
-import pk.mosafir.travsol.adapter.AirportListAdapter
 import pk.mosafir.travsol.dao.AirportDao
-import pk.mosafir.travsol.dao.TourCityDao
 import pk.mosafir.travsol.model.RecentAirportModal
-import pk.mosafir.travsol.response.FlyFrom10
 import pk.mosafir.travsol.response.GeneralFlightResponse
 import pk.mosafir.travsol.utils.loadJSONFromAssets
-import kotlin.properties.ReadOnlyProperty
 
 class FlightViewModel(
     private val repository: Repository,
@@ -29,6 +25,11 @@ class FlightViewModel(
 
     val airportList: LiveData<List<GeneralFlightResponse>?>
         get() = _airportList
+
+    private val _airportListArrival = MutableLiveData<List<GeneralFlightResponse>?>()
+
+    val airportListArrival: LiveData<List<GeneralFlightResponse>?>
+        get() = _airportListArrival
 
     private val _searchAirportList = MutableLiveData<List<GeneralFlightResponse>?>()
 
@@ -62,7 +63,7 @@ class FlightViewModel(
         }
     }
 
-    fun fetchOffers(flag: Int) {
+    fun fetchOffers() {
         viewModelScope.launch(Dispatchers.IO) {
             withContext(Dispatchers.Main) {
                 when (val response = repository.getAirport(
@@ -78,7 +79,7 @@ class FlightViewModel(
         }
     }
 
-    fun fetchOffersArrival(flag: Int) {
+    fun fetchOffersArrival() {
         viewModelScope.launch(Dispatchers.IO) {
             withContext(Dispatchers.Main) {
                 when (val response = repository.getAirport(
@@ -86,7 +87,7 @@ class FlightViewModel(
                     1
                 )) {
 
-                    is Response.Success -> _airportList.value = response.data
+                    is Response.Success -> _airportListArrival.value = response.data
                     is Response.Error -> error.value = response.message
                 }
                 isLoading.value = false

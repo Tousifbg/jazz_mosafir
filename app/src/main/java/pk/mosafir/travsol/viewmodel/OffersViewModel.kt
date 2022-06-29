@@ -40,6 +40,7 @@ class OffersViewModel(private val repository: Repository, private val tourCityDa
     fun putRecentLocation(id: String) {
         viewModelScope.launch {
             repository.putRecentCity(id)
+            fetchCities()
         }
     }
 
@@ -59,7 +60,7 @@ class OffersViewModel(private val repository: Repository, private val tourCityDa
             isLoading.value = false
         }
     }
-    private fun fetchCities() {
+    fun fetchCities() {
         viewModelScope.launch {
             when (val response = repository.getCitiesRecent()) {
                 is Response.Success -> _hotelCityList.value = response.data

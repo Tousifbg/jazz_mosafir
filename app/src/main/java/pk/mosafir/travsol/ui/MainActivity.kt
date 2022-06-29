@@ -38,6 +38,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import pk.mosafir.travsol.BuildConfig
+import pk.mosafir.travsol.CustomDialog
 import pk.mosafir.travsol.R
 import pk.mosafir.travsol.interfaces.SocialLoginInterface
 import pk.mosafir.travsol.model.SocialLoginModel
@@ -55,17 +56,15 @@ import java.util.concurrent.TimeUnit
 @SuppressLint("StaticFieldLeak")
 class MainActivity : AppCompatActivity() {
     private lateinit var firebaseAnalytics: FirebaseAnalytics
-    private lateinit var fragmentManager: FragmentManager
     private lateinit var transaction: FragmentTransaction
     private val viewModel: OffersViewModel by viewModel()
-    private lateinit var callbackManager: CallbackManager
+    lateinit var callbackManager:CallbackManager
 
     companion object {
-        var runningFragment = ""
+        lateinit var fragmentManager: FragmentManager
         var fragment = ""
         lateinit var sharedPreferences: SharedPreferences
-
-        //        lateinit var token: String
+//        lateinit var token: String
         lateinit var firebaseToken: String
         lateinit var login: LoginButton
         lateinit var googlelogin: Button
@@ -73,42 +72,35 @@ class MainActivity : AppCompatActivity() {
         lateinit var mGoogleSignInClient: GoogleSignInClient
         const val RC_SIGN_IN = 9001
 
-        //we want to call social login api in account fragment instead of main activity
-        //for that we used interface to send social data to account fragment and then call api there
-        lateinit var socialLoginInterface: SocialLoginInterface
+        lateinit var socialLoginInterface:SocialLoginInterface
+        fun logoutSocial(){
+            try {
+                mGoogleSignInClient.signOut()
+                LoginManager.getInstance().logOut()
+            } catch (e: Exception) {
+            }
+        }
+        fun socialLogin(which:String, result: SocialLoginInterface ){
+            when(which){
 
-        fun socialLogin(which: String, result: SocialLoginInterface) {
-            when (which) {
-                "1" -> {
+                "1"->{
                     login.performClick()
                 }
-                "2" -> {
+                "2"->{
                     googlelogin.performClick()
                 }
             }
             socialLoginInterface = result
         }
-
-        fun logoutSocial() {
-            try {
-                LoginManager.getInstance().logOut()
-                mGoogleSignInClient.signOut()
-            } catch (e: Exception) {
-
-            }
-        }
     }
-
-    /////
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         sharedPreferences = getSharedPreferences("main", MODE_PRIVATE)
-        fragmentManager = supportFragmentManager
-        transaction = fragmentManager.beginTransaction()
-        transaction.replace(R.id.nav_host_fragment, HomeFragment(), "MY_FRAGMENT")
+        MainActivity.fragmentManager = supportFragmentManager
+        transaction = MainActivity.fragmentManager.beginTransaction()
+        transaction.replace(R.id.nav_host_fragment, HomeFragment(), "MY_FRAGMENT").addToBackStack(null)
         transaction.commit()
         requestForSpecificPermission()
         firebaseAnalytics = Firebase.analytics
@@ -116,9 +108,10 @@ class MainActivity : AppCompatActivity() {
         loggedIn = getIfLoggedIn()
         BuildConfig.slide_banner
 
-        if (getTempKey() == "12") {
-            setTempKey("temp-${System.currentTimeMillis()}")
+       if (getTempKey() == "12") {
+        setTempKey("temp-${System.currentTimeMillis()}")
         }
+
         FacebookSdk.sdkInitialize(applicationContext)
         login = findViewById(R.id.login_button)
         login.setPermissions(
@@ -135,7 +128,6 @@ class MainActivity : AppCompatActivity() {
                     var name: String
                     var imageURL: String
                     var authID: String
-                    var authTYPE: String
                     val request = GraphRequest.newMeRequest(
                         result.accessToken
                     ) { jsonObject, _ ->
@@ -144,29 +136,18 @@ class MainActivity : AppCompatActivity() {
 
                         name = jsonObject.getString("name")
 
-                        imageURL = "https://graph.facebook.com/${
-                            jsonObject.getString("id")
-                        }/picture?width=500&height=500"
+                        imageURL = "https://graph.facebook.com/${jsonObject.getString("id")}/picture?width=500&height=500"
 
                         authID = result.accessToken.userId
 
-                        authTYPE = "FB"
-                        val socialLoginModel =
-                            SocialLoginModel(email, name, imageURL, authID, authTYPE)
+                        val socialLoginModel = SocialLoginModel(email, name, imageURL, authID,"FB")
                         socialLoginInterface.updated(socialLoginModel)
-
-//                        postSocialData(email, name, imageURL, authID, authTYPE)
-
-                        //displaying profile img in custom dialog
-                        //showDialog(imageURL)
                     }
 
                     val parameters = Bundle()
                     parameters.putString("fields", "id,name,email,gender,birthday")
                     request.parameters = parameters
                     request.executeAsync()
-//                    handleFacebookAccessToken(result.accessToken)
-                    //Toast.makeText(requireContext(), "login done $email", Toast.LENGTH_SHORT).show()
                 }
 
                 override fun onCancel() {
@@ -174,22 +155,21 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onError(error: FacebookException) {
-                    toast("FB_ERROR: " + error.message)
+                    toast("FB_ERROR: "+error.message)
                 }
             })
 
-        //google signin
-        val gso = GoogleSignInOptions
-            .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client))
-            .requestEmail()
-            .build()
+    val gso = GoogleSignInOptions
+        .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        .requestIdToken(getString(R.string.default_web_client))
+        .requestEmail()
+        .build()
 
-        mGoogleSignInClient = GoogleSignIn.getClient(this@MainActivity, gso)
+        mGoogleSignInClient = GoogleSignIn.getClient(this@MainActivity ,gso)
 
         googlelogin = findViewById(R.id.googleLoginBtn)
         googlelogin.setOnClickListener {
-            SignInGoogle()
+            signInGoogle()
 
         }
 
@@ -199,11 +179,10 @@ class MainActivity : AppCompatActivity() {
             when (item.itemId) {
 
                 R.id.navigation_account -> {
-                    selectedFragment = if (loggedIn) {
-                        LoggedInFragment()
-                        return@OnItemSelectedListener true
+                    if (loggedIn) {
+                        selectedFragment = LoggedInFragment()
                     } else {
-                        AccountFragment()
+                        selectedFragment = AccountFragment()
                     }
                 }
                 R.id.navigation_booking -> {
@@ -236,16 +215,15 @@ class MainActivity : AppCompatActivity() {
                     return@OnItemSelectedListener true
                 }
             }
-            fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-            fragmentManager = supportFragmentManager
-            transaction = fragmentManager.beginTransaction()
-            transaction.replace(R.id.nav_host_fragment, selectedFragment)
+            transaction = MainActivity.fragmentManager.beginTransaction()
+//            fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+            transaction.replace(R.id.nav_host_fragment, selectedFragment).addToBackStack(null)
             transaction.commit()
             return@OnItemSelectedListener true
         })
     }
 
-    private fun SignInGoogle() {
+    private fun signInGoogle() {
         val signinIntent = mGoogleSignInClient.signInIntent
         startActivityForResult(signinIntent, RC_SIGN_IN)
     }
@@ -306,6 +284,7 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(Intent.ACTION_VIEW)
         intent.data = Uri.parse("https://wa.me/$trimToNumber/?text=")
         startActivity(intent)
+
     }
 
     private fun callUs() {
@@ -318,7 +297,7 @@ class MainActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onResume() {
         super.onResume()
-        val selectedFragment: Fragment
+        var selectedFragment: Fragment = HomeFragment()
 //        fragmentManager = supportFragmentManager
         when (fragment) {
             "home" -> {
@@ -337,10 +316,10 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             "login" -> {
-                selectedFragment = if (loggedIn) {
-                    LoggedInFragment()
+                if (loggedIn) {
+                    selectedFragment = LoggedInFragment()
                 } else {
-                    AccountFragment()
+                    selectedFragment = AccountFragment()
                 }
                 openFragment(selectedFragment)
             }
@@ -364,13 +343,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun openFragment(selectedFragment: Fragment) {
-        transaction = fragmentManager.beginTransaction()
-        transaction.replace(R.id.nav_host_fragment, selectedFragment)
+    fun openFragment(selectedFragment: Fragment){
+        transaction.replace(R.id.nav_host_fragment, selectedFragment).addToBackStack(null)
         transaction.commit()
-
     }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         callbackManager.onActivityResult(requestCode, resultCode, data)
         super.onActivityResult(requestCode, resultCode, data)
@@ -383,41 +359,37 @@ class MainActivity : AppCompatActivity() {
     private fun handleSignInResult(task: Task<GoogleSignInAccount>) {
         try {
             val account = task.getResult(ApiException::class.java)
-            val googleID = account?.id ?: ""
+            val googleID = account?.id ?:""
             val googleFirstName = account?.givenName ?: ""
             val googleLastName = account?.familyName ?: ""
             val googleEmail = account?.email ?: ""
             val googleProfilePicURL = account?.photoUrl.toString()
-            val socialLoginModel = SocialLoginModel(
-                googleEmail,
-                "$googleFirstName $googleLastName", googleProfilePicURL, googleID, "GOOGLE"
-            )
+            var socialLoginModel = SocialLoginModel(googleEmail,
+                "$googleFirstName $googleLastName", googleProfilePicURL, googleID, "GOOGLE")
             socialLoginInterface.updated(socialLoginModel)
-        } catch (e: ApiException) {
+        }catch (e:ApiException) {
             Timber.e(e.statusCode.toString())
         }
+
     }
 
     private var doubleBackToExitPressedOnce = false
 
     override fun onBackPressed() {
-        val myFragment =
-            supportFragmentManager.findFragmentByTag("MY_FRAGMENT")
-        if (myFragment == null || !myFragment.isVisible) {
+        val myFragment: HomeFragment? =
+            supportFragmentManager.findFragmentByTag("MY_FRAGMENT") as HomeFragment?
+        if(fragmentManager.backStackEntryCount > 0){
+            fragmentManager.popBackStackImmediate()
+        }
+        else if (myFragment == null || !myFragment.isVisible) {
             val fragmentManager = supportFragmentManager
             val transaction = fragmentManager.beginTransaction()
-            var nextFragment: Fragment = HomeFragment()
-            if (runningFragment == "loggedin") {
-                nextFragment = LoggedInFragment()
-                runningFragment = ""
-                transaction.replace(R.id.nav_host_fragment, nextFragment, "MY_FRAG")
-            }
-            else{
-                transaction.replace(R.id.nav_host_fragment, nextFragment, "MY_FRAGMENT")
-            }
+            transaction.replace(R.id.nav_host_fragment, HomeFragment(), "MY_FRAGMENT").addToBackStack(null)
             transaction.commit()
-        } else {
-            if (doubleBackToExitPressedOnce) {
+        }
+
+        else{
+            if (doubleBackToExitPressedOnce){
                 super.onBackPressed()
                 return
             }

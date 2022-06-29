@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.coroutines.MainScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import pk.mosafir.travsol.R
 import pk.mosafir.travsol.databinding.FragmentBookFlightBinding
@@ -22,8 +23,7 @@ class BookFlightFragment : Fragment() {
     private lateinit var _binding: FragmentBookFlightBinding
     private val binding get() = _binding
     private val titles = arrayOf("Round Trip", "One Way", "Multi City")
-    public val viewModel: FlightViewModel by viewModel()
-
+    val viewModel: FlightViewModel by viewModel()
     companion object {
         val mOffersListArrive = mutableListOf<GeneralFlightResponse>()
         val mOffersList = mutableListOf<GeneralFlightResponse>()
@@ -40,22 +40,18 @@ class BookFlightFragment : Fragment() {
             val fragmentManager = requireActivity().supportFragmentManager
             val transaction = fragmentManager.beginTransaction()
             fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-            transaction.replace(R.id.nav_host_fragment, HomeFragment(), "MY_FRAGMENT")
+            transaction.replace(R.id.nav_host_fragment, HomeFragment(), "MY_FRAGMENT").addToBackStack(null)
             transaction.commit()
         }
-//        viewModel.airportList.observe(viewLifecycleOwner, {
-//            with(mOffersList) {
-//                clear()
-//                it?.let { it1 -> addAll(it1) }
-//            }
-//        })
 
         binding.topToolBar.title.text = "Flight Search"
-        TabLayoutMediator(
-            binding.tabLayout, binding.viewPager
-        ) { tab: TabLayout.Tab, position: Int ->
-            tab.text = titles[position]
-        }.attach()
+        MainScope().coroutineContext.apply {
+            TabLayoutMediator(
+                binding.tabLayout, binding.viewPager
+            ) { tab: TabLayout.Tab, position: Int ->
+                tab.text = titles[position]
+            }.attach()
+        }
         return binding.root
     }
 

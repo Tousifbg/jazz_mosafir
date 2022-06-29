@@ -2,6 +2,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:background="@color/colorWhite"
         android:orientation="vertical">
@@ -60,6 +61,14 @@
             android:layout_height="@dimen/_35sdp"
             tools:ignore="RtlSymmetry,UnusedAttribute"
             android:inputType="textAutoComplete" />
+    <ProgressBar
+            android:id="@+id/loader"
+            android:layout_marginTop="@dimen/_20sdp"
+            app:layout_constraintTop_toBottomOf="@id/location"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"/>
     <androidx.recyclerview.widget.RecyclerView
             android:layout_marginBottom="@dimen/_50sdp"
             android:layout_marginRight="@dimen/_10sdp"

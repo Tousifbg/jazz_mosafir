@@ -5,28 +5,26 @@ import android.app.Dialog
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.text.format.DateFormat
 import android.view.*
 import android.widget.Button
-import android.widget.EditText
 import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.annotation.RequiresApi
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.savvi.rangedatepicker.CalendarPickerView
+import pk.mosafir.travsol.CustomDialog
 import pk.mosafir.travsol.R
-import pk.mosafir.travsol.adapter.AirportListAdapter
 import pk.mosafir.travsol.databinding.FragmentOneWayBinding
 import pk.mosafir.travsol.interfaces.AirportSelector
 import pk.mosafir.travsol.model.RecentAirportModal
 import pk.mosafir.travsol.response.GeneralFlightResponse
+import pk.mosafir.travsol.ui.MainActivity
+import pk.mosafir.travsol.ui.account.AccountFragment
+import pk.mosafir.travsol.ui.account.LoggedInFragment
 import pk.mosafir.travsol.ui.base.FlightBaseFragment
-import pk.mosafir.travsol.ui.book_flight.BookFlightFragment.Companion.mOffersList
-import pk.mosafir.travsol.ui.book_flight.BookFlightFragment.Companion.mOffersListArrive
 import pk.mosafir.travsol.ui.book_hotel.BookHotelFragment.Companion.flightBindingModel
 import pk.mosafir.travsol.utils.*
 import pk.mosafir.travsol.webview.WebViewActivity
@@ -37,17 +35,14 @@ class OneWayFragment : FlightBaseFragment(), View.OnClickListener, AirportSelect
     private lateinit var _binding: FragmentOneWayBinding
     private val binding get() = _binding
 
-    private val mOffersList2 = mutableListOf<GeneralFlightResponse>()
-    private lateinit var airportListAdapter: AirportListAdapter
-    private lateinit var airportListAdapterArrive: AirportListAdapter
     private lateinit var bottomSheetDialog: BottomSheetDialog
 
     private var adult = 1
     private var children = 0
     private var infant = 0
 
-    private lateinit var dialog: Dialog
-    private lateinit var dialogArrival: Dialog
+    private lateinit var dialog: CustomDialog
+    private lateinit var dialogArrival: CustomDialog
     private lateinit var datePickerDialog: Dialog
 
     private lateinit var done: Button
@@ -66,7 +61,6 @@ class OneWayFragment : FlightBaseFragment(), View.OnClickListener, AirportSelect
     private var economy: Boolean = false
     private var business: Boolean = false
 
-    private lateinit var dialogTitle: TextView
 
     private lateinit var tvAdult: TextView
     private lateinit var tvChild: TextView
@@ -83,19 +77,23 @@ class OneWayFragment : FlightBaseFragment(), View.OnClickListener, AirportSelect
 
     private lateinit var radioGroup: RadioGroup
     private var flag = 0
+    private lateinit var transaction: FragmentTransaction
+    private lateinit var selectedFragment: Fragment
 
+    private fun openFragment(selectedFragment: Fragment) {
+        transaction = MainActivity.fragmentManager.beginTransaction()
+        transaction.replace(R.id.nav_host_fragment, selectedFragment).addToBackStack(null)
+        transaction.commit()
+    }
     @SuppressLint("SetTextI18n")
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         _binding = FragmentOneWayBinding.inflate(inflater, container, false)
         bottomSheetDialog = BottomSheetDialog(requireContext())
-        dialog = Dialog(requireActivity(), R.style.full_screen_dialog)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialogArrival = Dialog(requireActivity(), R.style.full_screen_dialog)
-        dialogArrival.requestWindowFeature(Window.FEATURE_NO_TITLE)
         datePickerDialog = Dialog(requireActivity(), R.style.full_screen_dialog)
         datePickerDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         lp.copyFrom(bottomSheetDialog.window?.attributes)
@@ -103,27 +101,26 @@ class OneWayFragment : FlightBaseFragment(), View.OnClickListener, AirportSelect
         lp.height = WindowManager.LayoutParams.MATCH_PARENT
         binding.oneWayBinding = flightBindingModel
         binding.travellers.setOnClickListener {
+            showBottomSheetDialog()
             bottomSheetDialog.window!!.attributes.windowAnimations = R.style.BottomAnimation
             bottomSheetDialog.show()
+            bottomSheetDialog.window?.attributes = lp
         }
         binding.departure.setOnClickListener {
             flag = 0
-            dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
             depart = true
-            dialogTitle.text = "Departure City"
-            dialog.show()
-            dialog.window!!.attributes = lp
+            dialog = CustomDialog("Departure City", requireContext(), this@OneWayFragment, viewModel, viewLifecycleOwner, R.style.full_screen_dialog)
+            showDialog(dialog)
         }
         binding.arrival.setOnClickListener {
             flag = 1
             depart = false
-            dialogArrival.window!!.attributes.windowAnimations = R.style.DialogAnimation
-            dialogTitle.text = "Arrival City"
-            dialogArrival.show()
-            dialogArrival.window!!.attributes = lp
+            dialogArrival = CustomDialog("Arrival City", requireContext(), this@OneWayFragment, viewModel, viewLifecycleOwner, R.style.full_screen_dialog)
+            showDialog(dialogArrival)
         }
         binding.date.setOnClickListener {
-            datePickerDialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
+            datePickerDialog()
+            //datePickerDialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
             datePickerDialog.show()
             datePickerDialog.window!!.attributes = lp
         }
@@ -168,11 +165,12 @@ class OneWayFragment : FlightBaseFragment(), View.OnClickListener, AirportSelect
             }
         }
         binding.signIn.setOnClickListener(this)
-        showBottomSheetDialog()
-        showDialog()
-        showDialogArrival()
-        datePickerDialog()
         return binding.root
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    override fun onResume() {
+        super.onResume()
     }
 
     @SuppressLint("NewApi", "CutPasteId", "WeekBasedYear")
@@ -257,6 +255,7 @@ class OneWayFragment : FlightBaseFragment(), View.OnClickListener, AirportSelect
                 binding.startDater.text = "$finalMonth $finalDate, $finalYear"
                 datePickerDialog.cancel()
                 flightBindingModel.fromDate = "$finalMonth $finalDate, $finalYear"
+                showBottomSheetDialog()
                 bottomSheetDialog.window!!.attributes.windowAnimations = R.style.BottomAnimation
                 bottomSheetDialog.show()
             }
@@ -272,17 +271,13 @@ class OneWayFragment : FlightBaseFragment(), View.OnClickListener, AirportSelect
                 flightBindingModel.traveller = travels
             }
             R.id.signIn -> {
-                val url = when {
-                    !loggedIn -> {
-                        "https://mosafir.pk/mobile/Flights/user_login"
-                    }
-                    else -> {
-                        "https://mosafir.pk/mobile/Admin/dashboard"
-                    }
+                selectedFragment = if (loggedIn) {
+                    LoggedInFragment()
+                } else {
+                    AccountFragment()
                 }
-                val intent = Intent(requireContext(), WebViewActivity::class.java)
-                intent.putExtra("url", url)
-                startActivity(intent)
+                openFragment(selectedFragment)
+
             }
             R.id.minus_adult -> {
                 if (adult > 1) {
@@ -323,9 +318,12 @@ class OneWayFragment : FlightBaseFragment(), View.OnClickListener, AirportSelect
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun selected(model: GeneralFlightResponse) {
         val apName = model.fly_from!!.split(',')[1]
         val apCode = model.fly_from.split(',')[0]
+        viewModel.fetchOffersArrival()
+        viewModel.fetchOffers()
         if (depart) {
             binding.departureCity.text = apName
             binding.departureCityCode.text = apCode
@@ -343,142 +341,19 @@ class OneWayFragment : FlightBaseFragment(), View.OnClickListener, AirportSelect
             flightBindingModel.to = apName
             flightBindingModel.toCode = apCode
             dialogArrival.dismiss()
+            datePickerDialog()
             datePickerDialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
             datePickerDialog.show()
-            datePickerDialog.window!!.attributes = lp
-        }
-
-    }
-
-    @SuppressLint("SetTextI18n", "NotifyDataSetChanged")
-    private fun showDialog() {
-        dialog.setCancelable(false)
-        dialog.setContentView(R.layout.cutom_dialog_location)
-        val recyclerView = dialog.findViewById<RecyclerView>(R.id.recyclerView)
-        val location = dialog.findViewById<EditText>(R.id.location)
-        mOffersList.clear()
-        airportListAdapter = AirportListAdapter("", mOffersList, this)
-        airportListAdapter.notifyDataSetChanged()
-
-        recyclerView.apply {
-            layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-            adapter = airportListAdapter
-        }
-
-
-        viewModel.fetchOffers(0)
-        viewModel.airportList.observe(viewLifecycleOwner, {
-            with(mOffersList) {
-                clear()
-                it?.let { it1 -> addAll(it1) }
-                airportListAdapter.notifyDataSetChanged()
-            }
-        })
-        dialogTitle = dialog.findViewById(R.id.title)
-        location.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            @SuppressLint("NotifyDataSetChanged")
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (s!!.isEmpty()) {
-                    airportListAdapter = AirportListAdapter("", mOffersList, this@OneWayFragment)
-                    recyclerView.adapter = airportListAdapter
-                } else {
-
-                    mOffersList2.clear()
-                    airportListAdapter.notifyDataSetChanged()
-                    airportListAdapter = AirportListAdapter(
-                        s.toString().lowercase(Locale.getDefault()),
-                        mOffersList2,
-                        this@OneWayFragment
-                    )
-                    recyclerView.adapter = airportListAdapter
-                    viewModel.getSelectedAirport("%${s}%")
-                    viewModel.searchAirportList.observe(viewLifecycleOwner, {
-                        with(mOffersList2) {
-                            clear()
-                            it?.let { it1 -> addAll(it1) }
-                            airportListAdapter.notifyDataSetChanged()
-                        }
-                    })
-                }
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-            }
-        })
-        val cancel = dialog.findViewById<TextView>(R.id.cancel)
-        cancel.setOnClickListener {
-            dialog.dismiss()
         }
     }
 
     @SuppressLint("SetTextI18n", "NotifyDataSetChanged")
-    private fun showDialogArrival() {
-        dialogArrival.setCancelable(false)
-        dialogArrival.setContentView(R.layout.cutom_dialog_location)
-        val recyclerView = dialogArrival.findViewById<RecyclerView>(R.id.recyclerView)
-        val location = dialogArrival.findViewById<EditText>(R.id.location)
-        mOffersListArrive.clear()
-        airportListAdapterArrive = AirportListAdapter("", mOffersListArrive, this)
-        airportListAdapterArrive.notifyDataSetChanged()
-
-        recyclerView.apply {
-            layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-            adapter = airportListAdapterArrive
-        }
-
-
-        viewModel.fetchOffersArrival(1)
-        viewModel.airportList.observe(viewLifecycleOwner, {
-            with(mOffersListArrive) {
-                clear()
-                it?.let { it1 -> addAll(it1) }
-                airportListAdapterArrive.notifyDataSetChanged()
-            }
-        })
-        dialogTitle = dialogArrival.findViewById(R.id.title)
-        location.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            @SuppressLint("NotifyDataSetChanged")
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (s!!.isEmpty()) {
-                    airportListAdapterArrive = AirportListAdapter("", mOffersListArrive, this@OneWayFragment)
-                    recyclerView.adapter = airportListAdapterArrive
-                } else {
-
-                    mOffersList2.clear()
-                    airportListAdapterArrive.notifyDataSetChanged()
-                    airportListAdapterArrive = AirportListAdapter(
-                        s.toString().lowercase(Locale.getDefault()),
-                        mOffersList2,
-                        this@OneWayFragment
-                    )
-                    recyclerView.adapter = airportListAdapterArrive
-                    viewModel.getSelectedAirport("%${s}%")
-                    viewModel.searchAirportList.observe(viewLifecycleOwner, {
-                        with(mOffersList2) {
-                            clear()
-                            it?.let { it1 -> addAll(it1) }
-                            airportListAdapterArrive.notifyDataSetChanged()
-                        }
-                    })
-                }
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-            }
-        })
-
-        val cancel = dialogArrival.findViewById<TextView>(R.id.cancel)
-        cancel.setOnClickListener {
-            dialogArrival.dismiss()
-        }
+    private fun showDialog(dialogue: CustomDialog) {
+//        dialogue.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialogue.initialize()
+        dialogue.window!!.attributes.windowAnimations = R.style.DialogAnimation
+        dialogue.show()
+        dialogue.window?.attributes = lp
     }
 
     private fun getUrl(): String {

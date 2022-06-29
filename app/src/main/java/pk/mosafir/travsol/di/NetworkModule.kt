@@ -7,8 +7,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
 import pk.mosafir.travsol.BuildConfig
 import pk.mosafir.travsol.data.Repository
-import pk.mosafir.travsol.model.LikeDataModal
-import pk.mosafir.travsol.model.LoginModel
 import pk.mosafir.travsol.network.ApiInterface
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

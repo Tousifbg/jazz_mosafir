@@ -18,7 +18,6 @@ class Repository(
 ) {
     private var citiesList = ArrayList<DiscoverPakistanCity>()
     private var mOffersList = ArrayList<Offer>()
-
     suspend fun getOffersList(): Response<List<Offer>>? {
         mOffersList = offersDao.getOffers() as ArrayList<Offer>
         return try {
@@ -66,22 +65,25 @@ class Repository(
 
     //Discover pakistan data
     suspend fun putRecentCity(id: String) {
-        if (!loggedIn)
-            api.putCitiesRecentAsync(
-                TourPutRecentModel(
-                    getTempKey(),
-                    userDetailDao.getUserDetail().user_id.toString(),
-                    id
+        try {
+            if (!loggedIn)
+                api.putCitiesRecentAsync(
+                    TourPutRecentModel(
+                        getTempKey(),
+                        userDetailDao.getUserDetail().user_id.toString(),
+                        id
+                    )
                 )
-            )
-        else
-            api.putCitiesRecentAsync(
-                TourPutRecentModel(
-                    getTempKey(),
-                    "0",
-                    id
+            else
+                api.putCitiesRecentAsync(
+                    TourPutRecentModel(
+                        getTempKey(),
+                        "0",
+                        id
+                    )
                 )
-            )
+        } catch (e: Exception) {
+        }
     }
 
     suspend fun getCitiesRecent(): Response<List<DiscoverPakistanCity>> {
@@ -125,22 +127,25 @@ class Repository(
 
     //Hotel functions
     suspend fun putRecentHotel(id: String) {
-        if (loggedIn)
-            api.putHotelRecentAsync(
-                TourPutRecentModel(
-                    getTempKey(),
-                    userDetailDao.getUserDetail().user_id.toString(),
-                    id
+        try {
+            if (loggedIn)
+                api.putHotelRecentAsync(
+                    TourPutRecentModel(
+                        getTempKey(),
+                        userDetailDao.getUserDetail().user_id.toString(),
+                        id
+                    )
                 )
-            )
-        else
-            api.putHotelRecentAsync(
-                TourPutRecentModel(
-                    getTempKey(),
-                    "0",
-                    id
+            else
+                api.putHotelRecentAsync(
+                    TourPutRecentModel(
+                        getTempKey(),
+                        "0",
+                        id
+                    )
                 )
-            )
+        } catch (e: Exception) {
+        }
     }
 
     suspend fun getHotelCities(string: String?): Response<List<HotelLocation>> {
@@ -170,13 +175,16 @@ class Repository(
     }
 
     private suspend fun addHotelCitiesToDb() {
-        var hotelCities = hotelLocationDao.getHotelLocations()
-        if (hotelCities.isEmpty()) {
-            try {
-                hotelCities = api.getHotelLocationAsync().hotel_locations
-                hotelLocationDao.insertHotelLocation(hotelCities)
-            } catch (e: Exception) {
+        try {
+            var hotelCities = hotelLocationDao.getHotelLocations()
+            if (hotelCities.isEmpty()) {
+                try {
+                    hotelCities = api.getHotelLocationAsync().hotel_locations
+                    hotelLocationDao.insertHotelLocation(hotelCities)
+                } catch (e: Exception) {
+                }
             }
+        } catch (e: Exception) {
         }
     }
 
@@ -185,84 +193,97 @@ class Repository(
         airportItem: JSONArray,
         flag: Int
     ): Response<List<GeneralFlightResponse>> {
-        val list =
-            if (loggedIn)
-                api.getAirportRecentAsync(
-                    TourKeyModel(
-                        getTempKey(),
-                        userDetailDao.getUserDetail().user_id.toString()
-                    )
-                )
-            else
-                api.getAirportRecentAsync(
-                    TourKeyModel(
-                        getTempKey(),
-                        "0"
-                    )
-                )
-        val listFly = ArrayList<GeneralFlightResponse>()
         try {
-            when (flag) {
-                0 -> {
-                    for (i in list.fly_from_10) {
-                        listFly.add(GeneralFlightResponse(i.id, i.fly_from))
+            val list =
+                if (loggedIn)
+                    api.getAirportRecentAsync(
+                        TourKeyModel(
+                            getTempKey(),
+                            userDetailDao.getUserDetail().user_id.toString()
+                        )
+                    )
+                else
+                    api.getAirportRecentAsync(
+                        TourKeyModel(
+                            getTempKey(),
+                            "0"
+                        )
+                    )
+            val listFly = ArrayList<GeneralFlightResponse>()
+            try {
+                when (flag) {
+                    0 -> {
+                        for (i in list.fly_from_10) {
+                            listFly.add(GeneralFlightResponse(i.id, i.fly_from))
+                        }
+                    }
+                    1 -> {
+                        for (i in list.fly_to_10) {
+                            listFly.add(GeneralFlightResponse(i.id, i.fly_from))
+                        }
                     }
                 }
-                1 -> {
-                    for (i in list.fly_to_10) {
-                        listFly.add(GeneralFlightResponse(i.id, i.fly_from))
-                    }
-                }
+                setAirportDatabase(airportItem)
+                return Response.Success(listFly)
+            } catch (ex: java.lang.Exception) {
+                return Response.Error(ex.toString())
             }
-            setAirportDatabase(airportItem)
-            return Response.Success(listFly)
-        } catch (ex: java.lang.Exception) {
-            return Response.Error(ex.toString())
+        } catch (e: Exception) {
+            return Response.Error(e.toString())
         }
     }
 
     suspend fun putRecentAirport(model: RecentAirportModal) {
-        if(loggedIn)
-            model.user_id = userDetailDao.getUserDetail().user_id.toString()
-        api.putAirportRecentAsync(model)
+        try {
+            if(loggedIn)
+                model.user_id = userDetailDao.getUserDetail().user_id.toString()
+            api.putAirportRecentAsync(model)
+        } catch (e: Exception) {
+        }
 
     }
 
     private suspend fun setAirportDatabase(airportItem: JSONArray) {
-        val airportList = airportDao.getAirports() as ArrayList<FlyFrom10>
-        if (airportList.isEmpty()) {
-            for (i in 0 until airportItem.length()) {
-                var airportLItem: FlyFrom10
-                val objects = airportItem.getJSONObject(i)
-                airportLItem = FlyFrom10(
-                    null,
-                    objects.getString("code") + ", " + objects.getString("name") + ", " + objects.getString(
-                        "city"
-                    ) + ", " + objects.getString("state") + ", " + objects.getString("country")
-                )
-                airportList.add(airportLItem)
+        try {
+            val airportList = airportDao.getAirports() as ArrayList<FlyFrom10>
+            if (airportList.isEmpty()) {
+                for (i in 0 until airportItem.length()) {
+                    var airportLItem: FlyFrom10
+                    val objects = airportItem.getJSONObject(i)
+                    airportLItem = FlyFrom10(
+                        null,
+                        objects.getString("code") + ", " + objects.getString("name") + ", " + objects.getString(
+                            "city"
+                        ) + ", " + objects.getString("state") + ", " + objects.getString("country")
+                    )
+                    airportList.add(airportLItem)
+                }
+                airportDao.insertAirports(airportList)
             }
-            airportDao.insertAirports(airportList)
+        } catch (e: Exception) {
         }
     }
 
     suspend fun putData() {
-        if (loggedIn)
-            api.putFTokenAsync(
-                FirebaseToken(
-                    userDetailDao.getUserDetail().user_id.toLong(),
-                    getTempKey(),
-                    getFirebaseToken()
+        try {
+            if (loggedIn)
+                api.putFTokenAsync(
+                    FirebaseToken(
+                        userDetailDao.getUserDetail().user_id.toLong(),
+                        getTempKey(),
+                        getFirebaseToken()
+                    )
                 )
-            )
-        else
-            api.putFTokenAsync(
-                FirebaseToken(
-                    0,
-                    getTempKey(),
-                    getFirebaseToken()
+            else
+                api.putFTokenAsync(
+                    FirebaseToken(
+                        0,
+                        getTempKey(),
+                        getFirebaseToken()
+                    )
                 )
-            )
+        } catch (e: Exception) {
+        }
     }
 
     suspend fun checkUser(mobile: String, countryCode: String): Response<String> {

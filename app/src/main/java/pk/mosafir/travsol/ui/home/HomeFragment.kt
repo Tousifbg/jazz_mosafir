@@ -57,6 +57,7 @@ import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import java.util.*
 import android.util.Base64
+import pk.mosafir.travsol.ui.MainActivity
 import kotlin.collections.ArrayList
 
 class HomeFragment : BaseFragment(), CitySelector, BillingProcessor.IBillingHandler {
@@ -200,8 +201,8 @@ class HomeFragment : BaseFragment(), CitySelector, BillingProcessor.IBillingHand
 
                 }
             }
-            fragmentManager = requireActivity().supportFragmentManager
-            transaction = fragmentManager.beginTransaction()
+            fragmentManager = MainActivity().supportFragmentManager
+            transaction = MainActivity.fragmentManager.beginTransaction()
             transaction.replace(R.id.fragContainer, TrendingFlightfragment()).addToBackStack(null)
             transaction.commit()
         }
@@ -330,7 +331,7 @@ class HomeFragment : BaseFragment(), CitySelector, BillingProcessor.IBillingHand
         binding.discoverEt.setOnClickListener {
             dialog.window!!.setSoftInputMode(SOFT_INPUT_STATE_VISIBLE)
             dialog.show()
-            dialog.window!!.attributes = lp
+            //dialog.window!!.attributes = lp
         }
         //special offers recyclerview
         val recyclerView = binding.root.findViewById<RecyclerView>(R.id.special_offer_recycle)
@@ -501,7 +502,6 @@ class HomeFragment : BaseFragment(), CitySelector, BillingProcessor.IBillingHand
         webview.addJavascriptInterface(
             DataFromJS(requireContext()), DataFromJS.TAG
         )
-
         webview.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
                 if (!url.equals("https://www.mosafir.pk/native_view") || !url.equals("https://mosafir.pk/native_view")) {
@@ -520,7 +520,6 @@ class HomeFragment : BaseFragment(), CitySelector, BillingProcessor.IBillingHand
 
     override fun selected(city: String?, id: String?) {
         id?.let { viewModel.putRecentLocation(it) }
-        cityAdapter = CityListAdapter("", mCityList, this@HomeFragment)
         val intent = Intent(requireActivity(), WebViewActivity::class.java)
         intent.putExtra(
             "url",

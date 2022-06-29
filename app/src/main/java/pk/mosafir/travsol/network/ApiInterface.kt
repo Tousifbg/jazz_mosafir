@@ -61,7 +61,6 @@ interface ApiInterface {
     suspend fun checkOTPRegister(@Body mobile_otp: OtpModel): UserDetailTable
 
     //Firebase Token Update
-    @Headers("Authentication: ")
     @POST("firebase_token_update")
     suspend fun putFTokenAsync(@Body firebaseToken: FirebaseToken)
 
