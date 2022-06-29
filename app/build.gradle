@@ -144,4 +144,8 @@ dependencies {
 
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
+    //easy permissions with Dexter
+    implementation 'com.karumi:dexter:6.2.2'
+
+
 }

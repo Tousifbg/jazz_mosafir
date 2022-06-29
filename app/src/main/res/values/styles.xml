@@ -93,4 +93,8 @@
         <item name="android:windowEnterAnimation">@anim/bottom_top</item>
         <item name="android:windowExitAnimation">@anim/top_bottom</item>
     </style>
+
+    <style name="CustomHintSize" parent="TextAppearance.Design.Hint">
+        <item name="android:textSize">@dimen/_11sdp</item>
+    </style>
 </resources>

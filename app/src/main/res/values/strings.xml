@@ -64,6 +64,7 @@
     <string name="all_booking_history">All Booking History</string>
     <string name="payment_history">Payment History</string>
     <string name="dashboard">Dashboard</string>
+    <string name="profile">Profile</string>
     <string name="hi_adil_zahoor_anjum">Hi!</string>
     <string name="log_out">Log Out</string>
     <string name="change_password">Change Password</string>
@@ -75,6 +76,7 @@
     <string name="_1_person_s_1_room_s">1 Person(s), 1 Room(s)</string>
     <string name="user_login">User Login</string>
     <string name="login">login</string>
+    <string name="update">Update</string>
     <string name="not_register_yet">Not Register Yet?</string>
     <string name="register_now">Register Now</string>
     <string name="mobile_number">Mobile Number</string>
