@@ -18,5 +18,5 @@ val viewModelModule = module {
 
     viewModel { LoggedInViewModel(get()) }
 
-    viewModel { UserInfoViewModel(get()) }
+    viewModel { UserInfoViewModel(get(), get()) }
 }

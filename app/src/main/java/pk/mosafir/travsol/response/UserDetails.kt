@@ -12,6 +12,7 @@ data class UserDetails(
     val profile_image: String? = "",
     val full_name: String? = "",
     var auth_type: String? = "",
+    var address: String? = "",
     @PrimaryKey val user_id: Int
     //ggg
 )

@@ -53,9 +53,8 @@ interface ApiInterface {
     @POST("social_login")
     suspend fun checkUserSocialResponse(@Body socialLoginModel: SocialLoginModel): UserDetailTable
 
- /*   @Headers("")
     @POST("update_profile")
-    suspend fun updateUserProfile(@Body )*/
+    suspend fun updateUserProfile(@Header("Authorization") header: String, @Body updateProfileModel: UpdateProfileModel): UpdateProfileResponse
 
     //Register Responses
     @POST("register_user")

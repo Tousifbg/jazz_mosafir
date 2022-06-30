@@ -13,7 +13,12 @@ interface UserDetailDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUserDetail(offers: UserDetails)
 
-
     @Query("DELETE FROM user_detail")
     suspend fun clear()
+
+    @Update
+    fun updateUserData(userDetails: UserDetails)
+
+    @Query("SELECT * FROM user_detail WHERE user_id = :id")
+    suspend fun get(id: Int): UserDetails?
 }

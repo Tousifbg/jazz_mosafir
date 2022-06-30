@@ -8,213 +8,213 @@
                 type="pk.mosafir.travsol.response.UserDetails" />
     </data>
 
-<androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:ignore="ContentDescription"
-        tools:context=".ui.account.UserInfoFragment">
-
-    <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            app:layout_constraintTop_toTopOf="parent"
-            android:background="@color/colorRed"
+    <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_40sdp">
+            android:layout_height="match_parent"
+            tools:ignore="ContentDescription"
+            tools:context=".ui.account.UserInfoFragment">
 
-        <RelativeLayout
+        <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                app:layout_constraintTop_toTopOf="parent"
+                android:background="@color/colorRed"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="@dimen/_40sdp">
+
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <ImageView
+                        android:id="@+id/back"
+                        android:layout_width="@dimen/_15sdp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/left_arrow"
+                        app:tint="@color/colorWhite"
+                        tools:ignore="ContentDescription" />
+
+                <TextView
+                        android:id="@+id/title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:fontFamily="@font/montserrat"
+                        android:text="@string/profile"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/_16sdp" />
+            </RelativeLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+
+
+        <LinearLayout
+                android:id="@+id/changeImgLayout"
+                android:layout_width="@dimen/_130sdp"
+                android:layout_height="@dimen/_130sdp"
+                android:orientation="vertical"
+                android:background="@drawable/img_rectangle_shape"
+                android:layout_marginTop="@dimen/_10sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
 
             <ImageView
-                    android:id="@+id/back"
-                    android:layout_width="@dimen/_15sdp"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/left_arrow"
-                    app:tint="@color/colorWhite"
-                    tools:ignore="ContentDescription" />
+                    android:id="@+id/img"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_100sdp"
+                    android:src="@drawable/ic_baseline_image_24"
+                    android:padding="@dimen/_10sdp"/>
 
             <TextView
-                    android:id="@+id/title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:fontFamily="@font/montserrat"
-                    android:text="@string/profile"
+                    android:id="@+id/changeImg"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:text="Click here to select image"
                     android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/_16sdp" />
-        </RelativeLayout>
-    </androidx.appcompat.widget.Toolbar>
+                    android:paddingVertical="@dimen/_6sdp"
+                    android:textSize="@dimen/_10sdp"
+                    android:layout_marginHorizontal="@dimen/_1sdp"
+                    android:gravity="center"
+                    android:background="@color/blue"/>
+
+        </LinearLayout>
 
 
-
-    <LinearLayout
-            android:id="@+id/changeImgLayout"
-            android:layout_width="@dimen/_130sdp"
-            android:layout_height="@dimen/_130sdp"
-            android:orientation="vertical"
-            android:background="@drawable/img_rectangle_shape"
-            android:layout_marginTop="@dimen/_10sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar">
-
-
-        <ImageView
-                android:id="@+id/img"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_100sdp"
-                android:src="@drawable/ic_baseline_image_24"
-                android:padding="@dimen/_10sdp"/>
-
-        <TextView
-                android:id="@+id/changeImg"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_30sdp"
-                android:text="Click here to select image"
-                android:textColor="@color/colorWhite"
-                android:paddingVertical="@dimen/_6sdp"
-                android:textSize="@dimen/_10sdp"
-                android:layout_marginHorizontal="@dimen/_1sdp"
-                android:gravity="center"
-                android:background="@color/blue"/>
-
-    </LinearLayout>
-
-
-    <LinearLayout
-            android:id="@+id/ProfileNameLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/changeImgLayout">
-
-
-        <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/username_et_profile"
+        <LinearLayout
+                android:id="@+id/ProfileNameLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Full Name"
-                app:hintTextAppearance="@style/CustomHintSize">
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/changeImgLayout">
 
-            <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/user_name_profile"
+
+            <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/username_et_profile"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40sdp"
-                    android:fontFamily="@font/montserrat"
-                    android:inputType="text"
-                    android:singleLine="true"
-                    android:textSize="@dimen/_12sdp" />
+                    android:layout_height="wrap_content"
+                    android:hint="Full Name"
+                    app:hintTextAppearance="@style/CustomHintSize">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/user_name_profile"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40sdp"
+                        android:fontFamily="@font/montserrat"
+                        android:inputType="text"
+                        android:singleLine="true"
+                        android:textSize="@dimen/_12sdp" />
 
-    </LinearLayout>
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
 
 
-    <com.hbb20.CountryCodePicker
-            android:id="@+id/profile_spinner_country"
-            android:layout_width="@dimen/_90sdp"
-            android:layout_height="@dimen/_39sdp"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:fontFamily="@font/montserrat"
-            android:gravity="bottom"
-            app:ccpDialog_keyboardAutoPopup="false"
-            app:ccp_arrowSize="@dimen/_20sdp"
-            app:ccp_defaultPhoneCode="92"
-            app:ccp_showFullName="false"
-            app:ccp_countryPreference="PK,AE,SA,TR"
-            app:ccp_textSize="@dimen/_10sdp"
-            app:layout_constraintTop_toBottomOf="@+id/ProfileNameLayout"
-            app:layout_constraintStart_toStartOf="parent" />
-
-    <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:background="@color/colorGrayDark"
-            android:layout_marginStart="@dimen/_5sdp"
-            app:layout_constraintEnd_toEndOf="@id/profile_spinner_country"
-            app:layout_constraintStart_toStartOf="@id/profile_spinner_country"
-            app:layout_constraintTop_toBottomOf="@+id/profile_spinner_country" />
-
-    <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/phone_et_profile"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_11sdp"
-            android:layout_marginEnd="@dimen/_10sdp"
-            app:hintTextAppearance="@style/CustomHintSize"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/profile_spinner_country"
-            app:layout_constraintTop_toBottomOf="@+id/ProfileNameLayout">
-
-        <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/phone_number_profile"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"
+        <com.hbb20.CountryCodePicker
+                android:id="@+id/profile_spinner_country"
+                android:layout_width="@dimen/_90sdp"
+                android:layout_height="@dimen/_39sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:fontFamily="@font/montserrat"
-                android:hint="@string/phone_number"
-                android:inputType="number"
-                android:singleLine="true"
-                android:textColorHint="@color/colorRed"
-                android:textSize="@dimen/_12sdp" />
-    </com.google.android.material.textfield.TextInputLayout>
+                android:gravity="bottom"
+                app:ccpDialog_keyboardAutoPopup="false"
+                app:ccp_arrowSize="@dimen/_20sdp"
+                app:ccp_defaultPhoneCode="92"
+                app:ccp_showFullName="false"
+                app:ccp_countryPreference="PK,AE,SA,TR"
+                app:ccp_textSize="@dimen/_10sdp"
+                app:layout_constraintTop_toBottomOf="@+id/ProfileNameLayout"
+                app:layout_constraintStart_toStartOf="parent" />
 
-
-    <LinearLayout
-            android:id="@+id/addressLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profile_spinner_country">
-
+        <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/colorGrayDark"
+                android:layout_marginStart="@dimen/_5sdp"
+                app:layout_constraintEnd_toEndOf="@id/profile_spinner_country"
+                app:layout_constraintStart_toStartOf="@id/profile_spinner_country"
+                app:layout_constraintTop_toBottomOf="@+id/profile_spinner_country" />
 
         <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/address_et_profile"
-                android:layout_width="match_parent"
+                android:id="@+id/phone_et_profile"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="Postal Address"
-                app:hintTextAppearance="@style/CustomHintSize">
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_11sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                app:hintTextAppearance="@style/CustomHintSize"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/profile_spinner_country"
+                app:layout_constraintTop_toBottomOf="@+id/ProfileNameLayout">
 
             <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/address_profile"
+                    android:id="@+id/phone_number_profile"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40sdp"
                     android:fontFamily="@font/montserrat"
-                    android:inputType="text"
+                    android:hint="@string/phone_number"
+                    android:inputType="number"
                     android:singleLine="true"
+                    android:textColorHint="@color/colorRed"
                     android:textSize="@dimen/_12sdp" />
-
         </com.google.android.material.textfield.TextInputLayout>
 
-    </LinearLayout>
 
-    <Button
-            android:id="@+id/update"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/_40sdp"
-            android:layout_marginTop="@dimen/_12sdp"
-            android:background="@drawable/background_login"
-            android:fontFamily="@font/montserrat"
-            android:text="@string/update"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:textColor="@color/colorWhite"
-            android:textSize="@dimen/_14sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/addressLayout" />
+        <LinearLayout
+                android:id="@+id/addressLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/profile_spinner_country">
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/address_et_profile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Postal Address"
+                    app:hintTextAppearance="@style/CustomHintSize">
+
+                <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/address_profile"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40sdp"
+                        android:fontFamily="@font/montserrat"
+                        android:inputType="text"
+                        android:singleLine="true"
+                        android:textSize="@dimen/_12sdp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+        <Button
+                android:id="@+id/update"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:background="@drawable/background_login"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/update"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/addressLayout" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </layout>

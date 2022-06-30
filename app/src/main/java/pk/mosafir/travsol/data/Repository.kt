@@ -294,7 +294,17 @@ class Repository(
         }
     }
 
-    //meh
+    //profile update call api
+    suspend fun profileUpdate(updateProfileModel: UpdateProfileModel): Response<String?> {
+        return try {
+            val token = userDetailDao.getUserDetail().token
+                val userCheckResponse = token?.let { api.updateUserProfile("Bearer $it", updateProfileModel) }
+            Response.Success(userCheckResponse!!.Status_code)
+        } catch (e: Exception) {
+            Response.Error("error" + e.message)
+        }
+    }
+
     //for login
     suspend fun validateOTP(mobile: String, temp_key: String): Response<String> {
         return try {
